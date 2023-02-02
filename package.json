@@ -3,7 +3,11 @@
   "author": "Bianca Morris",
   "version": "0.1.0",
   "description": "An application for requesting game mods",
-  "keywords": ["mods", "game mods", "modderize"],
+  "keywords": [
+    "mods",
+    "game mods",
+    "modderize"
+  ],
   "private": true,
   "scripts": {
     "dev": "next dev",
