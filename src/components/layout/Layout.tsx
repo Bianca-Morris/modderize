@@ -1,13 +1,11 @@
 import React from "react";
+import { PropsWithChildren } from "../../types/interfaces";
+import Navbar from "../navbar/Navbar";
 
-interface Props {
-	children: React.ReactNode;
-}
-
-const Layout: React.FC<Props> = ({ children }) => {
+const Layout: React.FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<>
-			{/* <Navbar /> */}
+			<Navbar />
 			<main>{children}</main>
 			{/* <Footer /> */}
 		</>

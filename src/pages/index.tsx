@@ -8,9 +8,13 @@ const Home: NextPage = () => {
 			<Head>
 				<title>Create Next App</title>
 				<link rel="icon" href="/favicon.ico" />
+				<link
+					rel="stylesheet"
+					href="https://rsms.me/inter/inter.css"
+				></link>
 			</Head>
 
-			<main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
+			{/* <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
 				<h1 className="text-6xl font-bold">
 					Welcome to{" "}
 					<a className="text-blue-600" href="https://nextjs.org">
@@ -89,7 +93,7 @@ const Home: NextPage = () => {
 						height={16}
 					/>
 				</a>
-			</footer>
+			</footer> */}
 		</div>
 	);
 };
