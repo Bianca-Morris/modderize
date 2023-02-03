@@ -1,7 +1,8 @@
 import { Dialog } from "@headlessui/react";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../basic/Button";
 import Input from "../../basic/Input";
+import OAuthGoogleButton from "./OAuthGoogleButton";
 
 type AuthPanelRegisterProps = {
 	handleSwitch: Function;
@@ -10,8 +11,24 @@ type AuthPanelRegisterProps = {
 const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 	handleSwitch
 }) => {
+	const [registerForm, setRegisterForm] = useState({
+		email: "",
+		password: "",
+		password2: ""
+	});
+
+	const onSubmit = () => {};
+	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const { target: { name = "", value = "" } = {} } = event;
+		// update form state
+		setRegisterForm((prev) => ({
+			...prev,
+			[name]: value
+		}));
+	};
+
 	return (
-		<div>
+		<form onSubmit={onSubmit}>
 			<div className="flex flex-col justify-center align-center">
 				<a
 					className="text-sm text-center text-gray-500 underline"
@@ -28,12 +45,13 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					Email
 				</label>
 				<Input
+					required
 					type="text"
 					name="email"
 					id="email"
 					placeholder=""
-					onChange={() => null}
 					value=""
+					{...{ onChange }}
 				/>
 			</div>
 			<div className="mt-2 mx-8 flex flex-col">
@@ -41,37 +59,37 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					Password
 				</label>
 				<Input
+					required
 					type="password"
 					name="password"
 					id="password"
 					placeholder=""
-					onChange={() => null}
 					value=""
+					{...{ onChange }}
 				/>
 			</div>
 			<div className="mt-2 mx-8 flex flex-col">
 				<label htmlFor="password2" className="text-left">
-					Repeat Password
+					Password
 				</label>
 				<Input
+					required
 					type="password"
 					name="password2"
 					id="password2"
 					placeholder=""
-					onChange={() => null}
 					value=""
+					{...{ onChange }}
 				/>
 			</div>
 			<div className="my-2 mx-8 flex flex-col text-center">
-				<Button variant="blue" onClick={() => null}>
+				<Button type="submit" variant="blue" onClick={onSubmit}>
 					Register
 				</Button>
 				<span>OR</span>
-				<Button variant="gray" onClick={() => null}>
-					Continue with Google
-				</Button>
+				<OAuthGoogleButton />
 			</div>
-		</div>
+		</form>
 	);
 };
 export default AuthPanelRegister;

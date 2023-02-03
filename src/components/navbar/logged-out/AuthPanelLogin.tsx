@@ -1,15 +1,31 @@
 import { Dialog } from "@headlessui/react";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../basic/Button";
 import Input from "../../basic/Input";
+import OAuthGoogleButton from "./OAuthGoogleButton";
 
 type AuthPanelLoginProps = {
 	handleSwitch: Function;
 };
 
 const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
+	const [loginForm, setLoginForm] = useState({
+		email: "",
+		password: ""
+	});
+
+	const onSubmit = () => {};
+	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const { target: { name = "", value = "" } = {} } = event;
+		// update form state
+		setLoginForm((prev) => ({
+			...prev,
+			[name]: value
+		}));
+	};
+
 	return (
-		<div>
+		<form onSubmit={onSubmit}>
 			<div className="flex flex-col justify-center align-center">
 				<a
 					className="text-sm text-center text-gray-500 underline"
@@ -26,12 +42,13 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 					Email
 				</label>
 				<Input
+					required
 					type="text"
 					name="email"
 					id="email"
 					placeholder=""
-					onChange={() => null}
 					value=""
+					{...{ onChange }}
 				/>
 			</div>
 			<div className="mt-2 mx-8 flex flex-col">
@@ -39,22 +56,21 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 					Password
 				</label>
 				<Input
+					required
 					type="password"
 					name="password"
 					id="password"
 					placeholder=""
-					onChange={() => null}
 					value=""
+					{...{ onChange }}
 				/>
 			</div>
 			<div className="my-2 mx-8 flex flex-col text-center">
-				<Button variant="blue" onClick={() => null}>
+				<Button type="submit" variant="blue" onClick={onSubmit}>
 					Login
 				</Button>
 				<span>OR</span>
-				<Button variant="gray" onClick={() => null}>
-					Continue with Google
-				</Button>
+				<OAuthGoogleButton />
 			</div>
 			<div className="flex flex-col justify-center align-center">
 				<a
@@ -67,7 +83,7 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 					Forgot Password?
 				</a>
 			</div>
-		</div>
+		</form>
 	);
 };
 export default AuthPanelLogin;
