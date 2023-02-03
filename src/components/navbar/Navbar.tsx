@@ -5,9 +5,11 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { PropsWithChildren } from "../../types/interfaces";
 import MenuButtonMobile from "./MenuButtonMobile";
 import MenuDropdownMobile from "./MenuDropdownMobile";
-import NotificationButton from "./NotificationButton";
-import UserMenuButton from "./UserMenuButton";
+import NotificationButton from "./logged-in/NotificationButton";
+import UserMenuButton from "./logged-in/UserMenuButton";
 import SearchBar from "./SearchBar";
+import AuthButton from "./logged-out/AuthButton";
+import AuthModal from "./logged-out/AuthModal";
 
 const navigation = [
 	{ name: "About", href: "#", current: false },
@@ -70,6 +72,8 @@ const Navbar: React.FC = () => {
 								<SearchBar />
 								<NotificationButton />
 								<UserMenuButton {...{ classNames }} />
+								<AuthButton />
+								<AuthModal />
 							</div>
 						</div>
 					</div>
