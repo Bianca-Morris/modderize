@@ -1,8 +1,13 @@
 import { Dialog } from "@headlessui/react";
 import React, { useState } from "react";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+
+import { validateEmail } from "../../../helpers";
+import { auth } from "../../../firebase/clientApp";
 import Button from "../../basic/Button";
 import Input from "../../basic/Input";
 import OAuthGoogleButton from "./OAuthGoogleButton";
+import { FIREBASE_ERRORS } from "../../../firebase/errors";
 
 type AuthPanelRegisterProps = {
 	handleSwitch: Function;
@@ -16,10 +21,40 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 		password: "",
 		password2: ""
 	});
+	const { email, password, password2 } = registerForm;
+	const [error, setError] = useState("");
 
-	const onSubmit = () => {};
-	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const { target: { name = "", value = "" } = {} } = event;
+	const [createUserWithEmailAndPassword, user, loading, userError] =
+		useCreateUserWithEmailAndPassword(auth);
+
+	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		if (error) setError("");
+
+		if (password !== password2) {
+			setError("Passwords do not match");
+			return;
+		} else if (!validateEmail(email)) {
+			setError("Email address is not valid");
+			return;
+		} else if (userError) {
+			console.log("usererror", userError);
+			setError(
+				(FIREBASE_ERRORS[
+					userError.message
+				] as keyof typeof FIREBASE_ERRORS) || "Something went wrong"
+			);
+		}
+
+		// TODO: Do some salt/hashing of passwords before sending
+
+		createUserWithEmailAndPassword(email, password);
+		console.log("user", user);
+	};
+
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { target: { name = "", value = "" } = {} } = e;
 		// update form state
 		setRegisterForm((prev) => ({
 			...prev,
@@ -50,7 +85,6 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					name="email"
 					id="email"
 					placeholder=""
-					value=""
 					{...{ onChange }}
 				/>
 			</div>
@@ -64,13 +98,12 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					name="password"
 					id="password"
 					placeholder=""
-					value=""
 					{...{ onChange }}
 				/>
 			</div>
 			<div className="mt-2 mx-8 flex flex-col">
 				<label htmlFor="password2" className="text-left">
-					Password
+					Confirm Password
 				</label>
 				<Input
 					required
@@ -78,12 +111,21 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					name="password2"
 					id="password2"
 					placeholder=""
-					value=""
 					{...{ onChange }}
 				/>
 			</div>
+			{error && (
+				<div className="text-sm text-center text-red-600 mt-2">
+					{error}
+				</div>
+			)}
 			<div className="my-2 mx-8 flex flex-col text-center">
-				<Button type="submit" variant="blue" onClick={onSubmit}>
+				<Button
+					type="submit"
+					variant="blue"
+					onClick={onSubmit}
+					{...{ loading }}
+				>
 					Register
 				</Button>
 				<span>OR</span>
