@@ -1,4 +1,6 @@
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import React, { MouseEventHandler } from "react";
+
 import { PropsWithChildren } from "react";
 
 const WITHOUT_OUTLINE = " border-transparent px-4 py-2";
@@ -21,6 +23,7 @@ interface ButtonProps extends PropsWithChildren {
 	type?: "button" | "submit";
 	onClick: React.MouseEventHandler<HTMLButtonElement>;
 	disabled?: boolean;
+	loading?: boolean;
 	variant: // | "black"
 	// | "white"
 	// | "slate"
@@ -54,6 +57,7 @@ const Button: React.FC<ButtonProps> = ({
 	children,
 	onClick,
 	variant,
+	loading,
 	cls
 }) => {
 	return (
@@ -64,7 +68,14 @@ const Button: React.FC<ButtonProps> = ({
                         text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2
                         ${COLOR_VARIANTS[variant]} ${cls ? cls : ""}`}
 		>
-			{children}
+			{loading ? (
+				<div className="animate-spin" role="status">
+					<ArrowPathIcon className="h-4 w-4" aria-hidden="true" />
+					<span className="sr-only">Loading...</span>
+				</div>
+			) : (
+				children
+			)}
 		</button>
 	);
 };
