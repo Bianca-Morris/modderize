@@ -21,7 +21,7 @@ const COLOR_VARIANTS = {
 interface ButtonProps extends PropsWithChildren {
 	cls?: string;
 	type?: "button" | "submit";
-	onClick: React.MouseEventHandler<HTMLButtonElement>;
+	onClick?: React.MouseEventHandler<HTMLButtonElement>; // Not entirely necessary when submittnig forms
 	disabled?: boolean;
 	loading?: boolean;
 	variant: // | "black"

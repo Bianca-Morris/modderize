@@ -1,5 +1,10 @@
 import { Dialog } from "@headlessui/react";
 import React, { useState } from "react";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+
+import { auth } from "../../../firebase/clientApp";
+import { FIREBASE_ERRORS } from "../../../firebase/errors";
+import { validateEmail } from "../../../helpers";
 import Button from "../../basic/Button";
 import Input from "../../basic/Input";
 import OAuthGoogleButton from "./OAuthGoogleButton";
@@ -13,10 +18,25 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 		email: "",
 		password: ""
 	});
+	const { email, password } = loginForm;
 
-	const onSubmit = () => {};
+	const [signInWithEmailAndPasssword, user, loading, firebaseError] =
+		useSignInWithEmailAndPassword(auth);
+
+	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		try {
+			signInWithEmailAndPasssword(email, password);
+			console.log("user", user);
+		} catch (e) {
+			console.error("error", e);
+		}
+	};
+
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { target: { name = "", value = "" } = {} } = event;
+
 		// update form state
 		setLoginForm((prev) => ({
 			...prev,
@@ -47,7 +67,6 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 					name="email"
 					id="email"
 					placeholder=""
-					value=""
 					{...{ onChange }}
 				/>
 			</div>
@@ -61,12 +80,19 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 					name="password"
 					id="password"
 					placeholder=""
-					value=""
 					{...{ onChange }}
 				/>
 			</div>
+			{firebaseError && (
+				<div className="text-sm text-center text-red-600 mt-2">
+					{(FIREBASE_ERRORS[
+						firebaseError?.message
+					] as keyof typeof FIREBASE_ERRORS) ||
+						"Something went wrong"}
+				</div>
+			)}
 			<div className="my-2 mx-8 flex flex-col text-center">
-				<Button type="submit" variant="blue" onClick={onSubmit}>
+				<Button type="submit" variant="blue" {...{ loading }}>
 					Login
 				</Button>
 				<span>OR</span>

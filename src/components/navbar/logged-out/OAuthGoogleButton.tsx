@@ -4,6 +4,7 @@ import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/clientApp";
 import Button from "../../basic/Button";
 
+// Note: Handles both the log-in case and sign-in case
 const OAuthGoogleButton: React.FC = () => {
 	const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
 

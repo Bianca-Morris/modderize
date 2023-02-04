@@ -1,13 +1,17 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useRef, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { authModalState } from "../../../atoms/authModalAtom";
 import { useRecoilState } from "recoil";
 import Button from "../../basic/Button";
 import AuthPanels from "./AuthPanels";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../firebase/clientApp";
 
 const AuthModal: React.FC = () => {
 	const [modalState, setModalState] = useRecoilState(authModalState);
+	const [user, loading, error] = useAuthState(auth);
+
 	const { open, view } = modalState;
 
 	const handleClose = () => {
@@ -25,6 +29,12 @@ const AuthModal: React.FC = () => {
 	};
 
 	const cancelButtonRef = useRef(null);
+
+	// When user is loaded, close the modal
+	useEffect(() => {
+		if (user) handleClose();
+		console.log("user", user);
+	}, [user]);
 
 	return (
 		<Transition.Root show={open} as={Fragment}>

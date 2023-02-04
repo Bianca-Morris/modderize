@@ -2,11 +2,14 @@ import React from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import UserMenuItem from "./UserMenuItem";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { signOut } from "@firebase/auth";
+import { auth } from "../../../firebase/clientApp";
 
 const navigation = [
 	{ title: "My Profile", href: "#" },
 	{ title: "Settings", href: "#" },
-	{ title: "Sign Out", href: "#" }
+	{ title: "Sign Out", href: undefined, onClick: () => signOut(auth) }
 ];
 
 interface UserMenuButtonProps {
@@ -19,13 +22,14 @@ const UserMenuButton: React.FC<UserMenuButtonProps> = (props) => {
 	return (
 		<Menu as="div" className="relative ml-3">
 			<div>
-				<Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+				<Menu.Button className="flex rounded-full text-gray-400 bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
 					<span className="sr-only">Open user menu</span>
-					<img
+					{/* <img
 						className="h-8 w-8 rounded-full"
 						src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
 						alt="User Profile Picture"
-					/>
+					/> */}
+					<UserCircleIcon className="h-8 w-8" aria-hidden="true" />
 				</Menu.Button>
 			</div>
 			<Transition

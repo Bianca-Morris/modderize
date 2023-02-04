@@ -24,7 +24,7 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 	const { email, password, password2 } = registerForm;
 	const [error, setError] = useState("");
 
-	const [createUserWithEmailAndPassword, user, loading, userError] =
+	const [createUserWithEmailAndPassword, user, loading, firebaseError] =
 		useCreateUserWithEmailAndPassword(auth);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,23 +38,27 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 		} else if (!validateEmail(email)) {
 			setError("Email address is not valid");
 			return;
-		} else if (userError) {
-			console.log("usererror", userError);
+		} else if (firebaseError) {
+			console.error("firebaseError", firebaseError);
 			setError(
 				(FIREBASE_ERRORS[
-					userError.message
+					firebaseError.message
 				] as keyof typeof FIREBASE_ERRORS) || "Something went wrong"
 			);
+			return;
 		}
 
 		// TODO: Do some salt/hashing of passwords before sending
 
 		createUserWithEmailAndPassword(email, password);
 		console.log("user", user);
+
+		// TODO: Set short timeout & then trigger navigation to Login section
 	};
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { target: { name = "", value = "" } = {} } = e;
+
 		// update form state
 		setRegisterForm((prev) => ({
 			...prev,
@@ -123,7 +127,7 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 				<Button
 					type="submit"
 					variant="blue"
-					onClick={onSubmit}
+					// onClick={onSubmit}
 					{...{ loading }}
 				>
 					Register

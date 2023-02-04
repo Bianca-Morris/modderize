@@ -1,15 +1,16 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { Menu } from "@headlessui/react";
 
 interface UserMenuItemProps {
 	classNames;
 	active?: boolean;
 	title: string;
-	href: string;
+	href?: string;
+	onClick?: MouseEventHandler;
 }
 
 const UserMenuItem: React.FC<UserMenuItemProps> = (props) => {
-	const { classNames, active, title, href = "#" } = props;
+	const { classNames, active, title, href, onClick } = props;
 	return (
 		<Menu.Item>
 			<a
@@ -18,6 +19,7 @@ const UserMenuItem: React.FC<UserMenuItemProps> = (props) => {
 					active ? "bg-gray-100" : "",
 					"block px-4 py-2 text-sm text-gray-700"
 				)}
+				{...{ onClick }}
 			>
 				{title}
 			</a>
