@@ -1,5 +1,6 @@
 import React from "react";
 import { Disclosure } from "@headlessui/react";
+import SearchBar from "./SearchBar";
 
 interface MenuDropdownMobileProps {
 	navigation;
@@ -26,6 +27,7 @@ const MenuDropdownMobile: React.FC<MenuDropdownMobileProps> = (props) => {
 					{item.name}
 				</Disclosure.Button>
 			))}
+			<SearchBar visibleOnDesktop={false} />
 		</div>
 	);
 };

@@ -2,12 +2,24 @@ import React from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 type SearchBarProps = {
-	// user
+	visibleOnMobile?: boolean;
+	visibleOnDesktop?: boolean;
 };
 
-const SearchBar: React.FC<SearchBarProps> = () => {
+const SearchBar: React.FC<SearchBarProps> = ({
+	visibleOnMobile = true,
+	visibleOnDesktop = true
+}) => {
+	let visibilityString = "";
+
+	if (!visibleOnMobile) {
+		visibilityString += "hidden md:block";
+	} else if (!visibleOnDesktop) {
+		visibilityString += "block md:hidden";
+	}
+
 	return (
-		<div>
+		<div className={visibilityString}>
 			<div className="relative mt-1 rounded-md shadow-sm">
 				<div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
 					<span className="text-gray-500" style={{ width: "15px" }}>
