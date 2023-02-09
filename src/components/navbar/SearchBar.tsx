@@ -40,7 +40,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 					<select
 						id="searchType"
 						name="searchType"
-						className="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+						className="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm cursor-pointer"
 					>
 						<option>By Keyword</option>
 						<option>By Modder</option>
