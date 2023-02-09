@@ -47,7 +47,7 @@ const AuthPanelResetPassword: React.FC<AuthPanelResetPasswordProps> = ({
 		<div>
 			<div className="flex flex-col justify-center align-center">
 				<a
-					className="text-sm text-center text-gray-500 underline"
+					className="text-sm text-center text-gray-500 underline cursor-pointer"
 					href={undefined}
 					onClick={(e: React.MouseEvent<Element, MouseEvent>) =>
 						handleSwitch(e, "signup")
@@ -85,7 +85,7 @@ const AuthPanelResetPassword: React.FC<AuthPanelResetPasswordProps> = ({
 								type="text"
 								name="email"
 								id="email"
-								placeholder="Ex: jane.doe@email-client.com"
+								placeholder="Ex: jane.doe@mail.com"
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 						</div>
@@ -108,7 +108,7 @@ const AuthPanelResetPassword: React.FC<AuthPanelResetPasswordProps> = ({
 			)}
 			<div className="flex flex-col justify-center align-center">
 				<a
-					className="text-sm text-center text-gray-500 underline"
+					className="text-sm text-center text-gray-500 underline cursor-pointer"
 					href={undefined}
 					onClick={(e: React.MouseEvent<Element, MouseEvent>) =>
 						handleSwitch(e, "login")

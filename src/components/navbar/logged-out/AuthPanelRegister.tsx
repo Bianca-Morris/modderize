@@ -70,7 +70,7 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 		<form onSubmit={onSubmit}>
 			<div className="flex flex-col justify-center align-center">
 				<a
-					className="text-sm text-center text-gray-500 underline"
+					className="text-sm text-center text-gray-500 underline cursor-pointer"
 					href={undefined}
 					onClick={(e: React.MouseEvent<Element, MouseEvent>) =>
 						handleSwitch(e, "login")
@@ -88,7 +88,7 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					type="text"
 					name="email"
 					id="email"
-					placeholder=""
+					placeholder="Ex: jane.doe@mail.com"
 					{...{ onChange }}
 				/>
 			</div>

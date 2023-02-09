@@ -48,7 +48,7 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 		<form onSubmit={onSubmit}>
 			<div className="flex flex-col justify-center align-center">
 				<a
-					className="text-sm text-center text-gray-500 underline"
+					className="text-sm text-center text-gray-500 underline cursor-pointer"
 					href={undefined}
 					onClick={(e: React.MouseEvent<Element, MouseEvent>) =>
 						handleSwitch(e, "signup")
@@ -66,7 +66,7 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 					type="text"
 					name="email"
 					id="email"
-					placeholder=""
+					placeholder="Ex: jane.doe@mail.com"
 					{...{ onChange }}
 				/>
 			</div>
@@ -95,12 +95,12 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 				<Button type="submit" variant="blue" {...{ loading }}>
 					Login
 				</Button>
-				<span>OR</span>
+				<span className="my-2 text-sm">OR</span>
 				<OAuthGoogleButton />
 			</div>
 			<div className="flex flex-col justify-center align-center">
 				<a
-					className="text-sm text-center text-gray-500 underline"
+					className="text-sm text-center text-gray-500 underline cursor-pointer"
 					href={undefined}
 					onClick={(e: React.MouseEvent<Element, MouseEvent>) =>
 						handleSwitch(e, "resetPassword")
