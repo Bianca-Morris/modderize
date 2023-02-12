@@ -1,9 +1,7 @@
 import React, { Fragment, useRef, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { authModalState } from "../../../atoms/authModalAtom";
 import { useRecoilState } from "recoil";
-import Button from "../../basic/Button";
 import AuthPanels from "./AuthPanels";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/clientApp";

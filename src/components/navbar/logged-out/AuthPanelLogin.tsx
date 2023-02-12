@@ -1,10 +1,8 @@
-import { Dialog } from "@headlessui/react";
 import React, { useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 import { auth } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
-import { validateEmail } from "../../../helpers";
 import Button from "../../basic/Button";
 import Input from "../../basic/Input";
 import OAuthGoogleButton from "./OAuthGoogleButton";

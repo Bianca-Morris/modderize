@@ -1,5 +1,4 @@
 import React from "react";
-import { Disclosure } from "@headlessui/react";
 import { BellIcon } from "@heroicons/react/24/outline";
 
 // interface NotificationButtonProps {

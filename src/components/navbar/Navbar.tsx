@@ -1,8 +1,5 @@
 import React from "react";
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { PropsWithChildren } from "../../types/interfaces";
+import { Disclosure } from "@headlessui/react";
 import MenuButtonMobile from "./MenuButtonMobile";
 import MenuDropdownMobile from "./MenuDropdownMobile";
 import NotificationButton from "./logged-in/NotificationButton";

@@ -1,4 +1,3 @@
-import { Dialog } from "@headlessui/react";
 import LockClosedIcon from "@heroicons/react/24/outline/LockClosedIcon";
 import React, { useState } from "react";
 import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
