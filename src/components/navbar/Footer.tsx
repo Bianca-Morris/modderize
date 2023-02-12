@@ -15,7 +15,9 @@ const FooterSection: React.FC<FooterSectionProps> = ({ children, title }) => {
 	return (
 		<div className="flex-1 p-3 flex justify-content-center">
 			<div className="p-4 w-full">
-				<h5 className="font-bold text-xl mb-4">{title}</h5>
+				<h5 className="font-bold text-xl mb-4 text-gray-100">
+					{title}
+				</h5>
 				<hr className="mb-3" />
 				{children}
 			</div>
@@ -26,7 +28,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ children, title }) => {
 const Footer: React.FC = () => {
 	return (
 		<React.Fragment>
-			<div className="bg-gray-900">
+			<div className="bg-gray-900 text-gray-300">
 				<div className="flex">
 					<FooterSection title="Links">
 						<ul>
@@ -53,7 +55,7 @@ const Footer: React.FC = () => {
 					</FooterSection>
 				</div>
 			</div>
-			<div className="w-full flex items-center justify-center">
+			<div className="w-full flex items-center justify-center bg-gray-800 text-gray-200">
 				Made with
 				<div className="mx-2">
 					<HeartIcon className="h-4 w-4 my-4" />
