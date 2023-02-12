@@ -55,12 +55,18 @@ const Footer: React.FC = () => {
 					</FooterSection>
 				</div>
 			</div>
-			<div className="w-full flex items-center justify-center bg-gray-800 text-gray-200">
+			<div className="w-full flex items-center justify-center bg-gray-800 text-gray-200 text-sm">
 				Made with
 				<div className="mx-2">
 					<HeartIcon className="h-4 w-4 my-4" />
 				</div>
-				by Bianca Morris
+				by
+				<a
+					className="ml-1 underline text-violet-300"
+					href="https://www.biancamorris.com"
+				>
+					Bianca Morris
+				</a>
 			</div>
 		</React.Fragment>
 	);
