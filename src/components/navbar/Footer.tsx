@@ -47,10 +47,10 @@ const Footer: React.FC = () => {
 					</FooterSection>
 					<FooterSection title="About">
 						<p>
-							Next.js, created by Vercel, is an open-source
-							JavaScript framework designed to let developers
-							create dynamic and static web applications and
-							websites that are fast and user-friendly.
+							Lorem ipsum dolor sit amet. Sit excepturi internos
+							At rerum deserunt non ipsum repellendus tempore non
+							eligendi. Sed numquam adipisci qui voluptatem
+							quibusdam ut enim maxime.
 						</p>
 					</FooterSection>
 				</div>
