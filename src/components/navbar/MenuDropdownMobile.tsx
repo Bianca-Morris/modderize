@@ -1,14 +1,15 @@
 import React from "react";
 import { Disclosure } from "@headlessui/react";
 import SearchBar from "./SearchBar";
+import { classNames } from "../../helpers";
+import GamesDropdown from "./logged-out/GamesDropdown";
 
 interface MenuDropdownMobileProps {
 	navigation;
-	classNames;
 }
 
 const MenuDropdownMobile: React.FC<MenuDropdownMobileProps> = (props) => {
-	const { navigation = [], classNames } = props;
+	const { navigation = [] } = props;
 	return (
 		<div className="space-y-1 px-2 pt-2 pb-3">
 			{navigation.map((item) => (
@@ -27,6 +28,7 @@ const MenuDropdownMobile: React.FC<MenuDropdownMobileProps> = (props) => {
 					{item.name}
 				</Disclosure.Button>
 			))}
+			<GamesDropdown />
 			<SearchBar visibleOnDesktop={false} />
 		</div>
 	);

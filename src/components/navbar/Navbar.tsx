@@ -9,15 +9,11 @@ import AuthButton from "./logged-out/AuthButton";
 import AuthModal from "./logged-out/AuthModal";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
+import { classNames } from "../../helpers";
+import GamesDropdown from "./logged-out/GamesDropdown";
+import AddGameModal from "./logged-out/AddGameModal";
 
-const navigation = [
-	{ name: "About", href: "#", current: false },
-	{ name: "Browse", href: "#", current: false }
-];
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(" ");
-}
+const navigation = [{ name: "About", href: "#", current: false }];
 
 const Navbar: React.FC = () => {
 	const [user, loading, error] = useAuthState(auth);
@@ -54,6 +50,7 @@ const Navbar: React.FC = () => {
 												{item.name}
 											</a>
 										))}
+										<GamesDropdown />
 									</div>
 								</div>
 							</div>
@@ -62,18 +59,19 @@ const Navbar: React.FC = () => {
 								{user ? (
 									<>
 										<NotificationButton />
-										<UserMenuButton {...{ classNames }} />
+										<UserMenuButton />
 									</>
 								) : (
 									<AuthButton />
 								)}
 								<AuthModal />
+								<AddGameModal />
 							</div>
 						</div>
 					</div>
 
 					<Disclosure.Panel className="sm:hidden">
-						<MenuDropdownMobile {...{ navigation, classNames }} />
+						<MenuDropdownMobile {...{ navigation }} />
 					</Disclosure.Panel>
 				</>
 			)}

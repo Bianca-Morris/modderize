@@ -7,3 +7,8 @@ export function validateEmail(email) {
 		return false;
 	}
 }
+
+// Takes in a bunch of class names as strings and creates a single string for tailwind
+export function classNames(...classes) {
+	return classes.filter(Boolean).join(" ");
+}

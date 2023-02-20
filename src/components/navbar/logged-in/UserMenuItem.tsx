@@ -1,8 +1,8 @@
 import React, { MouseEventHandler } from "react";
 import { Menu } from "@headlessui/react";
+import { classNames } from "../../../helpers";
 
 interface UserMenuItemProps {
-	classNames;
 	active?: boolean;
 	title: string;
 	href?: string;
@@ -10,7 +10,7 @@ interface UserMenuItemProps {
 }
 
 const UserMenuItem: React.FC<UserMenuItemProps> = (props) => {
-	const { classNames, active, title, href, onClick } = props;
+	const { active, title, href, onClick } = props;
 	return (
 		<Menu.Item>
 			<a

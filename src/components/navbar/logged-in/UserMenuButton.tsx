@@ -12,13 +12,10 @@ const navigation = [
 	{ title: "Sign Out", href: undefined, onClick: () => signOut(auth) }
 ];
 
-interface UserMenuButtonProps {
-	// open: boolean;
-	classNames;
-}
+interface UserMenuButtonProps {}
 
 const UserMenuButton: React.FC<UserMenuButtonProps> = (props) => {
-	const { classNames } = props;
+	const {} = props;
 	return (
 		<Menu as="div" className="relative ml-3">
 			<div>
@@ -43,11 +40,7 @@ const UserMenuButton: React.FC<UserMenuButtonProps> = (props) => {
 			>
 				<Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 					{navigation.map((item) => (
-						<UserMenuItem
-							key={item?.title}
-							{...item}
-							{...{ classNames }}
-						/>
+						<UserMenuItem key={item?.title} {...item} />
 					))}
 				</Menu.Items>
 			</Transition>
