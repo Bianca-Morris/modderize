@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { addDoc, collection } from "@firebase/firestore";
+import { User } from "firebase/auth";
 
 import { validateEmail } from "../../../helpers";
-import { auth } from "../../../firebase/clientApp";
+import { auth, firestore } from "../../../firebase/clientApp";
 import Button from "../../basic/Button";
 import Input from "../../basic/Input";
 import OAuthGoogleButton from "./OAuthGoogleButton";
@@ -23,7 +25,7 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 	const { email, password, password2 } = registerForm;
 	const [error, setError] = useState("");
 
-	const [createUserWithEmailAndPassword, user, loading, firebaseError] =
+	const [createUserWithEmailAndPassword, userCred, loading, firebaseError] =
 		useCreateUserWithEmailAndPassword(auth);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -47,12 +49,8 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 			return;
 		}
 
-		// TODO: Do some salt/hashing of passwords before sending
-
+		// NOTE: Salting/hashing of passwords is done by Firebase before sending
 		createUserWithEmailAndPassword(email, password);
-		console.log("user", user);
-
-		// TODO: Set short timeout & then trigger navigation to Login section
 	};
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +62,24 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 			[name]: value
 		}));
 	};
+
+	// NOTE: This is a non-standard approach to adding properties to user doc; better solution
+	// is to use Firebase Cloud Functions -- did not want to add CC info to FB.
+	// Similar code in OAuthGoogleButton
+	const createUserDocument = async (user: User) => {
+		// Prevent bug with second+ submissions by parse/stringifying
+		const cleanUser = JSON.parse(JSON.stringify(user));
+
+		// Add user object to the db
+		await addDoc(collection(firestore, "users"), cleanUser);
+	};
+
+	useEffect(() => {
+		if (userCred) {
+			const { user } = userCred;
+			createUserDocument(user);
+		}
+	}, [userCred]);
 
 	return (
 		<form onSubmit={onSubmit}>
