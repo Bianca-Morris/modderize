@@ -1,10 +1,17 @@
-import { doc, getDoc, serverTimestamp, setDoc } from "@firebase/firestore";
+import {
+	doc,
+	getDoc,
+	runTransaction,
+	serverTimestamp,
+	setDoc
+} from "@firebase/firestore";
 import { Transition, Dialog } from "@headlessui/react";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
 import { gameModalState } from "../../../atoms/gameModalAtom";
 import { auth, firestore } from "../../../firebase/clientApp";
+import Button from "../../basic/Button";
 import Input from "../../basic/Input";
 
 type AddGameModalProps = {};
@@ -43,8 +50,6 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 			open: false
 		});
 	};
-
-	const cancelButtonRef = useRef(null);
 
 	const handleChangeDisplayName = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -90,21 +95,35 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 		try {
 			// If valid ID, create the community
 			const gameDocRef = doc(firestore, "games", gameID);
-			const gameDoc = await getDoc(gameDocRef);
 
-			if (gameDoc.exists()) {
-				// Has already been created
-				throw new Error(
-					"This game ID already exists; check for duplicates and/or try again."
+			// Batching a few operations so if one fails, they fail together.
+			await runTransaction(firestore, async (transaction) => {
+				// Check if the game's ID is already in the db
+				const gameDoc = await transaction.get(gameDocRef);
+
+				if (gameDoc.exists()) {
+					// Has already been created
+					throw new Error(
+						"This game ID already exists; check for duplicates and/or try again."
+					);
+				}
+
+				// Create a new game doc in firestore with this ID
+				await transaction.set(gameDocRef, {
+					creatorID: user?.uid,
+					createdAt: serverTimestamp(),
+					displayName: gameDisplayName,
+					numberOfPlayers: 1
+				});
+
+				// Then, create a snippet with some info about the games a user is following
+				transaction.set(
+					doc(firestore, `users/${user?.uid}/gameSnippets`, gameID),
+					{
+						gameID,
+						gameName: gameDisplayName
+					}
 				);
-			}
-
-			// Create the community document in firebase
-			await setDoc(gameDocRef, {
-				creatorID: user?.uid,
-				createdAt: serverTimestamp(),
-				displayName: gameDisplayName,
-				numberOfPlayers: 1
 			});
 
 			console.log("Game created! Closing modal");
@@ -123,7 +142,7 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 			<Dialog
 				as="div"
 				className="relative z-10"
-				initialFocus={cancelButtonRef}
+				// initialFocus={nameInputRef} TODO: Maybe set in future
 				onClose={handleClose}
 			>
 				<Transition.Child
@@ -236,21 +255,21 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 									</div>
 								</div>
 								<div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:justify-end sm:px-6">
-									<button
+									<Button
 										type="button"
-										className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
 										onClick={handleClose}
+										variant="red"
 									>
 										Cancel
-									</button>
-									<button
+									</Button>
+									<Button
 										type="button"
-										className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+										cls="ml-2"
 										onClick={handleCreateGame}
-										ref={cancelButtonRef}
+										variant="gray"
 									>
 										Add New Game
-									</button>
+									</Button>
 								</div>
 							</Dialog.Panel>
 						</Transition.Child>
