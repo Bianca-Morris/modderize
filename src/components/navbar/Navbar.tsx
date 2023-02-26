@@ -13,7 +13,7 @@ import { classNames } from "../../helpers";
 import GamesDropdown from "./logged-out/GamesDropdown";
 import AddGameModal from "./logged-out/AddGameModal";
 
-const navigation = [{ name: "About", href: "#", current: false }];
+const navigation = [{ name: "About", href: "/about", current: false }];
 
 const Navbar: React.FC = () => {
 	const [user, loading, error] = useAuthState(auth);

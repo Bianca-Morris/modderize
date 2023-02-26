@@ -27,8 +27,8 @@ const FooterSection: React.FC<FooterSectionProps> = ({ children, title }) => {
 
 const Footer: React.FC = () => {
 	return (
-		<React.Fragment>
-			<div className="bg-gray-900 text-gray-300">
+		<div className="bg-gray-900 text-gray-300">
+			<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
 				<div className="flex">
 					<FooterSection title="Links">
 						<ul>
@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
 					Bianca Morris
 				</a>
 			</div>
-		</React.Fragment>
+		</div>
 	);
 };
 export default Footer;
