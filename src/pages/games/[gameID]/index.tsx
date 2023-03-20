@@ -68,9 +68,9 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 		<div className="flex min-h-screen flex-col items-center justify-start pb-2">
 			<SimpleHeader>
 				<div className="flex justify-between">
-					<div className="flex text-center flex-col text-3xl">
+					<div className="flex flex-col text-3xl">
 						<h1>{displayName}</h1>
-						{user && (
+						{user && !isGameFavorited && (
 							<Button
 								type="button"
 								variant="gray"
@@ -85,6 +85,23 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 							>
 								<HeartIcon className="w-5 h-5 mr-3" />
 								Favorite This Game
+							</Button>
+						)}
+						{user && isGameFavorited && (
+							<Button
+								type="button"
+								variant="grayOutline2"
+								cls="mt-3"
+								onClick={() =>
+									onToggleGameFavoriteStatus(
+										gameData,
+										isGameFavorited
+									)
+								}
+								loading={loading}
+							>
+								<HeartIcon className="w-5 h-5 mr-3" />
+								Un-Favorite This Game
 							</Button>
 						)}
 					</div>

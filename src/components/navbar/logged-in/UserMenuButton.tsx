@@ -5,17 +5,28 @@ import UserMenuItem from "./UserMenuItem";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { signOut } from "@firebase/auth";
 import { auth } from "../../../firebase/clientApp";
+import { User } from "firebase/auth";
+import { useResetRecoilState } from "recoil";
+import { gameState } from "../../../atoms/gamesAtom";
 
 const navigation = [
 	{ title: "My Profile", href: "#" },
-	{ title: "Settings", href: "#" },
-	{ title: "Sign Out", href: undefined, onClick: () => signOut(auth) }
+	{ title: "Settings", href: "#" }
+	// Sign Out link is defined outside of map because it has a method that needs recoil state from UserMenuButton
 ];
 
 interface UserMenuButtonProps {}
 
-const UserMenuButton: React.FC<UserMenuButtonProps> = (props) => {
-	const {} = props;
+const UserMenuButton: React.FC<UserMenuButtonProps> = () => {
+	const resetGameState = useResetRecoilState(gameState);
+
+	const logout = async () => {
+		await signOut(auth);
+
+		// once logout is complete, reset state for that user
+		resetGameState();
+	};
+
 	return (
 		<Menu as="div" className="relative ml-3">
 			<div>
@@ -42,6 +53,13 @@ const UserMenuButton: React.FC<UserMenuButtonProps> = (props) => {
 					{navigation.map((item) => (
 						<UserMenuItem key={item?.title} {...item} />
 					))}
+					<UserMenuItem
+						{...{
+							title: "Sign Out",
+							href: undefined,
+							onClick: logout
+						}}
+					/>
 				</Menu.Items>
 			</Transition>
 		</Menu>

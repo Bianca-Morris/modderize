@@ -15,7 +15,9 @@ const COLOR_VARIANTS = {
 	gray: "bg-gray-500 hover:bg-gray-400 text-white" + WITHOUT_OUTLINE,
 	grayOutline:
 		"bg-transparent text-gray-900 border-gray-300 hover:border-gray-200" +
-		WITH_OUTLINE
+		WITH_OUTLINE,
+	grayOutline2:
+		"bg-transparent text-white text-gray-400 border-gray-500 hover:border-gray-400 border-2 px-4 py-1"
 };
 
 interface ButtonProps extends PropsWithChildren {
@@ -28,6 +30,7 @@ interface ButtonProps extends PropsWithChildren {
 	// | "white"
 	// | "slate"
 	| "grayOutline"
+		| "grayOutline2"
 		| "gray"
 		// | "zinc"
 		// | "neutral"
