@@ -5,14 +5,16 @@ import { doc, getDoc } from "@firebase/firestore";
 import { GetServerSidePropsContext } from "next";
 import { Head } from "next/document";
 import React from "react";
-import { firestore } from "../../../firebase/clientApp";
+import { auth, firestore } from "../../../firebase/clientApp";
 import safeJsonStringify from "safe-json-stringify";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import { Game } from "../../../types/docTypes";
 import Button from "../../../components/basic/Button";
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import { HeartIcon, PlusIcon, WrenchIcon } from "@heroicons/react/20/solid";
 import ModRequest from "../../../components/general/ModRequest";
+import useGameData from "../../../hooks/useGameData";
 
 type GamePageProps = {
 	gameData: Game;
@@ -53,7 +55,14 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 		);
 	}
 
+	const [user] = useAuthState(auth);
 	const { id: gameID, displayName, numberOfPlayers } = gameData;
+	const { gameStateValue, onToggleGameFavoriteStatus, loading } =
+		useGameData();
+
+	const isGameFavorited = !!gameStateValue.mySnippets.find(
+		(item) => item.gameID === gameID
+	);
 
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-start pb-2">
@@ -61,16 +70,35 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 				<div className="flex justify-between">
 					<div className="flex text-center flex-col text-3xl">
 						<h1>{displayName}</h1>
-						<Button type="button" variant="gray" cls="mt-3">
-							<HeartIcon className="w-5 h-5 mr-3" />
-							Favorite This Game
-						</Button>
+						{user && (
+							<Button
+								type="button"
+								variant="gray"
+								cls="mt-3"
+								onClick={() =>
+									onToggleGameFavoriteStatus(
+										gameData,
+										isGameFavorited
+									)
+								}
+								loading={loading}
+							>
+								<HeartIcon className="w-5 h-5 mr-3" />
+								Favorite This Game
+							</Button>
+						)}
 					</div>
 					<div className="flex items-center">
-						<Button type="button" variant="violet" cls="max-h-10">
-							<PlusIcon className="w-5 h-5 mr-3" />
-							Open New Mod Request
-						</Button>
+						{user && (
+							<Button
+								type="button"
+								variant="violet"
+								cls="max-h-10"
+							>
+								<PlusIcon className="w-5 h-5 mr-3" />
+								Open New Mod Request
+							</Button>
+						)}
 					</div>
 				</div>
 			</SimpleHeader>
