@@ -1,6 +1,5 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { HeartIcon } from "@heroicons/react/24/outline";
-import { PropsWithChildren } from "../../types/interfaces";
 
 const navigation = [
 	{ name: "Privacy Policy", href: "#" },

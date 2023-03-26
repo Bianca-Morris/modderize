@@ -1,7 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, PropsWithChildren } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { PropsWithChildren } from "../../types/interfaces";
 
 interface DropdownProps extends PropsWithChildren {
 	title: string;

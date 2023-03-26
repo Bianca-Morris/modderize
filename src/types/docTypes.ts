@@ -9,21 +9,6 @@ export interface Game {
     imageURL?: string;
 }
 
-// export interface ModRequest {
-//     id: string;
-//     title: string;
-//     description: string;
-//     likes: Number;
-//     dislikes: Number;
-//     requesterId: string;
-//     modderId?: string;
-//     gameId: string;
-//     completionStatus: "pending modder" | "accepted" | "in progress" | "complete" | "archived";
-//     createdAt?: Timestamp;
-//     lastModified?: Timestamp;
-//     imageURL?: string;
-// }
-
 export type ModRequest = {
     id: string;
     gameID: string;

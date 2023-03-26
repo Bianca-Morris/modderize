@@ -93,7 +93,7 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 		setLoading(true);
 
 		try {
-			// If valid ID, create the community
+			// If valid ID, create the game community
 			const gameDocRef = doc(firestore, "games", gameID);
 
 			// Batching a few operations so if one fails, they fail together.
