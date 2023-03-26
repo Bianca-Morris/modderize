@@ -10,7 +10,7 @@ export interface Game {
 }
 
 export type ModRequest = {
-    id: string;
+    id?: string;    // ID gets populated by firebase
     gameID: string;
     title: string;
     description: string;
@@ -26,8 +26,6 @@ export type ModRequest = {
     modderID?: string;
 
     voteStatus: number;
-    numUpvotes: number;
-    numDownvotes: number;
 
     imageURL?: string;
 }
