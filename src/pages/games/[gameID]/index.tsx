@@ -15,6 +15,8 @@ import SimpleHeader from "../../../components/general/SimpleHeader";
 import { HeartIcon, PlusIcon, WrenchIcon } from "@heroicons/react/20/solid";
 import ModRequest from "../../../components/general/ModRequest";
 import useGameData from "../../../hooks/useGameData";
+import { useRouter } from "next/router";
+import ContentBody from "../../../components/layout/ContentBody";
 
 type GamePageProps = {
 	gameData: Game;
@@ -56,6 +58,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 	}
 
 	const [user] = useAuthState(auth);
+	const router = useRouter();
 	const { id: gameID, displayName, numberOfPlayers } = gameData;
 	const { gameStateValue, onToggleGameFavoriteStatus, loading } =
 		useGameData();
@@ -64,62 +67,70 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 		(item) => item.gameID === gameID
 	);
 
+	const onClickCreateNewModRequest = () => {
+		const { gameID } = router.query;
+		router.push(`/games/${gameID}/requestMod`);
+	};
+
 	return (
-		<div className="flex min-h-screen flex-col items-center justify-start pb-2">
-			<SimpleHeader>
-				<div className="flex justify-between">
-					<div className="flex flex-col text-3xl">
-						<h1>{displayName}</h1>
-						{user && !isGameFavorited && (
-							<Button
-								type="button"
-								variant="gray"
-								cls="mt-3"
-								onClick={() =>
-									onToggleGameFavoriteStatus(
-										gameData,
-										isGameFavorited
-									)
-								}
-								loading={loading}
-							>
-								<HeartIcon className="w-5 h-5 mr-3" />
-								Favorite This Game
-							</Button>
-						)}
-						{user && isGameFavorited && (
-							<Button
-								type="button"
-								variant="grayOutline2"
-								cls="mt-3"
-								onClick={() =>
-									onToggleGameFavoriteStatus(
-										gameData,
-										isGameFavorited
-									)
-								}
-								loading={loading}
-							>
-								<HeartIcon className="w-5 h-5 mr-3" />
-								Un-Favorite This Game
-							</Button>
-						)}
+		<ContentBody>
+			<>
+				<SimpleHeader>
+					<div className="flex justify-between">
+						<div className="flex flex-col text-3xl">
+							<h1>{displayName}</h1>
+							{user && !isGameFavorited && (
+								<Button
+									type="button"
+									variant="gray"
+									cls="mt-3"
+									onClick={() =>
+										onToggleGameFavoriteStatus(
+											gameData,
+											isGameFavorited
+										)
+									}
+									loading={loading}
+								>
+									<HeartIcon className="w-5 h-5 mr-3" />
+									Favorite This Game
+								</Button>
+							)}
+							{user && isGameFavorited && (
+								<Button
+									type="button"
+									variant="grayOutline2"
+									cls="mt-3"
+									onClick={() =>
+										onToggleGameFavoriteStatus(
+											gameData,
+											isGameFavorited
+										)
+									}
+									loading={loading}
+								>
+									<HeartIcon className="w-5 h-5 mr-3" />
+									Un-Favorite This Game
+								</Button>
+							)}
+						</div>
+						<div className="flex items-center">
+							{user && (
+								<Button
+									type="button"
+									variant="violet"
+									cls="max-h-10"
+									onClick={onClickCreateNewModRequest}
+								>
+									<PlusIcon className="w-5 h-5 mr-3" />
+									Open New Mod Request
+								</Button>
+							)}
+						</div>
 					</div>
-					<div className="flex items-center">
-						{user && (
-							<Button
-								type="button"
-								variant="violet"
-								cls="max-h-10"
-							>
-								<PlusIcon className="w-5 h-5 mr-3" />
-								Open New Mod Request
-							</Button>
-						)}
-					</div>
-				</div>
-			</SimpleHeader>
-			<div className="w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
+				</SimpleHeader>
+			</>
+			<>
 				<div className="flex flex-col flex-auto mt-10">
 					<h2 className="text-2xl font-bold mb-4">
 						Newest Mod Requests
@@ -234,8 +245,8 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</>
+		</ContentBody>
 	);
 };
 

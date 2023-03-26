@@ -99,7 +99,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 							<span className="ml-1">{`{January 3rd, 2022}`}</span>
 						</div>
 						<div>
-							<strong>Mod Descrtiption:</strong>
+							<strong>Mod Description:</strong>
 							<div></div>
 						</div>
 						<p>

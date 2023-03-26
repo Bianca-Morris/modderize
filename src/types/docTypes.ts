@@ -9,17 +9,40 @@ export interface Game {
     imageURL?: string;
 }
 
-export interface ModRequest {
+// export interface ModRequest {
+//     id: string;
+//     title: string;
+//     description: string;
+//     likes: Number;
+//     dislikes: Number;
+//     requesterId: string;
+//     modderId?: string;
+//     gameId: string;
+//     completionStatus: "pending modder" | "accepted" | "in progress" | "complete" | "archived";
+//     createdAt?: Timestamp;
+//     lastModified?: Timestamp;
+//     imageURL?: string;
+// }
+
+export type ModRequest = {
     id: string;
+    gameID: string;
     title: string;
     description: string;
-    likes: Number;
-    dislikes: Number;
-    requesterId: string;
-    modderId?: string;
-    gameId: string;
-    completionStatus: "pending modder" | "accepted" | "in progress" | "complete" | "archived";
-    createdAt?: Timestamp;
-    lastModified?: Timestamp;
+    creationDate: Timestamp;
+
+    requesterID: string;
+    requesterDisplayName: string;
+
+    lastModified: Timestamp;
+    completionStatus: "pending modder" | "in progress" | "complete" | "archived";
+
+    modderStatus: "requested" | "accepted" | "open";
+    modderID?: string;
+
+    voteStatus: number;
+    numUpvotes: number;
+    numDownvotes: number;
+
     imageURL?: string;
 }

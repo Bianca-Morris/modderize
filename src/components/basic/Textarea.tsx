@@ -1,19 +1,18 @@
 import React from "react";
 
-type InputProps = {
-	type: "text" | "password";
+type TextareaProps = {
 	id: string;
 	name: string;
 	placeholder: string;
-	onChange: React.ChangeEventHandler<HTMLInputElement>;
+	onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
 	value?: string;
 	required?: boolean;
 	cls?: string;
 	wrapperCls?: string;
+	rows?: number;
 };
 
-const Input: React.FC<InputProps> = ({
-	type,
+const Textarea: React.FC<TextareaProps> = ({
 	placeholder,
 	name,
 	id,
@@ -21,18 +20,27 @@ const Input: React.FC<InputProps> = ({
 	value,
 	required,
 	cls,
-	wrapperCls
+	wrapperCls,
+	rows
 }) => {
 	return (
 		<div className={"relative mt-1 rounded-md shadow-sm " + wrapperCls}>
-			<input
+			<textarea
 				className={
 					"placeholder:text-gray-400 block w-full rounded-md border-gray-300 px-5 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm " +
 					cls
 				}
-				{...{ value, onChange, name, id, type, placeholder, required }}
+				{...{
+					rows,
+					value,
+					onChange,
+					name,
+					id,
+					placeholder,
+					required
+				}}
 			/>
 		</div>
 	);
 };
-export default Input;
+export default Textarea;
