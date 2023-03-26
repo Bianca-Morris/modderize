@@ -17,6 +17,7 @@ import ModRequest from "../../../components/general/ModRequest";
 import useGameData from "../../../hooks/useGameData";
 import { useRouter } from "next/router";
 import ContentBody from "../../../components/layout/ContentBody";
+import GameModRequests from "../../../components/general/GameModRequests";
 
 type GamePageProps = {
 	gameData: Game;
@@ -135,63 +136,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 					<h2 className="text-2xl font-bold mb-4">
 						Newest Mod Requests
 					</h2>
-					<div className="flex flex-col gap-3">
-						<ModRequest
-							numUpvotes={1}
-							numDownvotes={0}
-							title="A Very Hardcore Difficulty Mod"
-							subTitle={
-								<div>
-									<span className="font-medium mr-1">
-										Requested By:
-									</span>
-									CoolGirl54
-								</div>
-							}
-						/>
-						<ModRequest
-							numUpvotes={0}
-							numDownvotes={0}
-							title="Another Exciting Mod"
-							subTitle={
-								<div>
-									<span className="font-medium mr-1">
-										Requested By:
-									</span>
-									SomeoneOnTheInterwebz
-								</div>
-							}
-						/>
-						<ModRequest
-							numUpvotes={4}
-							numDownvotes={1}
-							title="Something To Make My Game More Fun"
-							subTitle={
-								<div>
-									<span className="font-medium mr-1">
-										Requested By:
-									</span>
-									FancyBoi222
-								</div>
-							}
-						/>
-						<ModRequest
-							numUpvotes={12}
-							numDownvotes={1}
-							title="Mo Vampires, Mo Problems"
-							subTitle={
-								<div>
-									<span className="font-medium mr-1">
-										Requested By:
-									</span>
-									VaMpIreL@d
-								</div>
-							}
-						/>
-						<Button type="button" variant="violet" cls="mt-4">
-							View All Mods for {displayName}
-						</Button>
-					</div>
+					<GameModRequests {...{ gameData }} userID={user?.uid} />
 				</div>
 
 				<div className="flex flex-1 flex-col mt-10 gap-3">
