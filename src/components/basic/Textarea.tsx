@@ -7,6 +7,7 @@ type TextareaProps = {
 	onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
 	value?: string;
 	required?: boolean;
+	disabled?: boolean;
 	cls?: string;
 	wrapperCls?: string;
 	rows?: number;
@@ -19,6 +20,7 @@ const Textarea: React.FC<TextareaProps> = ({
 	onChange,
 	value,
 	required,
+	disabled,
 	cls,
 	wrapperCls,
 	rows
@@ -37,7 +39,8 @@ const Textarea: React.FC<TextareaProps> = ({
 					name,
 					id,
 					placeholder,
-					required
+					required,
+					disabled
 				}}
 			/>
 		</div>
