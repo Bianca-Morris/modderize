@@ -1,8 +1,11 @@
 import {
 	collection,
 	doc,
+	getCountFromServer,
 	getDocs,
 	increment,
+	query,
+	where,
 	writeBatch
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -58,6 +61,13 @@ const useGameData = () => {
 		}
 
 		setLoading(false);
+	};
+
+	const getModRequestsForGameCount = async (gameID: string) => {
+		const coll = collection(firestore, "modRequests");
+		const q = query(coll, where("gameID", "==", gameID));
+		const snapshot = await getCountFromServer(q);
+		return snapshot.data().count;
 	};
 
 	const favoriteGame = async (gameData: Game) => {
@@ -139,6 +149,7 @@ const useGameData = () => {
 	return {
 		gameStateValue,
 		onToggleGameFavoriteStatus,
+		getModRequestsForGameCount,
 		loading
 	};
 };

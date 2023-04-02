@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { Game } from "../types/docTypes";
 
 /**
  * Make accessible snippet data about the user's followed games
@@ -11,6 +12,7 @@ export interface GameSnippet {
 
 interface GameState {
     mySnippets: GameSnippet[];
+    currentGame?: Game;
     // viewedGames
 }
 

@@ -4,7 +4,7 @@
 import { doc, getDoc } from "@firebase/firestore";
 import { GetServerSidePropsContext } from "next";
 import { Head } from "next/document";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { auth, firestore } from "../../../firebase/clientApp";
 import safeJsonStringify from "safe-json-stringify";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -18,6 +18,8 @@ import useGameData from "../../../hooks/useGameData";
 import { useRouter } from "next/router";
 import ContentBody from "../../../components/layout/ContentBody";
 import GameModRequests from "../../../components/general/GameModRequests";
+import { useSetRecoilState } from "recoil";
+import { gameState } from "../../../atoms/gamesAtom";
 
 type GamePageProps = {
 	gameData: Game;
@@ -58,11 +60,18 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 		);
 	}
 
+	const [modRequestCount, setModRequestCount] = useState(0);
 	const [user] = useAuthState(auth);
+	const setGameStateValue = useSetRecoilState(gameState);
+
 	const router = useRouter();
 	const { id: gameID, displayName, numberOfPlayers } = gameData;
-	const { gameStateValue, onToggleGameFavoriteStatus, loading } =
-		useGameData();
+	const {
+		gameStateValue,
+		onToggleGameFavoriteStatus,
+		loading,
+		getModRequestsForGameCount
+	} = useGameData();
 
 	const isGameFavorited = !!gameStateValue.mySnippets.find(
 		(item) => item.gameID === gameID
@@ -72,6 +81,27 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 		const { gameID } = router.query;
 		router.push(`/games/${gameID}/requestMod`);
 	};
+
+	// On page load
+	useEffect(() => {
+		// Set the current game to this one in recoil state
+		setGameStateValue((prev) => ({
+			...prev,
+			currentGame: gameData
+		}));
+
+		// Grab the count of game mods available for this game and store in state
+		getModRequestsForGameCount(gameID)
+			.then((count) => {
+				setModRequestCount(count);
+			})
+			.catch((err) => {
+				console.log(
+					`Error getting count of mods for ${displayName}: `,
+					err
+				);
+			});
+	}, []);
 
 	return (
 		<ContentBody>
@@ -157,12 +187,12 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 								<strong className="inline-block">
 									Total Mod Count:
 								</strong>
-								<span className="ml-2">4</span>
+								<span className="ml-2">{modRequestCount}</span>
 							</div>
 						</div>
 					</div>
 
-					<div>
+					{/* <div>
 						<h3 className="text-xl font-bold bg-gray-200 p-4">
 							Most Active Modders
 						</h3>
@@ -188,7 +218,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 								</li>
 							</ol>
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</>
 		</ContentBody>
