@@ -6,18 +6,24 @@ const useModRequests = () => {
 	const [modRequestStateValue, setModRequestStateValue] =
 		useRecoilState(modRequestState);
 
-	const onVote = async () => {};
+	const onVote = async () => {
+		// TODO
+	};
 
-	const onSelectModRequest = async () => {};
+	const onSelectModRequest = () => {
+		// TODO
+	};
 
-	const onDeletePost = async () => {};
+	const onDeleteModRequest = async () => {
+		// TODO
+	};
 
 	return {
 		modRequestStateValue,
 		setModRequestStateValue,
 		onVote,
 		onSelectModRequest,
-		onDeletePost
+		onDeleteModRequest
 	};
 };
 

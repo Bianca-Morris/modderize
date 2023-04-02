@@ -1,10 +1,12 @@
 import { collection, orderBy, where, query, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { firestore } from "../../firebase/clientApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, firestore } from "../../firebase/clientApp";
 import useModRequests from "../../hooks/useModRequests";
 import { Game, ModRequest as ModRequestType } from "../../types/docTypes";
 import Button from "../basic/Button";
 import ModRequest from "./ModRequest";
+import ModRequestLoader from "./ModRequestLoader";
 
 type GameModRequestsProps = {
 	gameData: Game;
@@ -16,9 +18,15 @@ const GameModRequests: React.FC<GameModRequestsProps> = ({
 	userID
 }) => {
 	const [loading, setLoading] = useState(false);
-	const { modRequestStateValue, setModRequestStateValue } = useModRequests();
-	const { modRequests = [] } = modRequestStateValue;
+	const {
+		modRequestStateValue,
+		setModRequestStateValue,
+		onVote,
+		onDeleteModRequest,
+		onSelectModRequest
+	} = useModRequests();
 
+	const { modRequests: currModRequests = [] } = modRequestStateValue;
 	const { displayName: gameName, id: gameID } = gameData;
 
 	const getModRequests = async () => {
@@ -60,13 +68,22 @@ const GameModRequests: React.FC<GameModRequestsProps> = ({
 
 	return (
 		<div className="flex flex-col gap-3">
-			{modRequests.length === 0 && <div>No Mod Requests available</div>}
-			{modRequests.map((mr) => {
-				const { id, title, requesterDisplayName } = mr;
+			{loading && <ModRequestLoader />}
+			{!loading && currModRequests.length === 0 && (
+				<div>No Mod Requests available</div>
+			)}
+			{currModRequests.map((mr) => {
+				const { id, title, requesterDisplayName, requesterID } = mr;
 				return (
 					<ModRequest
 						key={id}
-						{...{ title }}
+						{...{
+							title,
+							onVote,
+							onDeleteModRequest,
+							onSelectModRequest
+						}}
+						modRequest={mr}
 						subTitle={
 							<div>
 								<span className="font-medium mr-1">
@@ -75,11 +92,13 @@ const GameModRequests: React.FC<GameModRequestsProps> = ({
 								{requesterDisplayName}
 							</div>
 						}
+						userIsCreator={requesterID === userID}
+						userVoteValue={undefined}
 					/>
 				);
 			})}
 
-			{modRequests.length > 0 && (
+			{currModRequests.length > 0 && (
 				<Button type="button" variant="violet" cls="mt-4">
 					View All Mods for {gameName}
 				</Button>
