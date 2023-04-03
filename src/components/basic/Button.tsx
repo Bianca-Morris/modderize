@@ -9,9 +9,9 @@ const WITH_OUTLINE = " border-2 px-3 py-1";
 const COLOR_VARIANTS = {
 	blue: "bg-blue-600 hover:bg-blue-500 text-white" + WITHOUT_OUTLINE,
 	red: "bg-red-500 hover:bg-red-400 text-white" + WITHOUT_OUTLINE,
-	purple: "bg-purple-500 hover:bg-purple-500 text-white" + WITHOUT_OUTLINE,
-	indigo: "bg-indigo-500 hover:bg-indigo-500 text-white" + WITHOUT_OUTLINE,
-	violet: "bg-violet-500 hover:bg-violet-500 text-white" + WITHOUT_OUTLINE,
+	purple: "bg-purple-500 hover:bg-purple-400 text-white" + WITHOUT_OUTLINE,
+	indigo: "bg-indigo-500 hover:bg-indigo-400 text-white" + WITHOUT_OUTLINE,
+	violet: "bg-violet-500 hover:bg-violet-400 text-white" + WITHOUT_OUTLINE,
 	gray: "bg-gray-500 hover:bg-gray-400 text-white" + WITHOUT_OUTLINE,
 	grayOutline:
 		"bg-transparent text-gray-900 border-gray-300 hover:border-gray-200" +
