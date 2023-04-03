@@ -17,11 +17,13 @@ import Textarea from "../basic/Textarea";
 type NewGameModRequestFormProps = {
 	user: User;
 	gameID: string;
+	gameDisplayName: string;
 };
 
 const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 	user,
-	gameID
+	gameID,
+	gameDisplayName
 }) => {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
@@ -33,6 +35,7 @@ const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 		// create the new game mod request object => type ModRequest
 		const newModRequest: ModRequest = {
 			gameID,
+			gameDisplayName,
 			title,
 			description,
 			requesterID: user?.uid,

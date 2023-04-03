@@ -11,7 +11,10 @@ export interface Game {
 
 export type ModRequest = {
     id?: string;    // ID gets populated by firebase
+    
     gameID: string;
+    gameDisplayName?: string;
+
     title: string;
     description: string;
     creationDate: Timestamp;

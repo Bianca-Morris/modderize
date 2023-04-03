@@ -6,6 +6,7 @@ import {
 	HandThumbDownIcon as ThumbDownIconOutline,
 	HandThumbUpIcon as ThumbUpIconOutline
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import React, { ReactElement, useState } from "react";
 import { ModRequest } from "../../types/docTypes";
 
@@ -36,7 +37,7 @@ const ModRequestShort: React.FC<ModRequestShortProps> = ({
 }) => {
 	const [loadingImage, setLoadingImage] = useState(true);
 
-	const { imageURL, completionStatus } = modRequest;
+	const { imageURL, completionStatus, id } = modRequest;
 
 	return (
 		<div className="flex max-w-full rounded border-gray-200 border align-center">
@@ -88,7 +89,7 @@ const ModRequestShort: React.FC<ModRequestShortProps> = ({
 			</div>
 			<div className="flex flex-col justify-center pl-3">
 				<span className="font-bold text-gray-800 leading-5 overflow-clip">
-					{title}
+					<Link href={`/requests/${id}`}>{title}</Link>
 				</span>
 				<span className="text-sm text-gray-700 mw-full">
 					{subTitle}

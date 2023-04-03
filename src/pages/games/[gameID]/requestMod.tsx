@@ -58,7 +58,9 @@ const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
 						</div>
 						<div className="mt-5 md:col-span-2 md:mt-0">
 							{user && (
-								<NewGameModRequestForm {...{ user, gameID }} />
+								<NewGameModRequestForm
+									{...{ user, gameID, gameDisplayName }}
+								/>
 							)}
 						</div>
 					</div>
