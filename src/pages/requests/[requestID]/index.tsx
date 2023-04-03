@@ -12,15 +12,21 @@ import { ModRequest as ModRequestType } from "../../../types/docTypes";
 import Button from "../../../components/basic/Button";
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import {
+	ArchiveBoxIcon,
 	HandThumbDownIcon,
 	HandThumbUpIcon,
 	HeartIcon,
+	PencilIcon,
 	PlusIcon,
 	WrenchIcon
 } from "@heroicons/react/20/solid";
 import CardsSearchResult_Modder from "https://framer.com/m/Cards-SearchResult-Modder-Ziap.js@EuFW80XbgjhlwQZxAi0n";
 import ModRequest from "../../../components/general/ModRequest";
 import Link from "next/link";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 type ModRequestPageProps = {
 	modRequestData?: ModRequestType;
@@ -64,6 +70,8 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 		creationDate
 	} = modRequestData || {};
 
+	const hasBeenModified = lastModified?.seconds !== creationDate?.seconds;
+
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-start pb-2">
 			<SimpleHeader>
@@ -95,10 +103,29 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 									{requesterDisplayName}
 								</Link>
 							</span>
+							<span className="text-sm text-gray-400 pl-1">
+								(
+								{dayjs(
+									new Date(creationDate?.seconds * 1000)
+								).fromNow()}
+								)
+							</span>
 						</div>
+						{hasBeenModified && (
+							<div>
+								<strong>Last Modified:</strong>
+								<span className="ml-1">
+									{dayjs(
+										new Date(lastModified?.seconds * 1000)
+									).fromNow()}
+								</span>
+							</div>
+						)}
 						<div>
-							<strong>Last Modified:</strong>
-							<span className="ml-1"> //TODO</span>
+							<strong>Status:</strong>
+							<span className="ml-1 capitalize">
+								{completionStatus}
+							</span>
 						</div>
 					</div>
 					<div className="flex align-center">
@@ -115,22 +142,47 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 					</div>
 				</div>
 				<hr />
-				<div className="flex flex-auto mt-10 justify-between">
-					<div className="flex flex-col gap-3">
-						<div>
-							<strong>Status:</strong>
-							<span className="ml-1 capitalize">
-								{completionStatus}
-							</span>
-						</div>
+				<div className="flex flex-auto mt-10 justify-between gap-10">
+					<div className="flex flex-col">
 						<div className="max-w-3xl">
-							<h2 className="mb-5 font-bold">Mod Description:</h2>
+							<h2 className="text-xl font-bold mb-5 font-bold">
+								Mod Description:
+							</h2>
 
 							<p className="whitespace-pre-wrap">{description}</p>
 						</div>
 					</div>
-					<div>
-						<CardsSearchResult_Modder />
+					<div className="flex flex-1 flex-col gap-2">
+						<div className="flex flex-col gap-0">
+							<h3 className="text-xl font-bold bg-gray-200 p-4">
+								Modder Info
+							</h3>
+							<div className="border border-gray-200 p-4">
+								<div className="flex w-full items-center justify-center">
+									No modder currently assigned to this
+									project.
+								</div>
+							</div>
+						</div>
+
+						<div className="flex gap-3">
+							<Button
+								type="button"
+								variant="red"
+								cls="flex-1 mt-4 bold"
+							>
+								<ArchiveBoxIcon className="w-4 h-4 mr-3" />
+								Archive Request
+							</Button>
+							<Button
+								type="button"
+								variant="indigo"
+								cls="flex-1 mt-4 bold"
+							>
+								<PencilIcon className="w-4 h-4 mr-3" />
+								Edit Request
+							</Button>
+						</div>
 					</div>
 				</div>
 			</div>
