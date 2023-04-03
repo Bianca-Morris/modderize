@@ -17,8 +17,17 @@ const MyProfile: React.FC<MyProfileProps> = ({ userData }) => {
 				showEdit
 				showRequestMod={false}
 			>
-				<h1>Shenanigans!</h1>
-				<p>100% shenanigans</p>
+				<div className="mb-10">
+					<h2 className="text-2xl font-bold mb-4">
+						My Mods In-Progress
+					</h2>
+					// TODO
+				</div>
+
+				<div className="">
+					<h2 className="text-2xl font-bold mb-4">My Mod Requests</h2>
+					// TODO
+				</div>
 			</GenericProfile>
 		</div>
 	);
