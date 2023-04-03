@@ -20,6 +20,7 @@ import ContentBody from "../../../components/layout/ContentBody";
 import GameModRequests from "../../../components/general/GameModRequests";
 import { useSetRecoilState } from "recoil";
 import { gameState } from "../../../atoms/gamesAtom";
+import useModRequests from "../../../hooks/useModRequests";
 
 type GamePageProps = {
 	gameData: Game;
@@ -63,6 +64,9 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 	const [modRequestCount, setModRequestCount] = useState(0);
 	const [user] = useAuthState(auth);
 	const setGameStateValue = useSetRecoilState(gameState);
+
+	const { modRequestStateValue } = useModRequests();
+	const { modRequests: currModRequests = [] } = modRequestStateValue;
 
 	const router = useRouter();
 	const { id: gameID, displayName, numberOfPlayers } = gameData;
@@ -169,8 +173,8 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 					<GameModRequests {...{ gameData }} userID={user?.uid} />
 				</div>
 
-				<div className="flex flex-1 flex-col mt-10 gap-3">
-					<div className="flex flex-1 flex-col gap-0">
+				<div className="flex flex-1 flex-col mt-10 gap-2">
+					<div className="flex flex-col gap-0">
 						<h3 className="text-xl font-bold bg-gray-200 p-4">
 							Game Info
 						</h3>
@@ -191,6 +195,12 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 							</div>
 						</div>
 					</div>
+
+					{currModRequests.length > 0 && (
+						<Button type="button" variant="violet" cls="mt-4">
+							View All Mods for {displayName}
+						</Button>
+					)}
 
 					{/* <div>
 						<h3 className="text-xl font-bold bg-gray-200 p-4">
