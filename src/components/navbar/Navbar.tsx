@@ -12,6 +12,7 @@ import { auth } from "../../firebase/clientApp";
 import { classNames } from "../../helpers";
 import GamesDropdown from "./logged-out/GamesDropdown";
 import AddGameModal from "./logged-out/AddGameModal";
+import Link from "next/link";
 
 const navigation = [{ name: "About", href: "/about", current: false }];
 
@@ -28,11 +29,11 @@ const Navbar: React.FC = () => {
 								<MenuButtonMobile {...{ open }} />
 							</div>
 							<div className="flex flex-1 items-center justify-start text-white uppercase font-bold">
-								<a href="/">Modderize</a>
+								<Link href="/">Modderize</Link>
 								<div className="hidden sm:ml-6 sm:block">
 									<div className="flex space-x-4">
 										{navigation.map((item) => (
-											<a
+											<Link
 												key={item.name}
 												href={item.href}
 												className={classNames(
@@ -48,7 +49,7 @@ const Navbar: React.FC = () => {
 												}
 											>
 												{item.name}
-											</a>
+											</Link>
 										))}
 										<GamesDropdown />
 									</div>

@@ -8,17 +8,13 @@ import { auth } from "../../../firebase/clientApp";
 import { User } from "firebase/auth";
 import { useResetRecoilState } from "recoil";
 import { gameState } from "../../../atoms/gamesAtom";
-
-const navigation = [
-	{ title: "My Profile", href: "#" },
-	{ title: "Settings", href: "#" }
-	// Sign Out link is defined outside of map because it has a method that needs recoil state from UserMenuButton
-];
+import { useAuthState } from "react-firebase-hooks/auth";
 
 interface UserMenuButtonProps {}
 
 const UserMenuButton: React.FC<UserMenuButtonProps> = () => {
 	const resetGameState = useResetRecoilState(gameState);
+	const [user] = useAuthState(auth);
 
 	const logout = async () => {
 		await signOut(auth);
@@ -26,6 +22,12 @@ const UserMenuButton: React.FC<UserMenuButtonProps> = () => {
 		// once logout is complete, reset state for that user
 		resetGameState();
 	};
+
+	const navigation = [
+		{ title: "My Profile", href: `/users/${user?.uid}` },
+		{ title: "Settings", href: "#" }
+		// Sign Out link is defined outside of map because it has a method that needs recoil state from UserMenuButton
+	];
 
 	return (
 		<Menu as="div" className="relative ml-3">

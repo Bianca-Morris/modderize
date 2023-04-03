@@ -6,6 +6,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useRecoilState } from "recoil";
 
 import { gameModalState as globalGameModalState } from "../../../atoms/gameModalAtom";
+import Link from "next/link";
 
 type GamesDropdownProps = {};
 
@@ -40,7 +41,7 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 			</Menu.Item>
 			<hr />
 			<Menu.Item>
-				<a
+				<Link
 					className={classNames(
 						active
 							? "bg-gray-200 text-gray-900"
@@ -50,7 +51,7 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 					href="/games/TheSims4"
 				>
 					The Sims 4
-				</a>
+				</Link>
 			</Menu.Item>
 		</Dropdown>
 	);

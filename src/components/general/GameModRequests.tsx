@@ -27,7 +27,7 @@ const GameModRequests: React.FC<GameModRequestsProps> = ({
 	} = useModRequests();
 
 	const { modRequests: currModRequests = [] } = modRequestStateValue;
-	const { displayName: gameName, id: gameID } = gameData;
+	const { id: gameID } = gameData;
 
 	const getModRequests = async () => {
 		try {
@@ -97,12 +97,6 @@ const GameModRequests: React.FC<GameModRequestsProps> = ({
 					/>
 				);
 			})}
-
-			{currModRequests.length > 0 && (
-				<Button type="button" variant="violet" cls="mt-4">
-					View All Mods for {gameName}
-				</Button>
-			)}
 		</div>
 	);
 };
