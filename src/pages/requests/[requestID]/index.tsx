@@ -68,28 +68,37 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 		<div className="flex min-h-screen flex-col items-center justify-start pb-2">
 			<SimpleHeader>
 				<div className="flex text-center flex-col text-2xl">
-					<h1>Mod Request</h1>
+					<h1>{title}</h1>
 				</div>
 			</SimpleHeader>
 			<div className="w-full flex-col mt-10 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
 				<div className="flex w-full justify-between py-4">
 					<div>
-						<h2 className="text-3xl font-bold mb-4">{title}</h2>
+						<div>
+							<Link
+								className="underline text-indigo-800 hover:text-indigo-600"
+								href={`/games/${gameID}`}
+							>
+								{gameDisplayName}
+							</Link>
+							&nbsp;&gt;&nbsp;
+							<span className="font-bold">Mod Request</span>
+						</div>
+						<h2 className="text-3xl font-bold mb-4"></h2>
 						<div>
 							<strong>Requested By:</strong>
 							<span className="ml-1">
-								<Link href={`/users/${requesterID}`}>
+								<Link
+									href={`/users/${requesterID}`}
+									className="underline text-indigo-800 hover:text-indigo-600"
+								>
 									{requesterDisplayName}
 								</Link>
 							</span>
 						</div>
 						<div>
-							<strong>Requested for:</strong>
-							<span className="ml-1">
-								<Link href={`/games/${gameID}`}>
-									{gameDisplayName}
-								</Link>
-							</span>
+							<strong>Last Modified:</strong>
+							<span className="ml-1"> //TODO</span>
 						</div>
 					</div>
 					<div className="flex align-center">
@@ -106,7 +115,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 					</div>
 				</div>
 				<hr />
-				<div className="flex flex-auto mt-10">
+				<div className="flex flex-auto mt-10 justify-between">
 					<div className="flex flex-col gap-3">
 						<div>
 							<strong>Status:</strong>
@@ -114,114 +123,16 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 								{completionStatus}
 							</span>
 						</div>
-						<div>
-							<strong>Date Requested:</strong>
-							<span className="ml-1"></span>
+						<div className="max-w-3xl">
+							<h2 className="mb-5 font-bold">Mod Description:</h2>
+
+							<p className="whitespace-pre-wrap">{description}</p>
 						</div>
-						<div>
-							<strong>Last Modified:</strong>
-							<span className="ml-1"></span>
-						</div>
-						<div>
-							<strong>Mod Description:</strong>
-							<div></div>
-						</div>
-						<p className="whitespace-pre-wrap">{description}</p>
 					</div>
 					<div>
 						<CardsSearchResult_Modder />
 					</div>
 				</div>
-
-				{/* <div className="flex flex-col flex-auto my-5">
-					<h3 className="text-xl font-bold p-4">
-						Most Recent Mod Requests for "{`{gameDisplayTitle}`}"
-					</h3>
-					<div className="flex">
-						<div className="flex flex-col w-full">
-							{/* <ModRequest
-								numUpvotes={1}
-								numDownvotes={0}
-								title="A Very Hardcore Difficulty Mod"
-								subTitle={
-									<div>
-										<span className="font-medium mr-1">
-											Requested By:
-										</span>
-										CoolGirl54
-									</div>
-								}
-							/>
-							<ModRequest
-								numUpvotes={0}
-								numDownvotes={0}
-								title="Another Exciting Mod"
-								subTitle={
-									<div>
-										<span className="font-medium mr-1">
-											Requested By:
-										</span>
-										SomeoneOnTheInterwebz
-									</div>
-								}
-							/>
-							<ModRequest
-								numUpvotes={4}
-								numDownvotes={1}
-								title="Something To Make My Game More Fun"
-								subTitle={
-									<div>
-										<span className="font-medium mr-1">
-											Requested By:
-										</span>
-										FancyBoi222
-									</div>
-								}
-							/>
-						</div>
-						<div className="flex flex-col w-full">
-							<ModRequest
-								numUpvotes={12}
-								numDownvotes={1}
-								title="Mo Vampires, Mo Problems"
-								subTitle={
-									<div>
-										<span className="font-medium mr-1">
-											Requested By:
-										</span>
-										VaMpIreL@d
-									</div>
-								}
-							/>
-							<ModRequest
-								numUpvotes={0}
-								numDownvotes={0}
-								title="Another Exciting Mod"
-								subTitle={
-									<div>
-										<span className="font-medium mr-1">
-											Requested By:
-										</span>
-										SomeoneOnTheInterwebz
-									</div>
-								}
-							/>
-							<ModRequest
-								numUpvotes={4}
-								numDownvotes={1}
-								title="Something To Make My Game More Fun"
-								subTitle={
-									<div>
-										<span className="font-medium mr-1">
-											Requested By:
-										</span>
-										FancyBoi222
-									</div>
-								}
-							/>
-						</div>
-					</div>
-				</div> */}
 			</div>
 		</div>
 	);
