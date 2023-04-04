@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
 								<SearchBar visibleOnMobile={false} />
 								{user ? (
 									<>
-										<NotificationButton />
+										{/* <NotificationButton /> */}
 										<UserMenuButton />
 									</>
 								) : (

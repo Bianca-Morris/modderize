@@ -21,6 +21,7 @@ type ModRequestShortProps = {
 	onVote: () => {};
 	onDeleteModRequest: () => {};
 	onSelectModRequest: () => void;
+	cls: string;
 };
 
 const ModRequestShort: React.FC<ModRequestShortProps> = ({
@@ -33,14 +34,20 @@ const ModRequestShort: React.FC<ModRequestShortProps> = ({
 	userIsCreator,
 	onVote,
 	onDeleteModRequest,
-	onSelectModRequest
+	onSelectModRequest,
+	cls
 }) => {
 	const [loadingImage, setLoadingImage] = useState(true);
 
 	const { imageURL, completionStatus, id } = modRequest;
 
 	return (
-		<div className="flex max-w-full rounded border-gray-200 border align-center">
+		<div
+			className={
+				"flex max-w-full rounded border-gray-200 border align-center " +
+				cls
+			}
+		>
 			<div className="flex flex-col justify-center p-3 w-20">
 				<div className="flex justify-start align-center text-green-600">
 					{userVoteValue === 1 ? (
