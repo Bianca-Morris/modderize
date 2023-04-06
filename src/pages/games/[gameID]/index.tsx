@@ -108,10 +108,10 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 	}, []);
 
 	return (
-		<ContentBody>
+		<ContentBody innerCls="flex-col-reverse lg:flex-row px-10">
 			<>
 				<SimpleHeader>
-					<div className="flex justify-between">
+					<div className="flex flex-col md:flex-row justify-between gap-3 md:gap-0">
 						<div className="flex flex-col text-3xl">
 							<h1>{displayName}</h1>
 							{user && !isGameFavorited && (
@@ -154,7 +154,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 								<Button
 									type="button"
 									variant="violet"
-									cls="max-h-10"
+									cls="max-h-10 w-100 "
 									onClick={onClickCreateNewModRequest}
 								>
 									<PlusIcon className="w-5 h-5 mr-3" />
