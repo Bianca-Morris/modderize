@@ -25,9 +25,9 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 				</Jumbotron>
 			</div>
 			<ContentBody>
-				<div className="flex gap-10 my-10">
+				<div className="flex flex-col lg:flex-row px-10 lg:px-0 gap-10 my-10">
 					<div className="flex-1">
-						<figure>
+						<figure className="flex flex-col center">
 							<img
 								className="rounded-3xl"
 								src="/images/axville-XaTRLucavKQ-unsplash-compressed.jpeg"
