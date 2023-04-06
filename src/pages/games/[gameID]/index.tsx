@@ -197,7 +197,16 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 					</div>
 
 					{currModRequests.length > 0 && (
-						<Button type="button" variant="violet" cls="mt-4">
+						<Button
+							type="button"
+							variant="violet"
+							cls="mt-4"
+							onClick={() =>
+								router.push(
+									`/search?type=modRequests&gameID=${gameID}`
+								)
+							}
+						>
 							View All Mods for {displayName}
 						</Button>
 					)}

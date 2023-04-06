@@ -25,6 +25,7 @@ import useModRequests from "../hooks/useModRequests";
 import ModRequest from "../components/general/ModRequest";
 import Link from "next/link";
 import Jumbotron from "../components/basic/Jumbotron";
+import { useRouter } from "next/router";
 
 type HomePageProps = {
 	topGames: Game[];
@@ -35,6 +36,8 @@ type HomePageProps = {
 const Home: React.FC<HomePageProps> = ({ topGames, topMods, newestMods }) => {
 	const [user, loadingUser] = useAuthState(auth);
 	const { uid: userID } = user || {};
+
+	const router = useRouter();
 
 	const { onVote, onDeleteModRequest, onSelectModRequest } = useModRequests();
 
@@ -65,7 +68,15 @@ const Home: React.FC<HomePageProps> = ({ topGames, topMods, newestMods }) => {
 						<Button variant="blue" cls="flex-1">
 							Request a Mod
 						</Button>
-						<Button variant="indigo" cls="flex-1">
+						<Button
+							variant="indigo"
+							cls="flex-1"
+							onClick={() =>
+								router.push(
+									`/search?type=modRequests&completionStatus=pending%20modder`
+								)
+							}
+						>
 							Fulfill a Request
 						</Button>
 					</div>
