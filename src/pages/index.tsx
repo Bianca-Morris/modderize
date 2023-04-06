@@ -64,7 +64,7 @@ const Home: React.FC<HomePageProps> = ({ topGames, topMods, newestMods }) => {
 						wants to see. Request from your favorite creators or
 						build the feature a fellow gamer has been dreaming of.
 					</div>
-					<div className="flex gap-5">
+					<div className="flex flex-col md:flex-row gap-5">
 						<Button variant="blue" cls="flex-1">
 							Request a Mod
 						</Button>

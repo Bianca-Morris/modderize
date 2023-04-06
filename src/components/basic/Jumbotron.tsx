@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from "react";
-import Button from "./Button";
 
 interface JumbotronProps extends PropsWithChildren {
 	title: string;
@@ -11,9 +10,9 @@ const Jumbotron: React.FC<JumbotronProps> = ({ children, title, subtitle }) => {
 
 	if (subtitle) {
 		body = (
-			<div className="w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16 my-10">
+			<div className="px-10 lg:p-0 w-full flex flex-col lg:flex-row mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-5 lg:gap-16 my-10">
 				<div className="flex-1">
-					<div className="text-6xl font-bold text-white  mb-5">
+					<div className="lg:text-6xl text-4xl font-bold text-white mb-5">
 						{title}
 					</div>
 					<div className="flex-1 text-3xl text-white">{subtitle}</div>
@@ -23,8 +22,8 @@ const Jumbotron: React.FC<JumbotronProps> = ({ children, title, subtitle }) => {
 		);
 	} else {
 		body = (
-			<div className="w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16 my-10">
-				<div className="flex-1 text-6xl font-bold text-white">
+			<div className="px-10 lg:p-0 w-full flex flex-col lg:flex-row mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-5 lg:gap-16 my-10">
+				<div className="flex-1 lg:text-6xl text-4xl font-bold text-white">
 					{title}
 				</div>
 				{children}
