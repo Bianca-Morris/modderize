@@ -28,7 +28,7 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 	children
 }) => {
 	return (
-		<ContentBody>
+		<ContentBody innerCls="flex-col lg:flex-row px-10">
 			<>
 				<SimpleHeader />
 			</>

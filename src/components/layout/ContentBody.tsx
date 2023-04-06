@@ -14,7 +14,16 @@ type functionOutput =
 	| ReactPortal;
 type Nullable<T> = T | null;
 
-const ContentBody: React.FC<PropsWithChildren> = ({ children }) => {
+interface ContentBodyProps extends PropsWithChildren {
+	innerCls?: string;
+	outerCls?: string;
+}
+
+const ContentBody: React.FC<ContentBodyProps> = ({
+	children,
+	outerCls,
+	innerCls
+}) => {
 	let header: Nullable<functionOutput> = null;
 	let body: Nullable<functionOutput> = null;
 
@@ -28,9 +37,19 @@ const ContentBody: React.FC<PropsWithChildren> = ({ children }) => {
 	}
 
 	return (
-		<div className="flex min-h-screen flex-col item-center justify-start pb-2">
+		<div
+			className={
+				"flex min-h-screen flex-col item-center justify-start pb-2 " +
+				outerCls
+			}
+		>
 			{header}
-			<div className="w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
+			<div
+				className={
+					"w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16 " +
+					innerCls
+				}
+			>
 				{body}
 			</div>
 		</div>
