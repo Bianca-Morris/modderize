@@ -87,7 +87,7 @@ const Home: React.FC<HomePageProps> = ({ topGames, topMods, newestMods }) => {
 					<h2 className="text-2xl font-bold font-medium text-gray-900 mb-3 ml-4">
 						Top Games
 					</h2>
-					<div className="w-full flex gap-5 my-5 items-center align-center justify-center">
+					<div className="lg:w-full flex flex-wrap gap-5 my-5 items-center align-center justify-center">
 						{topGames.map((game) => (
 							<GameCard
 								{...game}
@@ -98,10 +98,10 @@ const Home: React.FC<HomePageProps> = ({ topGames, topMods, newestMods }) => {
 				</div>
 			</div>
 			<hr />
-			<div className="w-full flex mx-auto py-16 max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
+			<div className="w-full flex flex-col lg:flex-row mx-auto py-16 max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
 				<div className="flex-1">
 					<h2 className="text-2xl font-bold font-medium text-gray-900 mb-3 ml-4">
-						Most Recent Mods
+						New Mod Requests
 					</h2>
 					<div className="w-full flex flex-col gap-5 my-5 items-center align-center justify-center">
 						{newestMods.map((mr) => {
@@ -141,7 +141,7 @@ const Home: React.FC<HomePageProps> = ({ topGames, topMods, newestMods }) => {
 				</div>
 				<div className="flex-1">
 					<h2 className="text-2xl font-bold font-medium text-gray-900 mb-3 ml-4">
-						Most Popular Mods
+						Popular Mod Requests
 					</h2>
 					<div className="w-full flex flex-col gap-5 my-5 items-center align-center justify-center">
 						{topMods.map((mr) => {
