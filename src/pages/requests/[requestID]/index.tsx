@@ -80,7 +80,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 				</div>
 			</SimpleHeader>
 			<div className="w-full flex-col mt-10 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
-				<div className="flex w-full justify-between py-4">
+				<div className="flex px-5 lg:px-0 w-full flex-col md:flex-row md:justify-between py-4">
 					<div>
 						<div>
 							<Link
@@ -142,8 +142,8 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 					</div>
 				</div>
 				<hr />
-				<div className="flex flex-auto mt-10 justify-between gap-10">
-					<div className="flex flex-col">
+				<div className="flex flex-col lg:flex-row px-5 lg:px-0 mt-10 justify-between gap-10">
+					<div className="flex flex-auto flex-col">
 						<div className="max-w-3xl">
 							<h2 className="text-xl font-bold mb-5 font-bold">
 								Mod Description:
@@ -165,7 +165,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 							</div>
 						</div>
 
-						<div className="flex gap-3">
+						<div className="flex flex-col md:flex-row gap-0 md:gap-1 lg:gap-3">
 							<Button
 								type="button"
 								variant="red"
