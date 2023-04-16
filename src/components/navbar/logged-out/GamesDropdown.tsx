@@ -44,7 +44,10 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 			{user && (
 				<>
 					<Menu.Item>
-						<CreateNewGameButton />
+						<div>
+							{/** Div only exists to avoid forwardRef warning */}
+							<CreateNewGameButton />
+						</div>
 					</Menu.Item>
 					<hr />
 				</>
