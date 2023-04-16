@@ -13,11 +13,15 @@ import { classNames } from "../../helpers";
 import GamesDropdown from "./logged-out/GamesDropdown";
 import AddGameModal from "./logged-out/AddGameModal";
 import Link from "next/link";
+import useGameData from "../../hooks/useGameData";
 
 const navigation = [{ name: "About", href: "/about", current: false }];
 
 const Navbar: React.FC = () => {
 	const [user, loading, error] = useAuthState(auth);
+
+	// Make sure this is loaded, so that favorite links for current user are triggered, if haven't been already
+	useGameData();
 
 	return (
 		<Disclosure as="nav" className="bg-gray-800">
