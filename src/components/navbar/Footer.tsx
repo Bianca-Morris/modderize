@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
 							{navigation.map((navItem) => {
 								const { name, href } = navItem;
 								return (
-									<li key={href}>
+									<li key={name}>
 										<a href={href}>{name}</a>
 									</li>
 								);
