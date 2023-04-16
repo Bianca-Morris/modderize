@@ -63,7 +63,7 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 			{mySnippets.map((snippet) => {
 				const { gameID, gameName } = snippet;
 				return (
-					<Menu.Item>
+					<Menu.Item key={gameID}>
 						<Link
 							className={classNames(
 								active
