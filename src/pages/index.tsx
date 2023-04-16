@@ -91,6 +91,7 @@ const Home: React.FC<HomePageProps> = ({ topGames, topMods, newestMods }) => {
 						{topGames.map((game) => (
 							<GameCard
 								{...game}
+								key={game.id}
 								cls="flex flex-1 flex-col text-center justify-center items-center"
 							/>
 						))}
