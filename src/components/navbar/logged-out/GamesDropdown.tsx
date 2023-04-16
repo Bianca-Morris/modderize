@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Menu } from "@headlessui/react";
+import { HeartIcon } from "@heroicons/react/20/solid";
+import { useRecoilState, useRecoilValue } from "recoil";
+import Link from "next/link";
+import { useAuthState } from "react-firebase-hooks/auth";
+
+import { gameState } from "../../../atoms/gamesAtom";
+import { auth } from "../../../firebase/clientApp";
+import useSearchData from "../../../hooks/useSearchData";
+import { searchState } from "../../../atoms/searchAtom";
 import Dropdown from "../../basic/Dropdown";
 import { classNames } from "../../../helpers";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { useRecoilState, useRecoilValue } from "recoil";
-
-import { gameModalState as globalGameModalState } from "../../../atoms/gameModalAtom";
-import Link from "next/link";
-import { gameState } from "../../../atoms/gamesAtom";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../firebase/clientApp";
-import { HeartIcon } from "@heroicons/react/20/solid";
+import CreateNewGameButton from "./CreateNewGameButton";
 
 type GamesDropdownProps = {};
 
@@ -19,12 +20,21 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 
 	const [user] = useAuthState(auth);
 
-	const [gameModalState, setGameModalState] =
-		useRecoilState(globalGameModalState);
+	const [searchStateValue] = useRecoilState(searchState);
+	const { games = [] } = searchStateValue;
 
-	const mySnippets = useRecoilValue(gameState).mySnippets;
+	const { getAllGames, loading: loadingSearchData } = useSearchData();
 
+	const { mySnippets = [] } = useRecoilValue(gameState);
 	const anyFavoriteGames = mySnippets.length > 0;
+
+	// On load, fetch a bunch of the games, if they aren't already present
+	useEffect(() => {
+		if (!user && !loadingSearchData && games.length === 0) {
+			// Grab a list of all of the games
+			getAllGames();
+		}
+	}, [user, games, loadingSearchData]);
 
 	return (
 		<Dropdown
@@ -34,24 +44,8 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 			{user && (
 				<>
 					<Menu.Item>
-						{/** TODO: Restrict this button to only appear when logged in as admin */}
-						<a
-							className={classNames(
-								active
-									? "bg-gray-200 text-gray-900"
-									: "text-gray-700 hover:bg-gray-100",
-								"inline-flex items-center w-full px-4 py-2 text-sm cursor-pointer"
-							)}
-							onClick={() => setGameModalState({ open: true })}
-						>
-							<PlusCircleIcon
-								className="h-5 w-5 mr-2"
-								aria-hidden="true"
-							/>
-							Create New Game
-						</a>
+						<CreateNewGameButton />
 					</Menu.Item>
-
 					<hr />
 				</>
 			)}
@@ -84,6 +78,26 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 					</Menu.Item>
 				);
 			})}
+
+			{!user &&
+				games.map((game) => {
+					const { id: gameID, displayName: gameName } = game;
+					return (
+						<Menu.Item key={gameID}>
+							<Link
+								className={classNames(
+									active
+										? "bg-gray-200 text-gray-900"
+										: "text-gray-700 hover:bg-gray-100",
+									"block px-4 py-2 text-sm cursor-pointer font-normal capitalize"
+								)}
+								href={`/games/${gameID}`}
+							>
+								{gameName}
+							</Link>
+						</Menu.Item>
+					);
+				})}
 
 			{user && !anyFavoriteGames && (
 				<div className="text-gray-400 px-4 py-4 font-normal capitalize text-xs">
