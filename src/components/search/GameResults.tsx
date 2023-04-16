@@ -1,12 +1,13 @@
 import React from "react";
-import { Game } from "../../types/docTypes";
+import { useRecoilState } from "recoil";
+import { searchState } from "../../atoms/searchAtom";
 import GameCard from "../general/GameCard";
 
-type GameResultsProps = {
-	games: Game[];
-};
+const GameResults: React.FC = () => {
+	const [searchStateValue] = useRecoilState(searchState);
+	const { docType, games } = searchStateValue || {};
 
-const GameResults: React.FC<GameResultsProps> = ({ games }) => {
+	if (docType !== "games") return null;
 	return (
 		<div className="w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 			{games.map((game) => (
