@@ -3,8 +3,11 @@ import type { AppProps } from "next/app";
 import Layout from "../components/layout/Layout";
 import { RecoilRoot } from "recoil";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 function App({ Component, pageProps }: AppProps) {
+	const router = useRouter();
+
 	return (
 		<RecoilRoot>
 			<Head>
@@ -16,7 +19,7 @@ function App({ Component, pageProps }: AppProps) {
 				></link>
 			</Head>
 			<Layout>
-				<Component {...pageProps} />
+				<Component {...pageProps} key={router.asPath} />
 			</Layout>
 		</RecoilRoot>
 	);
