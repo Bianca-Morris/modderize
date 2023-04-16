@@ -51,11 +51,7 @@ const SearchPage: React.FC<SearchPageProps> = () => {
 		}
 
 		// If doctype in state is different from query; this may be a sign page was reloaded
-		if (
-			type !== "games" &&
-			(type === "users" || type === "modRequests") &&
-			docType !== type
-		) {
+		if (docType !== type) {
 			setSearchStateValue((prev) => ({
 				...prev,
 				docType: type

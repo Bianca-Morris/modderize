@@ -65,7 +65,11 @@ const Home: React.FC<HomePageProps> = ({ topGames, topMods, newestMods }) => {
 						build the feature a fellow gamer has been dreaming of.
 					</div>
 					<div className="flex flex-col md:flex-row gap-5">
-						<Button variant="blue" cls="flex-1">
+						<Button
+							variant="blue"
+							cls="flex-1"
+							onClick={() => router.push(`/search/?type=games`)}
+						>
 							Request a Mod
 						</Button>
 						<Button
