@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Button from "../basic/Button";
+import { useRouter } from "next/router";
 
 type SearchBarProps = {
 	visibleOnMobile?: boolean;
@@ -18,6 +20,17 @@ const SearchBar: React.FC<SearchBarProps> = ({
 		visibilityString += "block md:hidden";
 	}
 
+	const router = useRouter();
+	const [textQuery, setTextQuery] = useState("");
+
+	const onStartSearch = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		console.log(textQuery);
+
+		const query = encodeURIComponent(textQuery);
+		router.push(`/search/?type=modRequests&q=${query}`);
+	};
+
 	return (
 		<div className={visibilityString}>
 			<div className="relative rounded-md shadow-sm">
@@ -26,27 +39,23 @@ const SearchBar: React.FC<SearchBarProps> = ({
 						<MagnifyingGlassIcon />
 					</span>
 				</div>
-				<input
-					type="text"
-					name="search"
-					id="search"
-					className="block w-full rounded-md border-gray-300 pl-7 pr-32 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-					placeholder="Search..."
-				/>
-				<div className="absolute inset-y-0 right-0 flex items-center">
-					<label htmlFor="searchType" className="sr-only">
-						Search Type
-					</label>
-					<select
-						id="searchType"
-						name="searchType"
-						className="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm cursor-pointer"
-					>
-						<option>By Keyword</option>
-						<option>By Modder</option>
-						<option>By Game</option>
-					</select>
-				</div>
+				<form onSubmit={(e) => onStartSearch(e)}>
+					<input
+						type="text"
+						name="search"
+						id="search"
+						className="block w-full rounded-md border-gray-300 pl-7 pr-32 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+						placeholder="Search Mod Requests..."
+						value={textQuery}
+						onChange={(e) => setTextQuery(e.target.value)}
+						required
+					/>
+					<div className="absolute inset-y-0 right-0 flex items-center">
+						<Button type="submit" variant="noOutline">
+							Search
+						</Button>
+					</div>
+				</form>
 			</div>
 		</div>
 	);

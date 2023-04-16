@@ -17,7 +17,8 @@ const COLOR_VARIANTS = {
 		"bg-transparent text-gray-900 border-gray-300 hover:border-gray-200" +
 		WITH_OUTLINE,
 	grayOutline2:
-		"bg-transparent text-white text-gray-400 border-gray-500 hover:border-gray-400 border-2 px-4 py-1"
+		"bg-transparent text-white text-gray-400 border-gray-500 hover:border-gray-400 border-2 px-4 py-1",
+	noOutline: "bg-transparent text-gray-500" + WITHOUT_OUTLINE
 };
 
 interface ButtonProps extends PropsWithChildren {
@@ -48,7 +49,8 @@ interface ButtonProps extends PropsWithChildren {
 		| "blue"
 		| "indigo"
 		| "violet"
-		| "purple";
+		| "purple"
+		| "noOutline";
 	// | "fuchsia"
 	// | "pink"
 	// | "rose";
