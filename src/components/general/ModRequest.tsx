@@ -21,7 +21,7 @@ type ModRequestShortProps = {
 	onVote: () => {};
 	onDeleteModRequest: () => {};
 	onSelectModRequest: () => void;
-	cls: string;
+	cls?: string;
 };
 
 const ModRequestShort: React.FC<ModRequestShortProps> = ({
