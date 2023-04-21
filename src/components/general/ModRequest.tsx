@@ -12,7 +12,6 @@ import { ModRequest } from "../../types/docTypes";
 
 type ModRequestShortProps = {
 	numUpvotes?: number;
-	numDownvotes?: number;
 	title: string | ReactElement;
 	subTitle: string | ReactElement;
 	userVoteValue?: number;
@@ -25,7 +24,6 @@ type ModRequestShortProps = {
 };
 
 const ModRequestShort: React.FC<ModRequestShortProps> = ({
-	numDownvotes = 0,
 	numUpvotes = 0,
 	title,
 	subTitle,
@@ -62,20 +60,6 @@ const ModRequestShort: React.FC<ModRequestShortProps> = ({
 						/>
 					)}
 					{numUpvotes}
-				</div>
-				<div className="flex justify-start align-center text-red-600">
-					{userVoteValue === -1 ? (
-						<ThumbDownIconSolid
-							className="w-4 h-4 mt-1 ml-1 mr-2 cursor-pointer"
-							onClick={onVote}
-						/>
-					) : (
-						<ThumbDownIconOutline
-							className="w-4 h-4 mt-1 ml-1 mr-2 cursor-pointer"
-							onClick={onVote}
-						/>
-					)}
-					{numDownvotes}
 				</div>
 			</div>
 			<div className="flex flex-col justify-center">
