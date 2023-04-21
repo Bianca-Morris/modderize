@@ -1,4 +1,4 @@
-import { DocumentData, Timestamp } from "@firebase/firestore";
+import { DocumentData, DocumentReference, Timestamp } from "@firebase/firestore";
 
 export interface Game extends DocumentData {
     id: string;
@@ -7,6 +7,7 @@ export interface Game extends DocumentData {
     numberOfPlayers: number;
     createdAt?: Timestamp;
     imageURL?: string;
+    docRef?: DocumentReference;
 }
 
 export type ModRequest = {
@@ -31,4 +32,5 @@ export type ModRequest = {
     voteStatus: number;
 
     imageURL?: string;
+    docRef?: DocumentReference;
 }

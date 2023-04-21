@@ -27,9 +27,10 @@ export const gameConverter: FirestoreDataConverter<Game> = {
 		options: SnapshotOptions
 	): Game {
 		const data = snapshot.data(options);
-		const { id } = snapshot;
+		const { id, ref } = snapshot;
 		return {
 			id,
+			docRef: ref,
 			creatorId: data.creatorId,
 			displayName: data.displayName,
 			numberOfPlayers: data.numberOfPlayers,
@@ -62,7 +63,7 @@ export const modRequestConverter: FirestoreDataConverter<ModRequest> = {
 		options: SnapshotOptions
 	): ModRequest {
 		const data = snapshot.data(options);
-		const { id } = snapshot;
+		const { id, ref } = snapshot;
 		const {
 			gameID,
 			gameDisplayName,
@@ -80,6 +81,7 @@ export const modRequestConverter: FirestoreDataConverter<ModRequest> = {
 		} = data || {};
 		return {
 			id,
+			docRef: ref,
 			gameID,
 			gameDisplayName,
 			title,
