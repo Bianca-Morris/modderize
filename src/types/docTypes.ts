@@ -1,6 +1,6 @@
-import { Timestamp } from "@firebase/firestore";
+import { DocumentData, Timestamp } from "@firebase/firestore";
 
-export interface Game {
+export interface Game extends DocumentData {
     id: string;
     creatorId: string;
     displayName: string;
