@@ -1,29 +1,55 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
+import { ReallySimpleInfiniteScroll } from "react-really-simple-infinite-scroll";
 import { searchState } from "../../atoms/searchAtom";
 import { ModRequest as ModRequestType } from "../../types/docTypes";
 import ModRequestShort from "../general/ModRequest";
 
-const ModRequestResults: React.FC = () => {
-	const [searchStateValue, setSearchStateValue] = useRecoilState(searchState);
-	const { docType, results } = searchStateValue || {};
+type ModRequestResultsProps = {
+	hasMore: boolean;
+	results: ModRequestType[];
+	isInfiniteLoading: boolean;
+	onInfiniteLoadCallback: () => void;
+};
 
-	if (docType !== "modRequests") return null;
+const ModRequestResults: React.FC<ModRequestResultsProps> = ({
+	hasMore,
+	results = [],
+	isInfiniteLoading,
+	onInfiniteLoadCallback
+}) => {
 	return (
 		<div>
-			{results.map((modRequest) => {
-				const { title } = modRequest;
-				return (
-					<ModRequestShort
-						{...{ title, modRequest }}
-						subTitle="This is a subtitle"
-						onVote={async () => console.log("vote")}
-						userIsCreator={false}
-						onDeleteModRequest={async () => console.log("delete")}
-						onSelectModRequest={() => null}
-					/>
-				);
-			})}
+			<ReallySimpleInfiniteScroll
+				className={`infinite-scroll`}
+				hasMore={hasMore}
+				length={results.length}
+				loadingComponent={
+					<div className="loading-component">
+						<span className="loading-label">Loading...</span>
+					</div>
+				}
+				isInfiniteLoading={isInfiniteLoading}
+				onInfiniteLoad={onInfiniteLoadCallback}
+			>
+				{results.map((modRequest) => {
+					const { title, id } = modRequest;
+					return (
+						<ModRequestShort
+							key={id}
+							{...{ title, modRequest }}
+							subTitle="This is a subtitle"
+							onVote={async () => console.log("vote")}
+							userIsCreator={false}
+							onDeleteModRequest={async () =>
+								console.log("delete")
+							}
+							onSelectModRequest={() => null}
+						/>
+					);
+				})}
+			</ReallySimpleInfiniteScroll>
+
 			{results.length === 0 && (
 				<div className="w-full pl-10">No Mod Requests found!</div>
 			)}

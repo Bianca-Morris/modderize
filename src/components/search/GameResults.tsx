@@ -1,22 +1,50 @@
-import React from "react";
-import { useRecoilState } from "recoil";
-import { searchState } from "../../atoms/searchAtom";
+import React, { useEffect } from "react";
+import { ReallySimpleInfiniteScroll } from "react-really-simple-infinite-scroll";
+import { Game as GameType } from "../../types/docTypes";
 import GameCard from "../general/GameCard";
 
-const GameResults: React.FC = () => {
-	const [searchStateValue] = useRecoilState(searchState);
-	const { docType, games } = searchStateValue || {};
+type GameResultsProps = {
+	hasMore: boolean;
+	results: GameType[];
+	isInfiniteLoading: boolean;
+	onInfiniteLoadCallback: () => void;
+};
 
-	if (docType !== "games") return null;
+const GameResults: React.FC<GameResultsProps> = ({
+	hasMore,
+	results = [],
+	isInfiniteLoading,
+	onInfiniteLoadCallback
+}) => {
 	return (
-		<div className="w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-			{games.map((game) => (
-				<GameCard
-					{...game}
-					cls="flex flex-1 flex-col text-center justify-center items-center"
-				/>
-			))}
-		</div>
+		<>
+			<ReallySimpleInfiniteScroll
+				className={`infinite-scroll`}
+				hasMore={hasMore}
+				length={results.length}
+				loadingComponent={
+					<div className="loading-component">
+						<span className="loading-label">Loading...</span>
+					</div>
+				}
+				isInfiniteLoading={isInfiniteLoading}
+				onInfiniteLoad={onInfiniteLoadCallback}
+			>
+				<div className="w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+					{results.map((game) => (
+						<GameCard
+							{...game}
+							cls="flex flex-1 flex-col text-center justify-center items-center"
+						/>
+					))}
+				</div>
+			</ReallySimpleInfiniteScroll>
+
+			{/* Should never happen */}
+			{results.length === 0 && (
+				<div className="w-full pl-10">No Games found!</div>
+			)}
+		</>
 	);
 };
 export default GameResults;
