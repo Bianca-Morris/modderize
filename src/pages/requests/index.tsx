@@ -93,14 +93,16 @@ const ModRequestsPage: React.FC = () => {
 							{...{ hasMore }}
 						/>
 					</div>
-					<Button
-						variant="violet"
-						type="button"
-						onClick={(e) => generateMore()}
-						disabled={!hasMore}
-					>
-						Show More
-					</Button>
+					{hasMore && (
+						<Button
+							variant="violet"
+							type="button"
+							onClick={(e) => generateMore()}
+							disabled={!hasMore}
+						>
+							Show More
+						</Button>
+					)}
 				</div>
 			</ContentBody>
 		</div>

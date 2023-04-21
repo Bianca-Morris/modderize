@@ -85,7 +85,7 @@ const GamesPage: React.FC = () => {
 				</div>
 			</SimpleHeader>
 			<ContentBody>
-				<div className="flex w-full py-10">
+				<div className="flex w-full flex-col py-10">
 					{/* <div className="flex-1">
 						// TODO: Search Filters
 						{<Filters />}
@@ -98,14 +98,16 @@ const GamesPage: React.FC = () => {
 							{...{ hasMore }}
 						/>
 					</div>
-					<Button
-						variant="violet"
-						type="button"
-						onClick={(e) => generateMore()}
-						disabled={!hasMore}
-					>
-						Show More
-					</Button>
+					{hasMore && (
+						<Button
+							variant="violet"
+							type="button"
+							onClick={(e) => generateMore()}
+							disabled={!hasMore}
+						>
+							Show More
+						</Button>
+					)}
 				</div>
 			</ContentBody>
 		</div>

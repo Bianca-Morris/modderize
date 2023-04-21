@@ -33,6 +33,7 @@ const GameResults: React.FC<GameResultsProps> = ({
 				<div className="w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 					{results.map((game) => (
 						<GameCard
+							key={game.id}
 							{...game}
 							cls="flex flex-1 flex-col text-center justify-center items-center"
 						/>

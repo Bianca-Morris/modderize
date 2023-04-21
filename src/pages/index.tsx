@@ -64,18 +64,14 @@ const Home: React.FC<HomePageProps> = ({ topGames, topMods, newestMods }) => {
 						<Button
 							variant="blue"
 							cls="flex-1"
-							onClick={() => router.push(`/search/?type=games`)}
+							onClick={() => router.push(`/games`)}
 						>
 							Request a Mod
 						</Button>
 						<Button
 							variant="indigo"
 							cls="flex-1"
-							onClick={() =>
-								router.push(
-									`/search?type=modRequests&completionStatus=pending%20modder`
-								)
-							}
+							onClick={() => router.push(`/requests`)}
 						>
 							Fulfill a Request
 						</Button>

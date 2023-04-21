@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { defaultSearchState } from "./atoms/searchAtom";
 import { firestore } from "./firebase/clientApp";
+import { gameConverter, modRequestConverter } from "./helpers/converters";
 
 export function validateEmail(email) {
 	// Regex from https://www.tutorialspoint.com/How-to-validate-email-address-in-JavaScript
@@ -70,7 +71,7 @@ const DOCUMENTS_PER_PAGE = 15;
 
 export function constructModRequestQuery(prevDocSnaps?: QuerySnapshot) {
 	// Query the games collection
-	const coll = collection(firestore, "modRequests");
+	const coll = collection(firestore, "modRequests").withConverter(modRequestConverter);
 
 	// Some basic values for all sort (TODO: Maybe make these dynamic?)
 	const sortField = "title";
@@ -97,7 +98,7 @@ export function constructGameQuery(
 	prevDocSnaps?: QuerySnapshot
 ) {
 	// Query the games collection
-	const coll = collection(firestore, "games");
+	const coll = collection(firestore, "games").withConverter(gameConverter);
 
 	// Some basic values for all sort (TODO: Maybe make these dynamic?)
 	const sortField = "displayName";
@@ -110,7 +111,7 @@ export function constructGameQuery(
 	if (keyword && typeof keyword === "string") {
 		returnQuery = query(
 			coll,
-			where("displayName", "==", keyword),
+			where("displayName", "in", [keyword]),
 			orderBy(sortField, sortValue),
 			limit(DOCUMENTS_PER_PAGE)
 		);
