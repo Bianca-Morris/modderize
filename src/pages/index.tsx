@@ -41,10 +41,6 @@ const Home: React.FC<HomePageProps> = ({ topGames, topMods, newestMods }) => {
 
 	const { onVote, onDeleteModRequest, onSelectModRequest } = useModRequests();
 
-	console.log("topGames", topGames);
-	console.log("topMods", topMods);
-	console.log("newestMods", newestMods);
-
 	return (
 		<div className="flex min-h-screen flex-col item-center justify-start pb-2">
 			{user && (
