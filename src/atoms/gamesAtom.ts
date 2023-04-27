@@ -11,13 +11,13 @@ export interface GameSnippet {
 }
 
 interface GameState {
-    mySnippets: GameSnippet[];
+    favoriteGames: GameSnippet[];
     currentGame?: Game;
     // viewedGames
 }
 
 const defaultGameState: GameState = {
-    mySnippets: []
+    favoriteGames: []
 }
 
 export const gameState = atom<GameState>({

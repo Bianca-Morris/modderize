@@ -36,7 +36,7 @@ const useGameData = () => {
 		favoriteGame(gameData);
 	};
 
-	const getMySnippets = async () => {
+	const getFavoriteGames = async () => {
 		setError("");
 		setLoading(true);
 		try {
@@ -51,7 +51,7 @@ const useGameData = () => {
 			// add this data to global app state
 			setGameStateValue((prev) => ({
 				...prev,
-				mySnippets: snippets as GameSnippet[]
+				favoriteGames: snippets as GameSnippet[]
 			}));
 
 			console.log("snippets", snippets);
@@ -98,7 +98,7 @@ const useGameData = () => {
 			// update the recoil state with the new snippet
 			setGameStateValue((prev) => ({
 				...prev,
-				mySnippets: [...prev.mySnippets, newSnippet]
+				favoriteGames: [...prev.favoriteGames, newSnippet]
 			}));
 		} catch (error: any) {
 			console.log("favoriteGame Error", error);
@@ -126,7 +126,7 @@ const useGameData = () => {
 			// update the recoil state to remove the snippet for this game
 			setGameStateValue((prev) => ({
 				...prev,
-				mySnippets: prev.mySnippets.filter(
+				favoriteGames: prev.favoriteGames.filter(
 					(item) => item.gameID !== gameID
 				)
 			}));
@@ -141,7 +141,7 @@ const useGameData = () => {
 	// When user is loaded, grab their favorite games and add to state
 	useEffect(() => {
 		if (!user) return;
-		getMySnippets();
+		getFavoriteGames();
 	}, [user]);
 
 	return {

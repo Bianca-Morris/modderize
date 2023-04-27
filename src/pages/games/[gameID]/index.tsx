@@ -77,7 +77,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 		getModRequestsForGameCount
 	} = useGameData();
 
-	const isGameFavorited = !!gameStateValue.mySnippets.find(
+	const isGameFavorited = !!gameStateValue.favoriteGames.find(
 		(item) => item.gameID === gameID
 	);
 

@@ -25,8 +25,8 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 
 	const { getAllGames, loading: loadingSearchData } = useSearchData();
 
-	const { mySnippets = [] } = useRecoilValue(gameState);
-	const anyFavoriteGames = mySnippets.length > 0;
+	const { favoriteGames = [] } = useRecoilValue(gameState);
+	const anyFavoriteGames = favoriteGames.length > 0;
 
 	// On load, fetch a bunch of the games, if they aren't already present
 	useEffect(() => {
@@ -63,7 +63,7 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 				)}
 			</div>
 
-			{mySnippets.map((snippet) => {
+			{favoriteGames.map((snippet) => {
 				const { gameID, gameName } = snippet;
 				return (
 					<Menu.Item key={gameID}>
