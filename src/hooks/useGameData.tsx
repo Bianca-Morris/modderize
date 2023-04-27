@@ -4,6 +4,7 @@ import {
 	getCountFromServer,
 	getDocs,
 	increment,
+	limit,
 	query,
 	where,
 	writeBatch
@@ -34,6 +35,60 @@ const useGameData = () => {
 			return;
 		}
 		favoriteGame(gameData);
+	};
+
+	const getAllGames = async () => {
+		setError("");
+		setLoading(true);
+
+		try {
+			const querySnapshot = await getDocs(collection(db, "games"));
+			setLoading(false);
+
+			const gamesArr = [] as Game[];
+			querySnapshot.forEach((doc) => {
+				// doc.data() is never undefined for query doc snapshots
+				const thisGame = {
+					id: doc.id,
+					...doc.data()
+				} as Game;
+				gamesArr.push(thisGame);
+			});
+
+			return gamesArr;
+		} catch (error: any) {
+			console.log("getAllGames error", error);
+			setError(error.message);
+			return [];
+		}
+	};
+
+	const getDropdownGames = async () => {
+		setError("");
+		setLoading(true);
+
+		try {
+			const coll = collection(db, "games");
+			const q = query(coll, limit(7));
+			const querySnapshot = await getDocs(q);
+			setLoading(false);
+
+			const gamesArr = [] as Game[];
+			querySnapshot.forEach((doc) => {
+				// doc.data() is never undefined for query doc snapshots
+				const thisGame = {
+					id: doc.id,
+					...doc.data()
+				} as Game;
+				gamesArr.push(thisGame);
+			});
+
+			return gamesArr;
+		} catch (error: any) {
+			console.log("getAllGames error", error);
+			setError(error.message);
+			return [];
+		}
 	};
 
 	const getFavoriteGames = async () => {
@@ -146,6 +201,8 @@ const useGameData = () => {
 
 	return {
 		gameStateValue,
+		getAllGames,
+		getDropdownGames,
 		onToggleGameFavoriteStatus,
 		getModRequestsForGameCount,
 		loading

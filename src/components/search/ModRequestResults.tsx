@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { ReallySimpleInfiniteScroll } from "react-really-simple-infinite-scroll";
-import { searchState } from "../../atoms/searchAtom";
 import { ModRequest as ModRequestType } from "../../types/docTypes";
 import ModRequestShort from "../general/ModRequest";
 

@@ -9,7 +9,6 @@ import {
 	startAfter,
 	where
 } from "firebase/firestore";
-// import { defaultSearchState } from "./atoms/searchAtom";
 import { db } from "./firebase/clientApp";
 import { gameConverter, modRequestConverter } from "./helpers/converters";
 

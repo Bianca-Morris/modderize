@@ -1,40 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu } from "@headlessui/react";
 import { HeartIcon } from "@heroicons/react/20/solid";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { gameState } from "../../../atoms/gamesAtom";
 import { auth } from "../../../firebase/clientApp";
-import useSearchData from "../../../hooks/useSearchData";
-import { searchState } from "../../../atoms/searchAtom";
 import Dropdown from "../../basic/Dropdown";
 import { classNames } from "../../../helpers";
 import CreateNewGameButton from "./CreateNewGameButton";
+import useGameData from "../../../hooks/useGameData";
+import { Game } from "../../../types/docTypes";
 
 type GamesDropdownProps = {};
 
 const GamesDropdown: React.FC<GamesDropdownProps> = () => {
+	const [games, setGames] = useState<Game[]>([]);
 	const active = null;
+	const { loading, getDropdownGames } = useGameData();
 
 	const [user] = useAuthState(auth);
-
-	const [searchStateValue] = useRecoilState(searchState);
-	const { games = [] } = searchStateValue;
-
-	const { getAllGames, loading: loadingSearchData } = useSearchData();
 
 	const { favoriteGames = [] } = useRecoilValue(gameState);
 	const anyFavoriteGames = favoriteGames.length > 0;
 
 	// On load, fetch a bunch of the games, if they aren't already present
 	useEffect(() => {
-		if (!user && !loadingSearchData && games.length === 0) {
+		if (!user && !loading && games.length === 0) {
 			// Grab a list of all of the games
-			getAllGames();
+			getDropdownGames().then((arr: Game[]) => setGames(arr));
 		}
-	}, [user, games, loadingSearchData]);
+	}, [user, loading]);
 
 	return (
 		<Dropdown
