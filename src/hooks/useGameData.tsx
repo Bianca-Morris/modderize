@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
 import { GameSnippet, gameState } from "../atoms/gamesAtom";
-import { auth, firestore } from "../firebase/clientApp";
+import { auth, db } from "../firebase/clientApp";
 import { Game } from "../types/docTypes";
 
 const useGameData = () => {
@@ -42,7 +42,7 @@ const useGameData = () => {
 		try {
 			// get snippets for currently logged in user.
 			const snippetDocs = await getDocs(
-				collection(firestore, `users/${user?.uid}/gameSnippets`)
+				collection(db, `users/${user?.uid}/gameSnippets`)
 			);
 
 			// loop through firebase docs and convert to JS objects w/data
@@ -64,7 +64,7 @@ const useGameData = () => {
 	};
 
 	const getModRequestsForGameCount = async (gameID: string) => {
-		const coll = collection(firestore, "modRequests");
+		const coll = collection(db, "modRequests");
 		const q = query(coll, where("gameID", "==", gameID));
 		const snapshot = await getCountFromServer(q);
 		return snapshot.data().count;
@@ -74,7 +74,7 @@ const useGameData = () => {
 		const { id, displayName } = gameData;
 
 		try {
-			const batch = writeBatch(firestore);
+			const batch = writeBatch(db);
 
 			// create a new game snippet for the user
 			const newSnippet: GameSnippet = {
@@ -83,12 +83,12 @@ const useGameData = () => {
 			};
 
 			batch.set(
-				doc(firestore, `users/${user?.uid}/gameSnippets`, id),
+				doc(db, `users/${user?.uid}/gameSnippets`, id),
 				newSnippet
 			);
 
 			// update the number of players in the database
-			batch.update(doc(firestore, "games", id), {
+			batch.update(doc(db, "games", id), {
 				numberOfPlayers: increment(1)
 			});
 
@@ -110,15 +110,13 @@ const useGameData = () => {
 
 	const unfavoriteGame = async (gameID: string) => {
 		try {
-			const batch = writeBatch(firestore);
+			const batch = writeBatch(db);
 
 			// delete the game snippet from the user
-			batch.delete(
-				doc(firestore, `users/${user?.uid}/gameSnippets`, gameID)
-			);
+			batch.delete(doc(db, `users/${user?.uid}/gameSnippets`, gameID));
 
 			// decrement the number of players in the database
-			batch.update(doc(firestore, "games", gameID), {
+			batch.update(doc(db, "games", gameID), {
 				numberOfPlayers: increment(-1)
 			});
 

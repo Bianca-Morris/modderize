@@ -1,7 +1,7 @@
 import type { GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, firestore } from "../firebase/clientApp";
+import { auth, db } from "../firebase/clientApp";
 
 import CardsSearchResult_Modder from "https://framer.com/m/Cards-SearchResult-Modder-Ziap.js@EuFW80XbgjhlwQZxAi0n";
 import FeaturesJumbotronWithButtons from "https://framer.com/m/Features-JumbotronWithButtons-U3un.js@Nt1jyKYpPeYLViU5bfrE";
@@ -188,7 +188,7 @@ const Home: React.FC<HomePageProps> = ({
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 	try {
 		// Grab top five games for the home page (sorted by number of players)
-		const gameColl = collection(firestore, "games");
+		const gameColl = collection(db, "games");
 		const gameQ = query(
 			gameColl,
 			orderBy("numberOfPlayers", "desc"),
@@ -206,7 +206,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 			)
 		);
 
-		const requestsColl = collection(firestore, "modRequests");
+		const requestsColl = collection(db, "modRequests");
 
 		// Grab top 5 mod requests
 		const top5Q = query(

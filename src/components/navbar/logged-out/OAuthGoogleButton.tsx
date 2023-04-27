@@ -3,7 +3,7 @@ import { User } from "firebase/auth";
 import React, { useEffect } from "react";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 
-import { auth, firestore } from "../../../firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import Button from "../../basic/Button";
 
 // Note: Handles both the log-in case and sign-in case
@@ -17,7 +17,7 @@ const OAuthGoogleButton: React.FC = () => {
 	const createUserDocument = async (user: User) => {
 		// Note: User could be a pre-existing or brand new user
 		const { uid } = user;
-		const userDocRef = doc(firestore, "users", uid);
+		const userDocRef = doc(db, "users", uid);
 
 		// Prevent bug with second+ submissions by parse/stringifying
 		const cleanUser = JSON.parse(JSON.stringify(user));

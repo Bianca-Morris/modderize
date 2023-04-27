@@ -1,7 +1,7 @@
 import { collection, orderBy, where, query, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, firestore } from "../../firebase/clientApp";
+import { auth, db } from "../../firebase/clientApp";
 import useModRequests from "../../hooks/useModRequests";
 import { Game, ModRequest as ModRequestType } from "../../types/docTypes";
 import Button from "../basic/Button";
@@ -35,7 +35,7 @@ const GameModRequests: React.FC<GameModRequestsProps> = ({
 
 			// Get a list of most recently created mod requests
 			const modRequestQuery = query(
-				collection(firestore, "modRequests"),
+				collection(db, "modRequests"),
 				where("gameID", "==", gameID),
 				orderBy("creationDate", "desc")
 			);

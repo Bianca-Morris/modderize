@@ -5,7 +5,7 @@ import { doc, getDoc } from "@firebase/firestore";
 import { GetServerSidePropsContext } from "next";
 import { Head } from "next/document";
 import React from "react";
-import { firestore } from "../../../firebase/clientApp";
+import { db } from "../../../firebase/clientApp";
 import safeJsonStringify from "safe-json-stringify";
 
 import { ModRequest as ModRequestType } from "../../../types/docTypes";
@@ -195,11 +195,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 	try {
 		// Grab document for this mod request
-		const modRequestRef = doc(
-			firestore,
-			"modRequests",
-			requestID as string
-		);
+		const modRequestRef = doc(db, "modRequests", requestID as string);
 		const modRequestDoc = await getDoc(modRequestRef);
 
 		return {

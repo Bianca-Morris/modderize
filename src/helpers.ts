@@ -9,8 +9,8 @@ import {
 	startAfter,
 	where
 } from "firebase/firestore";
-import { defaultSearchState } from "./atoms/searchAtom";
-import { firestore } from "./firebase/clientApp";
+// import { defaultSearchState } from "./atoms/searchAtom";
+import { db } from "./firebase/clientApp";
 import { gameConverter, modRequestConverter } from "./helpers/converters";
 
 export function validateEmail(email) {
@@ -71,7 +71,7 @@ const DOCUMENTS_PER_PAGE = 15;
 
 export function constructModRequestQuery(prevDocSnaps?: QuerySnapshot) {
 	// Query the games collection
-	const coll = collection(firestore, "modRequests").withConverter(modRequestConverter);
+	const coll = collection(db, "modRequests").withConverter(modRequestConverter);
 
 	// Some basic values for all sort (TODO: Maybe make these dynamic?)
 	const sortField = "title";
@@ -98,7 +98,7 @@ export function constructGameQuery(
 	prevDocSnaps?: QuerySnapshot
 ) {
 	// Query the games collection
-	const coll = collection(firestore, "games").withConverter(gameConverter);
+	const coll = collection(db, "games").withConverter(gameConverter);
 
 	// Some basic values for all sort (TODO: Maybe make these dynamic?)
 	const sortField = "displayName";

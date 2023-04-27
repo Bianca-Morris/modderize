@@ -10,7 +10,7 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
 import { gameModalState } from "../../../atoms/gameModalAtom";
-import { auth, firestore } from "../../../firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import Button from "../../basic/Button";
 import Input from "../../basic/Input";
 
@@ -94,10 +94,10 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 
 		try {
 			// If valid ID, create the game community
-			const gameDocRef = doc(firestore, "games", gameID);
+			const gameDocRef = doc(db, "games", gameID);
 
 			// Batching a few operations so if one fails, they fail together.
-			await runTransaction(firestore, async (transaction) => {
+			await runTransaction(db, async (transaction) => {
 				// Check if the game's ID is already in the db
 				const gameDoc = await transaction.get(gameDocRef);
 
@@ -118,7 +118,7 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 
 				// Then, create a snippet with some info about the games a user is following
 				transaction.set(
-					doc(firestore, `users/${user?.uid}/gameSnippets`, gameID),
+					doc(db, `users/${user?.uid}/gameSnippets`, gameID),
 					{
 						gameID,
 						gameName: gameDisplayName

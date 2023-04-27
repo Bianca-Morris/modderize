@@ -7,7 +7,7 @@ import {
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { firestore } from "../../firebase/clientApp";
+import { db } from "../../firebase/clientApp";
 import { ModRequest } from "../../types/docTypes";
 import Alert from "../basic/Alert";
 import Button from "../basic/Button";
@@ -52,7 +52,7 @@ const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 			setError(false);
 			setLoading(true);
 			const modRequestDocRef = await addDoc(
-				collection(firestore, "modRequests"),
+				collection(db, "modRequests"),
 				newModRequest
 			);
 			console.log("modRequestDocRef", modRequestDocRef);

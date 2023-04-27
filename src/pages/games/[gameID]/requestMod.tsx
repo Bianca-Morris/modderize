@@ -10,7 +10,7 @@ import NewGameModRequestForm from "../../../components/forms/NewGameModRequestFo
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import ContentBody from "../../../components/layout/ContentBody";
 import GameNotFoundPage from "../../../components/pages/GameNotFound";
-import { auth, firestore } from "../../../firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import { Game, ModRequest } from "../../../types/docTypes";
 
 /**
@@ -75,7 +75,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 	try {
 		// Grab document for this game
-		const gameDocRef = doc(firestore, "games", gameID as string);
+		const gameDocRef = doc(db, "games", gameID as string);
 		const gameDoc = await getDoc(gameDocRef);
 
 		console.log("requestMod gameDoc", gameDoc);

@@ -13,7 +13,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
 import { GameSnippet } from "../atoms/gamesAtom";
 import { searchState } from "../atoms/searchAtom";
-import { auth, firestore } from "../firebase/clientApp";
+import { auth, db } from "../firebase/clientApp";
 import { Game } from "../types/docTypes";
 
 const useSearchData = () => {
@@ -25,7 +25,7 @@ const useSearchData = () => {
 	const getAllGames = async () => {
 		setLoading(true);
 
-		const querySnapshot = await getDocs(collection(firestore, "games"));
+		const querySnapshot = await getDocs(collection(db, "games"));
 		const gamesArr = [] as Game[];
 
 		querySnapshot.forEach((doc) => {

@@ -5,7 +5,7 @@ import { doc, getDoc } from "@firebase/firestore";
 import { GetServerSidePropsContext } from "next";
 import { Head } from "next/document";
 import React, { useEffect, useState } from "react";
-import { auth, firestore } from "../../../firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import safeJsonStringify from "safe-json-stringify";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -249,7 +249,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 	try {
 		// Grab document for this game
-		const gameDocRef = doc(firestore, "games", gameID as string);
+		const gameDocRef = doc(db, "games", gameID as string);
 		const gameDoc = await getDoc(gameDocRef);
 
 		return {

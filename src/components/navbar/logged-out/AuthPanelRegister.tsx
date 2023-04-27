@@ -4,7 +4,7 @@ import { updateProfile } from "firebase/auth";
 import { useRouter } from "next/router";
 
 import { validateEmail } from "../../../helpers";
-import { auth, firestore } from "../../../firebase/clientApp";
+import { auth } from "../../../firebase/clientApp";
 import Button from "../../basic/Button";
 import Input from "../../basic/Input";
 import OAuthGoogleButton from "./OAuthGoogleButton";

@@ -8,7 +8,7 @@ import {
 	setDoc,
 	where
 } from "firebase/firestore";
-import { firestore } from "../firebase/clientApp";
+import { db } from "../firebase/clientApp";
 
 /**
  * Returns an object containing a set of methods for interacting with User documents
@@ -20,7 +20,7 @@ const useUserDocs = () => {
 	 * @returns Boolean
 	 */
 	const isUsernameTaken = async (username: String) => {
-		const usersRef = collection(firestore, "users");
+		const usersRef = collection(db, "users");
 
 		// Check the users table for users with the same displayName
 		const userQuery = query(usersRef, where("displayName", "==", username));
@@ -39,7 +39,7 @@ const useUserDocs = () => {
 		const cleanUser = JSON.parse(JSON.stringify(user));
 
 		// Add user object to the db and ensure ID is pulled from auth provider's uid
-		return await setDoc(doc(firestore, "users", user.uid), cleanUser);
+		return await setDoc(doc(db, "users", user.uid), cleanUser);
 	};
 
 	return {
