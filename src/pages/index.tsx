@@ -33,7 +33,11 @@ type HomePageProps = {
 	newestMods: ModRequestType[];
 };
 
-const Home: React.FC<HomePageProps> = ({ topGames, topMods, newestMods }) => {
+const Home: React.FC<HomePageProps> = ({
+	topGames = [],
+	topMods = [],
+	newestMods = []
+}) => {
 	const [user, loadingUser] = useAuthState(auth);
 	const { uid: userID } = user || {};
 
@@ -242,9 +246,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 		return {
 			props: {
-				topGames: !gameDocs.empty ? top4Games : null,
-				topMods: !top5ModDocs.empty ? top5Mods : null,
-				newestMods: !new5ModDocs.empty ? new5Mods : null
+				topGames: !gameDocs.empty ? top4Games : [],
+				topMods: !top5ModDocs.empty ? top5Mods : [],
+				newestMods: !new5ModDocs.empty ? new5Mods : []
 			}
 		};
 	} catch (error) {
