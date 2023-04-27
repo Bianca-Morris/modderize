@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { addDoc, collection } from "@firebase/firestore";
-import { User } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
+import { useRouter } from "next/router";
 
 import { validateEmail } from "../../../helpers";
 import { auth, firestore } from "../../../firebase/clientApp";
@@ -9,6 +9,7 @@ import Button from "../../basic/Button";
 import Input from "../../basic/Input";
 import OAuthGoogleButton from "./OAuthGoogleButton";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
+import useUserDocs from "../../../hooks/useUserDocs";
 
 type AuthPanelRegisterProps = {
 	handleSwitch: Function;
@@ -17,18 +18,21 @@ type AuthPanelRegisterProps = {
 const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 	handleSwitch
 }) => {
+	const router = useRouter();
+	const { isUsernameTaken, createUserDocument } = useUserDocs();
 	const [registerForm, setRegisterForm] = useState({
 		email: "",
+		username: "",
 		password: "",
 		password2: ""
 	});
-	const { email, password, password2 } = registerForm;
+	const { email, username, password, password2 } = registerForm;
 	const [error, setError] = useState("");
 
 	const [createUserWithEmailAndPassword, userCred, loading, firebaseError] =
 		useCreateUserWithEmailAndPassword(auth);
 
-	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (error) setError("");
@@ -49,8 +53,29 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 			return;
 		}
 
+		// Validate username (checks if already taken, if appropriate length, etc)
+		const validUsername = await isValidUsername();
+		if (!validUsername) return;
+
 		// NOTE: Salting/hashing of passwords is done by Firebase before sending
 		createUserWithEmailAndPassword(email, password);
+	};
+
+	const isValidUsername = async () => {
+		// Check the length
+		if (username.length < 3) {
+			setError("Username must be at least 3 characters!");
+			return false;
+		}
+
+		// Check if username is already taken or not
+		const usernameTaken = await isUsernameTaken(username);
+
+		if (usernameTaken) {
+			setError("Username is already taken!");
+			return false;
+		}
+		return true;
 	};
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,21 +88,32 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 		}));
 	};
 
-	// NOTE: This is a non-standard approach to adding properties to user doc; better solution
-	// is to use Firebase Cloud Functions -- did not want to add CC info to FB.
-	// Similar code in OAuthGoogleButton
-	const createUserDocument = async (user: User) => {
-		// Prevent bug with second+ submissions by parse/stringifying
-		const cleanUser = JSON.parse(JSON.stringify(user));
-
-		// Add user object to the db
-		await addDoc(collection(firestore, "users"), cleanUser);
-	};
-
 	useEffect(() => {
 		if (userCred) {
 			const { user } = userCred;
-			createUserDocument(user);
+
+			// Add the selected username as a displayName in auth
+			updateProfile(user, {
+				displayName: username
+			})
+				.then(() => {
+					// Save the user data
+					return createUserDocument(user);
+				})
+				.then(() => {
+					console.log("created new user successfully!");
+					// Redirect user to their profile page, so they can add images/make any edits
+					router.push(`/users/${user.uid}`);
+				})
+				.catch((error) => {
+					// An error occurred
+					// ...
+					setError(error.message);
+					console.log(
+						"Error while updating new user displayName",
+						error
+					);
+				});
 		}
 	}, [userCred]);
 
@@ -104,6 +140,19 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					name="email"
 					id="email"
 					placeholder="Ex: jane.doe@mail.com"
+					{...{ onChange }}
+				/>
+			</div>
+			<div className="mt-2 mx-8 flex flex-col">
+				<label htmlFor="username" className="text-left">
+					Username
+				</label>
+				<Input
+					required
+					type="text"
+					name="username"
+					id="username"
+					placeholder="Ex: janeDoe"
 					{...{ onChange }}
 				/>
 			</div>
@@ -139,12 +188,7 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 				</div>
 			)}
 			<div className="my-2 mx-8 flex flex-col text-center">
-				<Button
-					type="submit"
-					variant="blue"
-					// onClick={onSubmit}
-					{...{ loading }}
-				>
+				<Button type="submit" variant="blue" {...{ loading }}>
 					Register
 				</Button>
 				<span>OR</span>
