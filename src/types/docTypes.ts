@@ -1,4 +1,10 @@
 import { DocumentData, DocumentReference, Timestamp } from "@firebase/firestore";
+import { User } from "firebase/auth";
+
+export interface UserDoc extends User {
+    isAdmin: boolean;
+    isActiveModder: boolean;
+}
 
 export interface Game extends DocumentData {
     id: string;
