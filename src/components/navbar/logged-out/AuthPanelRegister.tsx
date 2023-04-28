@@ -43,14 +43,6 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 		} else if (!validateEmail(email)) {
 			setError("Email address is not valid");
 			return;
-		} else if (firebaseError) {
-			console.error("firebaseError", firebaseError);
-			setError(
-				(FIREBASE_ERRORS[
-					firebaseError.message
-				] as keyof typeof FIREBASE_ERRORS) || "Something went wrong"
-			);
-			return;
 		}
 
 		// Validate username (checks if already taken, if appropriate length, etc)
@@ -58,7 +50,12 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 		if (!validUsername) return;
 
 		// NOTE: Salting/hashing of passwords is done by Firebase before sending
-		createUserWithEmailAndPassword(email, password);
+		try {
+			createUserWithEmailAndPassword(email, password);
+			// Firebase errors, will be captured by useEffect below
+		} catch (error) {
+			console.log("Error while creating user with email and password...");
+		}
 	};
 
 	const isValidUsername = async () => {
@@ -116,6 +113,18 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 				});
 		}
 	}, [userCred]);
+
+	useEffect(() => {
+		if (firebaseError) {
+			console.error("firebaseError", firebaseError);
+			setError(
+				(FIREBASE_ERRORS[
+					firebaseError.message
+				] as keyof typeof FIREBASE_ERRORS) || "Something went wrong"
+			);
+			return;
+		}
+	}, [firebaseError]);
 
 	return (
 		<form onSubmit={onSubmit}>

@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { User } from "firebase/auth";
 import {
 	collection,
 	doc,
+	getDoc,
 	getDocs,
 	query,
 	setDoc,
+	updateDoc,
 	where
 } from "firebase/firestore";
 import { db } from "../firebase/clientApp";
@@ -14,6 +16,9 @@ import { db } from "../firebase/clientApp";
  * Returns an object containing a set of methods for interacting with User documents
  */
 const useUserDocs = () => {
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState("");
+
 	/**
 	 * Async function to query user docs and determine if user with passed in username exists
 	 * @param username String
@@ -24,6 +29,24 @@ const useUserDocs = () => {
 
 		// Check the users table for users with the same displayName
 		const userQuery = query(usersRef, where("displayName", "==", username));
+		const userDocs = await getDocs(userQuery);
+
+		// If there are docs, return true, else return false (0 = falsy)
+		const docLength = userDocs.docs.length;
+		return !!docLength;
+	};
+
+	/**
+	 * @deprecated (Looks like firebase returns a nice error for this, so handled in /firebase/errors)
+	 * Async function to query user docs and determine if user with passed in username exists
+	 * @param username String
+	 * @returns Boolean
+	 */
+	const isEmailTaken = async (email: String) => {
+		const usersRef = collection(db, "users");
+
+		// Check the users table for users with the same email address
+		const userQuery = query(usersRef, where("email", "==", email));
 		const userDocs = await getDocs(userQuery);
 
 		// If there are docs, return true, else return false (0 = falsy)
@@ -42,9 +65,50 @@ const useUserDocs = () => {
 		return await setDoc(doc(db, "users", user.uid), cleanUser);
 	};
 
+	const retrieveUserDoc = async (uid: string) => {
+		setLoading(true);
+
+		const userDocRef = doc(db, "users", uid);
+		const userDocSnap = await getDoc(userDocRef);
+
+		setLoading(false);
+
+		if (userDocSnap.exists()) {
+			return userDocSnap.data();
+		}
+		return null;
+	};
+
+	const updateUserDocField = async (
+		uid: string,
+		field: string,
+		newValue: string | number | boolean
+	) => {
+		const updateObj = {};
+		updateObj[field] = newValue;
+
+		setLoading(true);
+
+		try {
+			const updated = await updateDoc(doc(db, "users", uid), updateObj);
+			console.log("updated", updated);
+		} catch (err: any) {
+			setError(
+				err.message || "Something went wrong while updating a user doc."
+			);
+		}
+
+		setLoading(false);
+	};
+
 	return {
 		isUsernameTaken,
-		createUserDocument
+		isEmailTaken,
+		createUserDocument,
+		retrieveUserDoc,
+		updateUserDocField,
+		loading,
+		error
 	};
 };
 
