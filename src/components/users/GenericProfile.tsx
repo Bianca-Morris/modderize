@@ -11,7 +11,7 @@ interface GenericProfileProps extends PropsWithChildren {
 	description?: string;
 	profileURL?: string;
 	showEdit: boolean;
-	onEditDescription?: () => {};
+	onEditProfile?: () => {};
 	showRequestMod: boolean;
 	onRequestMod?: () => {};
 }
@@ -22,7 +22,7 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 	description,
 	profileURL,
 	showEdit,
-	onEditDescription,
+	onEditProfile,
 	showRequestMod,
 	onRequestMod,
 	children
@@ -70,7 +70,7 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 						<div className="flex mt-5 w-full justify-center gap-3">
 							{showEdit && (
 								<PencilIcon
-									onClick={onEditDescription}
+									onClick={onEditProfile}
 									className="h-8 w-8 cursor-pointer hover:stroke-indigo-300"
 								/>
 							)}
