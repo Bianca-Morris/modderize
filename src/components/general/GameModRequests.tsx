@@ -18,13 +18,7 @@ const GameModRequests: React.FC<GameModRequestsProps> = ({
 	userID
 }) => {
 	const [loading, setLoading] = useState(false);
-	const {
-		modRequestStateValue,
-		setModRequestStateValue,
-		onVote,
-		onDeleteModRequest,
-		onSelectModRequest
-	} = useModRequests();
+	const { modRequestStateValue, setModRequestStateValue } = useModRequests();
 
 	const { modRequests: currModRequests = [] } = modRequestStateValue;
 	const { id: gameID } = gameData;
@@ -78,10 +72,7 @@ const GameModRequests: React.FC<GameModRequestsProps> = ({
 					<ModRequest
 						key={id}
 						{...{
-							title,
-							onVote,
-							onDeleteModRequest,
-							onSelectModRequest
+							title
 						}}
 						modRequest={mr}
 						subTitle={

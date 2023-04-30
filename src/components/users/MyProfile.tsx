@@ -11,6 +11,8 @@ import EditProfileModal from "../modals/EditProfileModal";
 import GenericProfile from "./GenericProfile";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
+import ProfileOpenModsByRequesterID from "../general/ProfileOpenModsByRequesterID";
+import ProfileModsByStatus from "../general/ProfileModsByStatus";
 
 type MyProfileProps = {
 	userData: User;
@@ -57,7 +59,7 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 	}, [userDoc, user]);
 
 	if (!user) {
-		return <div></div>;
+		return null;
 	}
 
 	const { uid, displayName = "", photoURL, email } = user;
@@ -108,12 +110,12 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 					<h2 className="text-2xl font-bold mb-4">
 						My Mods In-Progress
 					</h2>
-					// TODO
+					<ProfileModsByStatus status="in progress" modderID={uid} />
 				</div>
 
 				<div className="">
 					<h2 className="text-2xl font-bold mb-4">My Mod Requests</h2>
-					// TODO
+					<ProfileOpenModsByRequesterID requesterID={uid} />
 				</div>
 			</GenericProfile>
 		</div>

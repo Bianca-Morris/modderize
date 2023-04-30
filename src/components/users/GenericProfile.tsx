@@ -12,7 +12,7 @@ interface GenericProfileProps extends PropsWithChildren {
 	profileURL?: string;
 	donationLink?: string;
 	showEdit: boolean;
-	showTopDonationLink: boolean;
+	showTopDonationLink?: boolean;
 	onEditProfile?: () => void;
 	showRequestMod: boolean;
 	onRequestMod?: () => {};

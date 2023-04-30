@@ -117,10 +117,7 @@ const Home: React.FC<HomePageProps> = ({
 								<ModRequest
 									key={id}
 									{...{
-										title,
-										onVote,
-										onDeleteModRequest,
-										onSelectModRequest
+										title
 									}}
 									modRequest={mr}
 									subTitle={

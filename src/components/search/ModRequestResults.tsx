@@ -38,12 +38,7 @@ const ModRequestResults: React.FC<ModRequestResultsProps> = ({
 							key={id}
 							{...{ title, modRequest }}
 							subTitle="This is a subtitle"
-							onVote={async () => console.log("vote")}
 							userIsCreator={false}
-							onDeleteModRequest={async () =>
-								console.log("delete")
-							}
-							onSelectModRequest={() => null}
 						/>
 					);
 				})}

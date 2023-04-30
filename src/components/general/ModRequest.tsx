@@ -8,36 +8,30 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import React, { ReactElement, useState } from "react";
+import useModRequests from "../../hooks/useModRequests";
 import { ModRequest } from "../../types/docTypes";
 
 type ModRequestShortProps = {
 	numUpvotes?: number;
-	title: string | ReactElement;
 	subTitle: string | ReactElement;
 	userVoteValue?: number;
 	modRequest: ModRequest;
 	userIsCreator: boolean;
-	onVote: () => {};
-	onDeleteModRequest: () => {};
-	onSelectModRequest: () => void;
 	cls?: string;
 };
 
 const ModRequestShort: React.FC<ModRequestShortProps> = ({
 	numUpvotes = 0,
-	title,
 	subTitle,
 	userVoteValue,
 	modRequest,
 	userIsCreator,
-	onVote,
-	onDeleteModRequest,
-	onSelectModRequest,
 	cls
 }) => {
+	const { onVote, onDeleteModRequest, onSelectModRequest } = useModRequests();
 	const [loadingImage, setLoadingImage] = useState(true);
 
-	const { imageURL, completionStatus, id } = modRequest;
+	const { imageURL, completionStatus, id, title } = modRequest;
 
 	return (
 		<div
