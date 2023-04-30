@@ -21,7 +21,13 @@ const GameCard: React.FC<GameCardProps> = ({
 					Placeholder
 				</div>
 			)}
-			{imageURL && <>lol</>}
+			{imageURL && (
+				<img
+					src={imageURL}
+					alt={"Image of " + displayName}
+					className="flex items-center align-center justify-center w-52 h-52 rounded"
+				/>
+			)}
 			<div className="font-bold mt-3 h-10 w-52">{displayName}</div>
 		</Link>
 	);

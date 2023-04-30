@@ -10,6 +10,7 @@ type FileUploadInputProps = {
 	handleSubmit?: React.MouseEventHandler;
 	handleImageChange: React.ChangeEventHandler;
 	disabled: boolean;
+	required?: boolean;
 };
 
 const FileUploadInput: React.FC<FileUploadInputProps> = ({
@@ -20,19 +21,20 @@ const FileUploadInput: React.FC<FileUploadInputProps> = ({
 	accept = "image/png, image/jpeg",
 	handleSubmit,
 	handleImageChange,
-	disabled = false
+	disabled = false,
+	required
 }) => {
 	return (
 		<>
-			<div className="flex max-w-sm gap-2">
+			<div className="flex gap-2">
 				<div className="max-w-full flex whitespace-nowrap flex-row flex-nowrap items-center w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-100 focus:outline-none">
 					<label
 						htmlFor={id}
-						className="bg-gray-200 flex-grow h-full py-2 px-3 mr-2 cursor-pointer"
+						className="bg-gray-200 h-full py-2 px-3 mr-2 cursor-pointer"
 					>
 						{label}
 					</label>
-					<span className="text-ellipsis overflow-hidden max-w-[180px] pr-14">
+					<span className="text-ellipsis overflow-hidden pr-14">
 						{fileName}
 					</span>
 				</div>
@@ -54,7 +56,7 @@ const FileUploadInput: React.FC<FileUploadInputProps> = ({
 				id={id}
 				type="file"
 				onChange={handleImageChange}
-				{...{ accept, disabled }}
+				{...{ accept, disabled, required }}
 			/>
 			{fileInputHelp && (
 				<p className="mt-1 text-xs text-gray-500" id="file_input_help">

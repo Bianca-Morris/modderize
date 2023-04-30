@@ -10,6 +10,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
 import { profileEditModalState } from "../../atoms/profileEditModalAtom";
 import { auth, db } from "../../firebase/clientApp";
+import { extractMetadataFromFile } from "../../helpers";
 import useStorage from "../../hooks/useStorage";
 import useUserDocs from "../../hooks/useUserDocs";
 import Button from "../basic/Button";
@@ -58,11 +59,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
 
 		// Handle image processing
 		if (image) {
-			const metadata = {
-				contentType: "image/jpeg",
-				name: image.name,
-				size: image.size
-			};
+			const metadata = extractMetadataFromFile(image);
 
 			// Wait for image to upload
 			const imageUrl = await uploadFile(
@@ -115,8 +112,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
 		if (files && files.length > 0) {
 			const thisFile = files[0];
 
-			if (thisFile.size < 40000) {
-				console.log("image", files[0]);
+			if (thisFile.size < 50000) {
 				setError("");
 				setImage(files[0]);
 			} else {

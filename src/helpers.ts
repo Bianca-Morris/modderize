@@ -137,3 +137,11 @@ export function getLastVisibleDocument(documentSnapshots: QuerySnapshot): QueryD
 	const lastIndex = documentSnapshots.docs.length-1;
 	return documentSnapshots.docs[lastIndex];
 }
+
+export function extractMetadataFromFile(file: File) {
+	return {
+		contentType: file.type,
+		name: file.name,
+		size: file.size
+	};
+}

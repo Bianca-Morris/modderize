@@ -15,8 +15,6 @@ type UserPageProps = {
 };
 
 const UserPage: React.FC<UserPageProps> = ({ userData }) => {
-	console.log("userData", userData);
-
 	// 404 Error message
 	if (!userData) {
 		return (
