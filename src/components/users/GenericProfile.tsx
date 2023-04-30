@@ -2,6 +2,7 @@ import { ShareIcon, UserIcon } from "@heroicons/react/20/solid";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import React, { PropsWithChildren } from "react";
 import Button from "../basic/Button";
+import SharePopover from "../general/SharePopover";
 import SimpleHeader from "../general/SimpleHeader";
 import ContentBody from "../layout/ContentBody";
 
@@ -96,7 +97,10 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 									className="h-8 w-8 cursor-pointer hover:stroke-indigo-300"
 								/>
 							)}
-							<ShareIcon className="h-8 w-8 cursor-pointer hover:fill-indigo-300" />
+							{/** TODO: Update once deployed and project has URL */}
+							<SharePopover url="https://www.lol.com">
+								<ShareIcon className="h-8 w-8 cursor-pointer hover:fill-indigo-300" />
+							</SharePopover>
 						</div>
 					</div>
 				</div>

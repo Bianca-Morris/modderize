@@ -142,6 +142,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
 			</div>
 			<div className="mt-4 mx-8 flex flex-col">
 				<label htmlFor="about" className="text-left">
+					{/* @TODO: Would be nice to add some validation here to ensure this is a URL */}
 					My Donation Page:
 				</label>
 				<Input
