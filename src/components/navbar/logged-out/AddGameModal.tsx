@@ -166,7 +166,7 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 		if (files && files.length > 0) {
 			const thisFile = files[0];
 
-			if (thisFile.size < 40000) {
+			if (thisFile.size < 60000) {
 				setError("");
 				setImage(files[0]);
 			} else {
