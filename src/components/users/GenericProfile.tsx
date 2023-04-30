@@ -10,8 +10,10 @@ interface GenericProfileProps extends PropsWithChildren {
 	email?: string;
 	description?: string;
 	profileURL?: string;
+	donationLink?: string;
 	showEdit: boolean;
-	onEditProfile?: () => {};
+	showTopDonationLink: boolean;
+	onEditProfile?: () => void;
 	showRequestMod: boolean;
 	onRequestMod?: () => {};
 }
@@ -22,6 +24,8 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 	description,
 	profileURL,
 	showEdit,
+	showTopDonationLink,
+	donationLink,
 	onEditProfile,
 	showRequestMod,
 	onRequestMod,
@@ -49,10 +53,28 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 
 					<h2 className="mt-10 text-2xl font-bold">{displayName}</h2>
 					{email && <div className="text-gray-700">{email}</div>}
+					{donationLink && showTopDonationLink && (
+						<div className="flex text-xs mt-1">
+							(
+							<a
+								href={donationLink}
+								target="_blank"
+								rel="noreferrer"
+								className="text-violet-700 underline"
+							>
+								{donationLink}
+							</a>
+							)
+						</div>
+					)}
 					<div className="mt-4 bg-gray-100 p-5 w-full shadow-sm">
 						<strong>About Me:</strong>
 						<br />
-						{description || (
+						{description ? (
+							<div className="whitespace-pre-wrap max-h-60 overflow-scroll">
+								{description}
+							</div>
+						) : (
 							<i className="italic">No description available</i>
 						)}
 					</div>

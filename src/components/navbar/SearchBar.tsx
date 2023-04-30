@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import Button from "../basic/Button";
 import { useRouter } from "next/router";
 
 type SearchBarProps = {
@@ -45,15 +44,22 @@ const SearchBar: React.FC<SearchBarProps> = ({
 						name="search"
 						id="search"
 						className="block w-full rounded-md border-gray-300 pl-7 pr-32 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-						placeholder="Search Mod Requests..."
+						placeholder="Search..."
 						value={textQuery}
 						onChange={(e) => setTextQuery(e.target.value)}
-						required
 					/>
 					<div className="absolute inset-y-0 right-0 flex items-center">
-						<Button type="submit" variant="noOutline">
-							Search
-						</Button>
+						<label htmlFor="searchType" className="sr-only">
+							Search Type
+						</label>
+						<select
+							id="searchType"
+							name="searchType"
+							className="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm cursor-pointer"
+						>
+							<option value="games">Games</option>
+							<option value="modders">Modders</option>
+						</select>
 					</div>
 				</form>
 			</div>

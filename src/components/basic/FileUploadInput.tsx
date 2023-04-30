@@ -7,8 +7,9 @@ type FileUploadInputProps = {
 	fileName?: string;
 	fileInputHelp?: string;
 	accept?: string;
-	handleSubmit: React.MouseEventHandler;
+	handleSubmit?: React.MouseEventHandler;
 	handleImageChange: React.ChangeEventHandler;
+	disabled: boolean;
 };
 
 const FileUploadInput: React.FC<FileUploadInputProps> = ({
@@ -18,7 +19,8 @@ const FileUploadInput: React.FC<FileUploadInputProps> = ({
 	id = "file_input",
 	accept = "image/png, image/jpeg",
 	handleSubmit,
-	handleImageChange
+	handleImageChange,
+	disabled = false
 }) => {
 	return (
 		<>
@@ -26,7 +28,7 @@ const FileUploadInput: React.FC<FileUploadInputProps> = ({
 				<div className="max-w-full flex whitespace-nowrap flex-row flex-nowrap items-center w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-100 focus:outline-none">
 					<label
 						htmlFor={id}
-						className="bg-gray-200 flex-grow h-full py-2 px-3 mr-2"
+						className="bg-gray-200 flex-grow h-full py-2 px-3 mr-2 cursor-pointer"
 					>
 						{label}
 					</label>
@@ -35,14 +37,16 @@ const FileUploadInput: React.FC<FileUploadInputProps> = ({
 					</span>
 				</div>
 
-				<Button
-					type="button"
-					onClick={handleSubmit}
-					variant="violet"
-					disabled={fileName === "No file chosen..."}
-				>
-					Upload
-				</Button>
+				{!!handleSubmit && (
+					<Button
+						type="button"
+						onClick={handleSubmit}
+						variant="violet"
+						disabled={fileName === "No file chosen..."}
+					>
+						Upload
+					</Button>
+				)}
 			</div>
 			<input
 				className="hidden"
@@ -50,7 +54,7 @@ const FileUploadInput: React.FC<FileUploadInputProps> = ({
 				id={id}
 				type="file"
 				onChange={handleImageChange}
-				{...{ accept }}
+				{...{ accept, disabled }}
 			/>
 			{fileInputHelp && (
 				<p className="mt-1 text-xs text-gray-500" id="file_input_help">

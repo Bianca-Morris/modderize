@@ -4,6 +4,8 @@ import { User } from "firebase/auth";
 export interface UserDoc extends User {
     isAdmin: boolean;
     isActiveModder: boolean;
+    about: string;
+    donationLink: string;
 }
 
 export interface Game extends DocumentData {

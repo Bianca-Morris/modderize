@@ -24,7 +24,7 @@ const useUserDocs = () => {
 	 * @param username String
 	 * @returns Boolean
 	 */
-	const isUsernameTaken = async (username: String) => {
+	const isUsernameTaken = async (username: string) => {
 		const usersRef = collection(db, "users");
 
 		// Check the users table for users with the same displayName
@@ -42,7 +42,7 @@ const useUserDocs = () => {
 	 * @param username String
 	 * @returns Boolean
 	 */
-	const isEmailTaken = async (email: String) => {
+	const isEmailTaken = async (email: string) => {
 		const usersRef = collection(db, "users");
 
 		// Check the users table for users with the same email address
@@ -79,18 +79,14 @@ const useUserDocs = () => {
 		return null;
 	};
 
-	const updateUserDocField = async (
-		uid: string,
-		field: string,
-		newValue: string | number | boolean
-	) => {
-		const updateObj = {};
-		updateObj[field] = newValue;
-
+	const updateUserDoc = async (uid: string, updateObject: {}) => {
 		setLoading(true);
 
 		try {
-			const updated = await updateDoc(doc(db, "users", uid), updateObj);
+			const updated = await updateDoc(
+				doc(db, "users", uid),
+				updateObject
+			);
 			console.log("updated", updated);
 		} catch (err: any) {
 			setError(
@@ -101,11 +97,23 @@ const useUserDocs = () => {
 		setLoading(false);
 	};
 
+	const updateUserDocField = async (
+		uid: string,
+		field: string,
+		newValue: string | number | boolean
+	) => {
+		const updateObj = {};
+		updateObj[field] = newValue;
+
+		await updateUserDoc(uid, updateObj);
+	};
+
 	return {
 		isUsernameTaken,
 		isEmailTaken,
 		createUserDocument,
 		retrieveUserDoc,
+		updateUserDoc,
 		updateUserDocField,
 		loading,
 		error
