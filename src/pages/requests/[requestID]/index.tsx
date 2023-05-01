@@ -5,7 +5,7 @@ import { doc, getDoc } from "@firebase/firestore";
 import { GetServerSidePropsContext } from "next";
 import { Head } from "next/document";
 import React from "react";
-import { db } from "../../../firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import safeJsonStringify from "safe-json-stringify";
 
 import { ModRequest as ModRequestType } from "../../../types/docTypes";
@@ -18,13 +18,16 @@ import {
 	HeartIcon,
 	PencilIcon,
 	PlusIcon,
-	WrenchIcon
+	WrenchIcon,
+	WrenchScrewdriverIcon
 } from "@heroicons/react/20/solid";
 import CardsSearchResult_Modder from "https://framer.com/m/Cards-SearchResult-Modder-Ziap.js@EuFW80XbgjhlwQZxAi0n";
 import ModRequest from "../../../components/general/ModRequest";
 import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import useUserDocs from "../../../hooks/useUserDocs";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 dayjs.extend(relativeTime);
 
@@ -33,6 +36,8 @@ type ModRequestPageProps = {
 };
 
 const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
+	const [user] = useAuthState(auth);
+
 	console.log("modRequestData", modRequestData);
 	if (!modRequestData) {
 		return (
@@ -64,6 +69,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 		requesterID,
 		gameID,
 		gameDisplayName,
+		modderID,
 		modderStatus,
 		completionStatus,
 		lastModified,
@@ -71,6 +77,13 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 	} = modRequestData || {};
 
 	const hasBeenModified = lastModified?.seconds !== creationDate?.seconds;
+
+	const isRequester = requesterID === user?.uid;
+	const isModder = modderID === user?.uid && modderStatus === "accepted";
+	const noModderAssigned =
+		!modderID &&
+		modderStatus !== "accepted" &&
+		modderStatus !== "requested";
 
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-start pb-2">
@@ -143,8 +156,8 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 				</div>
 				<hr />
 				<div className="flex flex-col lg:flex-row px-5 lg:px-0 mt-10 justify-between gap-10">
-					<div className="flex flex-auto flex-col">
-						<div className="max-w-3xl">
+					<div className="flex flex-col">
+						<div className="max-w-2xl">
 							<h2 className="text-xl font-bold mb-5 font-bold">
 								Mod Description:
 							</h2>
@@ -159,29 +172,43 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 							</h3>
 							<div className="border border-gray-200 p-4">
 								<div className="flex w-full items-center justify-center">
-									No modder currently assigned to this
-									project.
+									{!modderID && (
+										<>
+											No modder currently assigned to this
+											project.
+										</>
+									)}
 								</div>
 							</div>
 						</div>
 
-						<div className="flex flex-col md:flex-row gap-0 md:gap-1 lg:gap-3">
-							<Button
-								type="button"
-								variant="red"
-								cls="flex-1 mt-4 bold"
-							>
-								<ArchiveBoxIcon className="w-4 h-4 mr-3" />
-								Archive Request
-							</Button>
-							<Button
-								type="button"
-								variant="indigo"
-								cls="flex-1 mt-4 bold"
-							>
-								<PencilIcon className="w-4 h-4 mr-3" />
-								Edit Request
-							</Button>
+						<div className="flex flex-col justify-center md:flex-row gap-0 md:gap-1 lg:gap-3">
+							{isRequester && (
+								<Button
+									type="button"
+									variant="red"
+									cls="flex-1 mt-4 bold"
+								>
+									<ArchiveBoxIcon className="w-4 h-4 mr-3" />
+									Archive Request
+								</Button>
+							)}
+							{isRequester && (
+								<Button
+									type="button"
+									variant="indigo"
+									cls="flex-1 mt-4 bold"
+								>
+									<PencilIcon className="w-4 h-4 mr-3" />
+									Edit Request
+								</Button>
+							)}
+							{!!user && !isRequester && noModderAssigned && (
+								<Button type="button" variant="blue">
+									<WrenchScrewdriverIcon className="w-4 h-4 mr-3" />
+									Work on This Request
+								</Button>
+							)}
 						</div>
 					</div>
 				</div>

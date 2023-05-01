@@ -41,7 +41,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 				showTopDonationLink={isActiveModder && donationLink}
 				{...{ donationLink }}
 				showEdit={false}
-				showRequestMod={!!activeUser}
+				showRequestMod={!!activeUser && isActiveModder}
 			>
 				<div className="mb-10">
 					<h2 className="text-2xl font-bold mb-4">

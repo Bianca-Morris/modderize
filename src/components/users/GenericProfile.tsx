@@ -44,7 +44,7 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 							src={profileURL}
 							// src="https://assets2.gyazo.com/assets/images/top/surf-9251859ffc.svg"
 							// src="https://github.com/creativetimofficial/soft-ui-dashboard-tailwind/blob/main/build/assets/img/team-2.jpg?raw=true"
-							className="shadow-xl rounded-full align-middle border-none h-32 w-32"
+							className="shadow-xl rounded-full align-middle border-none h-52 w-52"
 						/>
 					) : (
 						<div className="shadow-xl bg-gray-300 h-52 w-52 rounded-full align-middle border-none flex items-center justify-center">
