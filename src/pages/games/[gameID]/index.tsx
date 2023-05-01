@@ -69,7 +69,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 	const { modRequests: currModRequests = [] } = modRequestStateValue;
 
 	const router = useRouter();
-	const { id: gameID, displayName, numberOfPlayers } = gameData;
+	const { id: gameID, displayName, numberOfPlayers, imageURL } = gameData;
 	const {
 		gameStateValue,
 		onToggleGameFavoriteStatus,
@@ -175,6 +175,15 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 
 				<div className="flex flex-1 flex-col mt-10 gap-2">
 					<div className="flex flex-col gap-0">
+						{imageURL && (
+							<div className="flex justify-center mb-3">
+								<img
+									src={imageURL}
+									alt={displayName + " Cover Image"}
+									className="w-52 h-52 rounded"
+								/>
+							</div>
+						)}
 						<h3 className="text-xl font-bold bg-gray-200 p-4">
 							Game Info
 						</h3>
