@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import {
 	collection,
@@ -10,14 +10,19 @@ import {
 	updateDoc,
 	where
 } from "firebase/firestore";
-import { db } from "../firebase/clientApp";
+import { auth, db } from "../firebase/clientApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { UserDoc } from "../types/docTypes";
 
 /**
  * Returns an object containing a set of methods for interacting with User documents
  */
 const useUserDocs = () => {
+	const [userDoc, setUserDoc] = useState<UserDoc>();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
+
+	const [user] = useAuthState(auth);
 
 	/**
 	 * Async function to query user docs and determine if user with passed in username exists
@@ -56,13 +61,16 @@ const useUserDocs = () => {
 
 	// NOTE: This is a non-standard approach to adding properties to user doc; better solution
 	// is to use Firebase Cloud Functions -- did not want to add CC info to FB.
-	// Similar code in OAuthGoogleButton
 	const createUserDocument = async (user: User) => {
+		// Note: User could be a pre-existing or brand new user
+		const { uid } = user;
+		const userDocRef = doc(db, "users", uid);
+
 		// Prevent bug with second+ submissions by parse/stringifying
 		const cleanUser = JSON.parse(JSON.stringify(user));
 
-		// Add user object to the db and ensure ID is pulled from auth provider's uid
-		return await setDoc(doc(db, "users", user.uid), cleanUser);
+		// Go ahead and create or add user to this document
+		await setDoc(userDocRef, cleanUser);
 	};
 
 	const retrieveUserDoc = async (uid: string) => {
@@ -81,6 +89,7 @@ const useUserDocs = () => {
 
 	const updateUserDoc = async (uid: string, updateObject: {}) => {
 		setLoading(true);
+		setError("");
 
 		try {
 			const updated = await updateDoc(
@@ -108,13 +117,38 @@ const useUserDocs = () => {
 		await updateUserDoc(uid, updateObj);
 	};
 
+	const refreshLoggedInUserDoc = async () => {
+		if (!user) {
+			console.log("User not logged in. Can't retrieve user doc.");
+			return;
+		}
+		const newestUserDoc = (await retrieveUserDoc(user.uid)) as UserDoc;
+		setUserDoc(newestUserDoc);
+	};
+
+	const clearUserDoc = () => {
+		setUserDoc(undefined);
+	};
+
+	// On user change, grab user doc and update it
+	useEffect(() => {
+		if (user) {
+			refreshLoggedInUserDoc();
+		} else if (!user && !!userDoc) {
+			clearUserDoc();
+		}
+	}, [user]);
+
 	return {
+		clearUserDoc,
 		isUsernameTaken,
 		isEmailTaken,
 		createUserDocument,
 		retrieveUserDoc,
 		updateUserDoc,
 		updateUserDocField,
+		refreshLoggedInUserDoc,
+		userDoc,
 		loading,
 		error
 	};
