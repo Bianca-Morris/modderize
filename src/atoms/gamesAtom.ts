@@ -13,7 +13,7 @@ export interface GameSnippet {
 interface GameState {
     favoriteGames: GameSnippet[];
     currentGame?: Game;
-    // viewedGames
+    allGames?: Game[];
 }
 
 const defaultGameState: GameState = {
