@@ -34,16 +34,12 @@ const ProfileOpenModsByRequesterID: React.FC<
 		{}
 	);
 
-	if (!user) {
-		return null;
-	}
-
 	return (
 		<div>
 			{loading && <ModRequestLoader />}
-			{!loading && docs.length === 0 && (
+			{!loading && !docs.length ? (
 				<div>
-					No open mod requests.{" "}
+					No open mod requests{" "}
 					{user && user.uid === requesterID && (
 						<>
 							<Link
@@ -56,7 +52,7 @@ const ProfileOpenModsByRequesterID: React.FC<
 						</>
 					)}
 				</div>
-			)}
+			) : null}
 			{docs.map((doc) => (
 				<ModRequestShort
 					key={doc.id}
