@@ -6,8 +6,9 @@ import { useRecoilState } from "recoil";
 import { gameModalState as globalGameModalState } from "../../../atoms/gameModalAtom";
 
 const CreateNewGameButton: React.FC = () => {
+	// This button should not appear for non-admin users
 	const [, setGameModalState] = useRecoilState(globalGameModalState);
-	// TODO: Restrict this button to only appear when logged in as admin
+
 	return (
 		<a
 			className={classNames(

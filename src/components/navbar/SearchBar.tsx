@@ -27,7 +27,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 		console.log(textQuery);
 
 		const query = encodeURIComponent(textQuery);
-		router.push(`/search/?type=modRequests&q=${query}`);
+		router.push(`/games?keyword=${query}`);
 	};
 
 	return (
