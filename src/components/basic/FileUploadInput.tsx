@@ -15,7 +15,7 @@ type FileUploadInputProps = {
 
 const FileUploadInput: React.FC<FileUploadInputProps> = ({
 	label = "Choose file",
-	fileInputHelp = "PNG or JPG (MAX. 50kb, RECOMMENDED 128x128px).",
+	fileInputHelp = "JPG (MAX. 50kb, RECOMMENDED 208x208px).",
 	fileName = "No file chosen...",
 	id = "file_input",
 	accept = "image/png, image/jpeg",
