@@ -63,6 +63,10 @@ const useGameData = () => {
 		}
 	};
 
+	/**
+	 * @deprecated Was going to be used for dropdown filters; no longer necessary
+	 * @returns
+	 */
 	const getDropdownGames = async () => {
 		setError("");
 		setLoading(true);
@@ -198,6 +202,18 @@ const useGameData = () => {
 		if (!user) return;
 		getFavoriteGames();
 	}, [user]);
+
+	// On first load, grab all of the games
+	useEffect(() => {
+		(async () => {
+			const allGamesFirstLoad = await getAllGames();
+			// add this data to global app state
+			setGameStateValue((prev) => ({
+				...prev,
+				allGames: allGamesFirstLoad as Game[]
+			}));
+		})();
+	}, []);
 
 	return {
 		gameStateValue,
