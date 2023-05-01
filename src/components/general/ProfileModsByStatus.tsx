@@ -16,8 +16,8 @@ type ProfileModsByStatusProps = {
 };
 
 const statusToNoneAvailableString = {
-	"in progress": "No mods currently in progress.",
-	complete: "No mods completed."
+	"in progress": "No mods currently in progress",
+	complete: "No mods completed"
 };
 
 const ProfileModsByStatus: React.FC<ProfileModsByStatusProps> = ({
