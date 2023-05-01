@@ -6,14 +6,16 @@ import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { signOut } from "@firebase/auth";
 import { auth } from "../../../firebase/clientApp";
 import { User } from "firebase/auth";
-import { useResetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { gameState } from "../../../atoms/gamesAtom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import useUserDocs from "../../../hooks/useUserDocs";
 
 interface UserMenuButtonProps {}
 
 const UserMenuButton: React.FC<UserMenuButtonProps> = () => {
-	const resetGameState = useResetRecoilState(gameState);
+	const setGameStateValue = useSetRecoilState(gameState);
+	const { userDoc, clearUserDoc } = useUserDocs();
 	const [user] = useAuthState(auth);
 
 	const { photoURL, displayName, email } = user || {};
@@ -22,7 +24,16 @@ const UserMenuButton: React.FC<UserMenuButtonProps> = () => {
 		await signOut(auth);
 
 		// once logout is complete, reset state for that user
-		resetGameState();
+
+		// delete favoriteGames from global recoil state
+		setGameStateValue((prev) => {
+			return { ...prev, favoriteGames: [] };
+		});
+
+		if (userDoc) {
+			// delete userDocs from hook state
+			clearUserDoc();
+		}
 	};
 
 	const navigation = [

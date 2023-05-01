@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { User } from "firebase/auth";
-import { DocumentData } from "firebase/firestore";
 import { useSetRecoilState } from "recoil";
 
 import { profileEditModalState } from "../../atoms/profileEditModalAtom";
@@ -19,30 +18,24 @@ type MyProfileProps = {
 };
 
 const MyProfile: React.FC<MyProfileProps> = () => {
-	const [userDoc, setUserDoc] = useState<DocumentData | null>();
 	const [modalKey, setModalKey] = useState<number>(0);
-	const { isActiveModder = false, about, donationLink } = userDoc || {};
 	const [user] = useAuthState(auth);
 
-	const { retrieveUserDoc, updateUserDocField, loading } = useUserDocs();
+	const { userDoc, refreshLoggedInUserDoc, updateUserDocField, loading } =
+		useUserDocs();
+	const {
+		isActiveModder = false,
+		about = "",
+		donationLink = ""
+	} = userDoc || {};
+
 	const setOpenProfileEditModalStateValue = useSetRecoilState(
 		profileEditModalState
 	);
 
 	useEffect(() => {
-		onLoad();
+		refreshLoggedInUserDoc();
 	}, []);
-
-	useEffect(() => {
-		console.log("new user Doc", userDoc);
-	}, [isActiveModder]);
-
-	const onLoad = async () => {
-		if (!user) {
-			return;
-		}
-		return retrieveUserDoc(uid).then((doc) => setUserDoc(doc));
-	};
 
 	const handleOpenModal = () => {
 		setOpenProfileEditModalStateValue((prev) => ({
@@ -71,7 +64,7 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 					<EditProfileForm
 						initialAbout={about}
 						initialDonationLink={donationLink}
-						postSubmitReload={onLoad}
+						postSubmitReload={refreshLoggedInUserDoc}
 					/>
 				</EditProfileModal>
 			)}
@@ -102,7 +95,7 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 							newState
 						);
 						// Update state here
-						onLoad();
+						await refreshLoggedInUserDoc();
 					}}
 				/>
 				<hr className="my-3" />
