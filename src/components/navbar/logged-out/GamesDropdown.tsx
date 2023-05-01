@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Menu } from "@headlessui/react";
 import { HeartIcon } from "@heroicons/react/20/solid";
 import { useRecoilValue } from "recoil";
@@ -12,43 +12,47 @@ import { classNames } from "../../../helpers";
 import CreateNewGameButton from "./CreateNewGameButton";
 import useGameData from "../../../hooks/useGameData";
 import { Game } from "../../../types/docTypes";
+import useUserDocs from "../../../hooks/useUserDocs";
+import { useRouter } from "next/router";
 
 type GamesDropdownProps = {};
 
 const GamesDropdown: React.FC<GamesDropdownProps> = () => {
-	const [games, setGames] = useState<Game[]>([]);
-	const active = null;
-	const { loading, getDropdownGames } = useGameData();
+	const router = useRouter();
+	const slashGamesActive = router.asPath === "/games";
+	const gamePageActive = router.asPath.startsWith("/games");
 
 	const [user] = useAuthState(auth);
+	const { userDoc } = useUserDocs();
 
-	const { favoriteGames = [] } = useRecoilValue(gameState);
+	const gameStateValue = useRecoilValue(gameState);
+	const { favoriteGames = [], allGames = [] } = gameStateValue;
+
 	const anyFavoriteGames = favoriteGames.length > 0;
-
-	// On load, fetch a bunch of the games, if they aren't already present
-	useEffect(() => {
-		if (!user && !loading && games.length === 0) {
-			// Grab a list of all of the games
-			getDropdownGames().then((arr: Game[]) => setGames(arr));
-		}
-	}, [user, loading]);
 
 	return (
 		<Dropdown
-			btnCls="uppercase inline-flex text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer"
+			btnCls={classNames(
+				gamePageActive
+					? "bg-gray-900 text-white"
+					: "text-gray-300 hover:bg-gray-700 hover:text-white",
+				"uppercase inline-flex px-3 py-2 rounded-md text-sm font-medium cursor-pointer"
+			)}
 			title="Games"
 		>
-			{user && (
-				<>
-					<Menu.Item>
-						<div>
-							{/** Div only exists to avoid forwardRef warning */}
-							<CreateNewGameButton />
-						</div>
-					</Menu.Item>
-					<hr />
-				</>
-			)}
+			{user &&
+				userDoc &&
+				userDoc.isAdmin && ( // Show only when logged in as admin user
+					<>
+						<Menu.Item>
+							<div>
+								{/** Div only exists to avoid forwardRef warning */}
+								<CreateNewGameButton />
+							</div>
+						</Menu.Item>
+						<hr />
+					</>
+				)}
 			<div className="text-gray-700 px-4 pt-4 pb-2 text-sm">
 				{user ? (
 					<span className="flex items-center">
@@ -60,33 +64,15 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 				)}
 			</div>
 
-			{favoriteGames.map((snippet) => {
-				const { gameID, gameName } = snippet;
-				return (
-					<Menu.Item key={gameID}>
-						<Link
-							className={classNames(
-								active
-									? "bg-gray-200 text-gray-900"
-									: "text-gray-700 hover:bg-gray-100",
-								"block px-4 py-2 text-sm cursor-pointer font-normal capitalize"
-							)}
-							href={`/games/${gameID}`}
-						>
-							{gameName}
-						</Link>
-					</Menu.Item>
-				);
-			})}
-
-			{!user &&
-				games.map((game) => {
-					const { id: gameID, displayName: gameName } = game;
+			{!!user &&
+				favoriteGames.map((snippet) => {
+					const { gameID, gameName } = snippet;
+					const thisGameActive = router.asPath === `/games/${gameID}`;
 					return (
 						<Menu.Item key={gameID}>
 							<Link
 								className={classNames(
-									active
+									thisGameActive
 										? "bg-gray-200 text-gray-900"
 										: "text-gray-700 hover:bg-gray-100",
 									"block px-4 py-2 text-sm cursor-pointer font-normal capitalize"
@@ -99,6 +85,35 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 					);
 				})}
 
+			{!user && (
+				<>
+					{allGames.slice(0, 6).map((game) => {
+						const { id: gameID, displayName: gameName } = game;
+
+						const thisGameActive =
+							router.asPath === `/games/${gameID}`;
+						return (
+							<Menu.Item key={gameID}>
+								<Link
+									className={classNames(
+										thisGameActive
+											? "bg-gray-200 text-gray-900"
+											: "text-gray-700 hover:bg-gray-100",
+										"block px-4 py-2 text-sm cursor-pointer font-normal capitalize"
+									)}
+									href={`/games/${gameID}`}
+								>
+									{gameName}
+								</Link>
+							</Menu.Item>
+						);
+					})}
+					<div className="text-gray-400 text-xs font-normal px-4 py-2">
+						(+ {allGames.length - 5} more)
+					</div>
+				</>
+			)}
+
 			{user && !anyFavoriteGames && (
 				<div className="text-gray-400 px-4 py-4 font-normal capitalize text-xs">
 					No favorite games yet!
@@ -109,7 +124,7 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 			<Menu.Item>
 				<Link
 					className={classNames(
-						active
+						slashGamesActive
 							? "bg-gray-200 text-gray-900"
 							: "text-gray-700 hover:bg-gray-100",
 						"block px-4 py-2 text-sm cursor-pointer font-normal capitalize"
