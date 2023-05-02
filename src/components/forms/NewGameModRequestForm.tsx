@@ -8,7 +8,7 @@ import {
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { db } from "../../firebase/clientApp";
-import { ModRequest } from "../../types/docTypes";
+import { ModRequestSansID } from "../../types/docTypes";
 import Alert from "../basic/Alert";
 import Button from "../basic/Button";
 import Input from "../basic/Input";
@@ -33,7 +33,7 @@ const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 
 	const handleCreateGameModRequest = async () => {
 		// create the new game mod request object => type ModRequest
-		const newModRequest: ModRequest = {
+		const newModRequest: ModRequestSansID = {
 			gameID,
 			gameDisplayName,
 			title,
@@ -55,13 +55,12 @@ const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 				collection(db, "modRequests"),
 				newModRequest
 			);
-			console.log("modRequestDocRef", modRequestDocRef);
 			setLoading(false);
 
 			// redirect the user back to the game page
 			router.back();
 		} catch (error: any) {
-			console.log("handleCreateModRequest error", error.message);
+			console.error("handleCreateModRequest error", error.message);
 			setError(true);
 			setLoading(false);
 		}

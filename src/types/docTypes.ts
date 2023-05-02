@@ -6,21 +6,20 @@ export interface UserDoc extends User {
     isActiveModder: boolean;
     about: string;
     donationLink: string;
+    likedPostIDs: string[];
 }
 
 export interface Game extends DocumentData {
     id: string;
     creatorId: string;
     displayName: string;
-    numberOfPlayers: number;
+    numberOfPlayers: number; // Number of users that "favorite" the game
     createdAt?: Timestamp;
     imageURL?: string;
     docRef?: DocumentReference;
 }
 
-export type ModRequest = {
-    id?: string;    // ID gets populated by firebase
-    
+export interface ModRequestSansID extends DocumentData {    
     gameID: string;
     gameDisplayName?: string;
 
@@ -41,4 +40,8 @@ export type ModRequest = {
 
     imageURL?: string;
     docRef?: DocumentReference;
+}
+
+export interface ModRequest extends ModRequestSansID {
+    id: string;  // ID gets populated by firebase
 }
