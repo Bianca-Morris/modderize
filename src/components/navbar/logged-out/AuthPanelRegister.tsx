@@ -54,7 +54,9 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 			createUserWithEmailAndPassword(email, password);
 			// Firebase errors, will be captured by useEffect below
 		} catch (error) {
-			console.log("Error while creating user with email and password...");
+			console.error(
+				"Error while creating user with email and password..."
+			);
 		}
 	};
 
@@ -98,7 +100,6 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					return createUserDocument(user);
 				})
 				.then(() => {
-					console.log("created new user successfully!");
 					// Redirect user to their profile page, so they can add images/make any edits
 					router.push(`/users/${user.uid}`);
 				})
@@ -106,7 +107,7 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					// An error occurred
 					// ...
 					setError(error.message);
-					console.log(
+					console.error(
 						"Error while updating new user displayName",
 						error
 					);

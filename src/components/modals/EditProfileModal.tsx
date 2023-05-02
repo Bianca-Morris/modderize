@@ -29,7 +29,6 @@ const EditProfileModal: React.FC<PropsWithChildren> = ({ children }) => {
 	// When user is not loaded, close the modal
 	useEffect(() => {
 		if (!user) handleClose();
-		console.log("user", user);
 	}, [user]);
 
 	return (

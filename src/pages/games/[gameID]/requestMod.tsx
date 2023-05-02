@@ -19,7 +19,6 @@ import { Game, ModRequest } from "../../../types/docTypes";
 type RequestModPageProps = { gameData: Game };
 
 const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
-	console.log("requestmodpage gameData", gameData);
 	if (!gameData) {
 		return <GameNotFoundPage />;
 	}
@@ -77,8 +76,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 		// Grab document for this game
 		const gameDocRef = doc(db, "games", gameID as string);
 		const gameDoc = await getDoc(gameDocRef);
-
-		console.log("requestMod gameDoc", gameDoc);
 
 		return {
 			props: {

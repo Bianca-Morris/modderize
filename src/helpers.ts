@@ -115,7 +115,7 @@ export function constructGameQuery(
 			limit(DOCUMENTS_PER_PAGE)
 		);
 	} else {
-		console.log("found no keyword", keyword);
+		console.error("found no keyword:", keyword);
 		returnQuery = query(
 			coll,
 			orderBy(sortField, sortValue),

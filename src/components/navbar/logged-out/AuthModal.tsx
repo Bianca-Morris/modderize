@@ -31,7 +31,6 @@ const AuthModal: React.FC = () => {
 	// When user is loaded, close the modal
 	useEffect(() => {
 		if (user) handleClose();
-		console.log("user", user);
 	}, [user]);
 
 	return (

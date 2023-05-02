@@ -24,7 +24,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
 	const onStartSearch = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(textQuery);
 
 		const query = encodeURIComponent(textQuery);
 		router.push(`/games?keyword=${query}`);

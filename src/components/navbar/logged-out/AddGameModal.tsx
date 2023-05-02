@@ -161,8 +161,6 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { target: { files = [] } = {} } = e;
 
-		console.log("files", files);
-
 		if (files && files.length > 0) {
 			const thisFile = files[0];
 

@@ -1,33 +1,26 @@
 /**
  * Page for viewing all of the mod requests for a particular game
  */
+import React from "react";
 import { doc, getDoc } from "@firebase/firestore";
 import { GetServerSidePropsContext } from "next";
-import { Head } from "next/document";
-import React from "react";
-import { auth, db } from "../../../firebase/clientApp";
+import Link from "next/link";
+import { useAuthState } from "react-firebase-hooks/auth";
+import dayjs from "dayjs";
 import safeJsonStringify from "safe-json-stringify";
-
-import { ModRequest as ModRequestType } from "../../../types/docTypes";
-import Button from "../../../components/basic/Button";
-import SimpleHeader from "../../../components/general/SimpleHeader";
+import relativeTime from "dayjs/plugin/relativeTime";
 import {
 	ArchiveBoxIcon,
 	HandThumbDownIcon,
 	HandThumbUpIcon,
-	HeartIcon,
 	PencilIcon,
-	PlusIcon,
-	WrenchIcon,
 	WrenchScrewdriverIcon
 } from "@heroicons/react/20/solid";
-import CardsSearchResult_Modder from "https://framer.com/m/Cards-SearchResult-Modder-Ziap.js@EuFW80XbgjhlwQZxAi0n";
-import ModRequest from "../../../components/general/ModRequest";
-import Link from "next/link";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import useUserDocs from "../../../hooks/useUserDocs";
-import { useAuthState } from "react-firebase-hooks/auth";
+
+import { auth, db } from "../../../firebase/clientApp";
+import { ModRequest as ModRequestType } from "../../../types/docTypes";
+import Button from "../../../components/basic/Button";
+import SimpleHeader from "../../../components/general/SimpleHeader";
 
 dayjs.extend(relativeTime);
 
@@ -38,7 +31,6 @@ type ModRequestPageProps = {
 const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 	const [user] = useAuthState(auth);
 
-	console.log("modRequestData", modRequestData);
 	if (!modRequestData) {
 		return (
 			<div className="flex min-h-screen flex-col item-center justify-start pb-2">

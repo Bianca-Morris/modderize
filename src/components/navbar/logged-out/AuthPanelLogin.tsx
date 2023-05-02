@@ -18,15 +18,14 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 	});
 	const { email, password } = loginForm;
 
-	const [signInWithEmailAndPasssword, user, loading, firebaseError] =
+	const [signInWithEmailAndPassword, user, loading, firebaseError] =
 		useSignInWithEmailAndPassword(auth);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		try {
-			signInWithEmailAndPasssword(email, password);
-			console.log("user", user);
+			signInWithEmailAndPassword(email, password);
 		} catch (e) {
 			console.error("error", e);
 		}

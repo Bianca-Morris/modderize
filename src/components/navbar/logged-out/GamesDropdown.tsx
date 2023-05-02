@@ -29,7 +29,7 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 	const { favoriteGames = [], allGames = [] } = gameStateValue;
 
 	const anyFavoriteGames = favoriteGames.length > 0;
-
+	console.log("GamesDropdown userDoc", userDoc);
 	return (
 		<Dropdown
 			btnCls={classNames(

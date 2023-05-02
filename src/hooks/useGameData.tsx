@@ -57,7 +57,7 @@ const useGameData = () => {
 
 			return gamesArr;
 		} catch (error: any) {
-			console.log("getAllGames error", error);
+			console.error("getAllGames error", error);
 			setError(error.message);
 			return [];
 		}
@@ -89,7 +89,7 @@ const useGameData = () => {
 
 			return gamesArr;
 		} catch (error: any) {
-			console.log("getAllGames error", error);
+			console.error("getAllGames error", error);
 			setError(error.message);
 			return [];
 		}
@@ -112,10 +112,8 @@ const useGameData = () => {
 				...prev,
 				favoriteGames: snippets as GameSnippet[]
 			}));
-
-			console.log("snippets", snippets);
 		} catch (error: any) {
-			console.log("useGameData error getting snippets", error);
+			console.error("useGameData error getting snippets", error);
 			setError(error.message);
 		}
 
@@ -160,7 +158,7 @@ const useGameData = () => {
 				favoriteGames: [...prev.favoriteGames, newSnippet]
 			}));
 		} catch (error: any) {
-			console.log("favoriteGame Error", error);
+			console.error("favoriteGame Error", error);
 			setError(error.message);
 		}
 
@@ -190,7 +188,7 @@ const useGameData = () => {
 				)
 			}));
 		} catch (error: any) {
-			console.log("unfavoriteGame Error", error);
+			console.error("unfavoriteGame Error", error);
 			setError(error.message);
 		}
 

@@ -28,7 +28,6 @@ const ModRequestsPage: React.FC = () => {
 	// Update snapshot when snapshot is loaded
 	useEffect(() => {
 		if (snapshot) {
-			console.log("snapshot", snapshot);
 			setDocSnapshot(snapshot);
 		}
 	}, [snapshot]);
@@ -45,7 +44,6 @@ const ModRequestsPage: React.FC = () => {
 	// Update items state when docs are loaded
 	useEffect(() => {
 		if (docs && docs.length) {
-			console.log("docs", docs);
 			setItems([...items, ...docs]);
 		}
 	}, [docs]);

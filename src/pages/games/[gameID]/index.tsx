@@ -27,7 +27,6 @@ type GamePageProps = {
 };
 
 const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
-	console.log("gameData", gameData);
 	if (!gameData) {
 		return (
 			<div className="flex min-h-screen flex-col item-center justify-start pb-2">
@@ -100,7 +99,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 				setModRequestCount(count);
 			})
 			.catch((err) => {
-				console.log(
+				console.error(
 					`Error getting count of mods for ${displayName}: `,
 					err
 				);
