@@ -15,7 +15,7 @@ type UserProfileProps = {
 const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 	const { uid, displayName, photoURL } = userData;
 	const [viewingUserDoc, setViewingUserDoc] = useState<DocumentData | null>();
-	const { retrieveUserDoc } = useUserDocs();
+	const { getUserDoc } = useUserDocs();
 	const [activeUser] = useAuthState(auth);
 
 	const {
@@ -29,7 +29,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 	}, []);
 
 	const onLoad = async () => {
-		return retrieveUserDoc(uid).then((doc) => setViewingUserDoc(doc));
+		return getUserDoc(uid).then((doc) => setViewingUserDoc(doc));
 	};
 
 	return (

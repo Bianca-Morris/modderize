@@ -1,22 +1,27 @@
 import React from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import UserMenuItem from "./UserMenuItem";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { signOut } from "@firebase/auth";
-import { auth } from "../../../firebase/clientApp";
-import { User } from "firebase/auth";
-import { useSetRecoilState } from "recoil";
-import { gameState } from "../../../atoms/gamesAtom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+
+import { auth } from "../../../firebase/clientApp";
+import UserMenuItem from "./UserMenuItem";
+import { gameState } from "../../../atoms/gamesAtom";
+import { userDocAtom } from "../../../atoms/userDocAtom";
 import useUserDocs from "../../../hooks/useUserDocs";
+import useUserDoc from "../../../hooks/useUserDoc";
 
 interface UserMenuButtonProps {}
 
 const UserMenuButton: React.FC<UserMenuButtonProps> = () => {
 	const setGameStateValue = useSetRecoilState(gameState);
-	const { userDoc, clearUserDoc } = useUserDocs();
+
 	const [user] = useAuthState(auth);
+	const { userDoc } = useUserDoc();
+
+	const clearUserDoc = useResetRecoilState(userDocAtom);
 
 	const { photoURL, displayName, email } = user || {};
 
@@ -30,8 +35,8 @@ const UserMenuButton: React.FC<UserMenuButtonProps> = () => {
 			return { ...prev, favoriteGames: [] };
 		});
 
+		// trigger a cleanup of global user doc state
 		if (userDoc) {
-			// delete userDocs from hook state
 			clearUserDoc();
 		}
 	};

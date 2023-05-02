@@ -21,54 +21,26 @@ import GameModRequests from "../../../components/general/GameModRequests";
 import { useSetRecoilState } from "recoil";
 import { gameState } from "../../../atoms/gamesAtom";
 import useModRequests from "../../../hooks/useModRequests";
+import {
+	useCollectionData,
+	useDocumentData
+} from "react-firebase-hooks/firestore";
+import GameNotFoundPage from "../../../components/pages/GameNotFound";
+import { collection, orderBy, query, where } from "firebase/firestore";
+import {
+	gameConverter,
+	modRequestConverter
+} from "../../../helpers/converters";
+import ModRequestList from "../../../components/general/ModRequestList";
 
 type GamePageProps = {
-	gameData: Game;
+	gameID: string;
 };
 
-const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
-	if (!gameData) {
-		return (
-			<div className="flex min-h-screen flex-col item-center justify-start pb-2">
-				<SimpleHeader>
-					<div className="flex text-center text-3xl">
-						<h1>Error: Game Not Found</h1>
-					</div>
-				</SimpleHeader>
-				<div className="w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
-					<div className="py-6">
-						<h1 className="text-xl font-bold font-medium text-gray-900 mb-3">
-							Sorry!
-						</h1>
-						<h2>This game doesn't seem to be on Modderize.</h2>
-						<p>
-							Check the spelling of the ID or&nbsp;
-							<a
-								className="underline text-gray-500"
-								href="/browse"
-							>
-								Browse by Game
-							</a>
-							.
-						</p>
-						<Button type="button" variant="gray" cls="mt-3">
-							Request a Game
-						</Button>
-					</div>
-				</div>
-			</div>
-		);
-	}
-
-	const [modRequestCount, setModRequestCount] = useState(0);
-	const [user] = useAuthState(auth);
-	const setGameStateValue = useSetRecoilState(gameState);
-
-	const { modRequestStateValue } = useModRequests();
-	const { modRequests: currModRequests = [] } = modRequestStateValue;
-
+const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 	const router = useRouter();
-	const { id: gameID, displayName, numberOfPlayers, imageURL } = gameData;
+	const setGameStateValue = useSetRecoilState(gameState);
+	const [modRequestCount, setModRequestCount] = useState(0);
 	const {
 		gameStateValue,
 		onToggleGameFavoriteStatus,
@@ -76,21 +48,17 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 		getModRequestsForGameCount
 	} = useGameData();
 
-	const isGameFavorited = !!gameStateValue.favoriteGames.find(
-		(item) => item.gameID === gameID
-	);
+	const collectionRef = collection(db, "games").withConverter(gameConverter);
+	const gameDocRef = doc(collectionRef, gameID);
 
-	const onClickCreateNewModRequest = () => {
-		const { gameID } = router.query;
-		router.push(`/games/${gameID}/requestMod`);
-	};
+	const [gameData, gameLoading, gameError] = useDocumentData(gameDocRef);
 
 	// On page load
 	useEffect(() => {
 		// Set the current game to this one in recoil state
 		setGameStateValue((prev) => ({
 			...prev,
-			currentGame: gameData
+			currentGame: gameData as Game
 		}));
 
 		// Grab the count of game mods available for this game and store in state
@@ -104,7 +72,24 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 					err
 				);
 			});
-	}, []);
+	}, [gameID]);
+
+	if (!gameID) {
+		return <GameNotFoundPage />;
+	}
+
+	const [user] = useAuthState(auth);
+
+	const { displayName, numberOfPlayers, imageURL } = gameData || {};
+
+	const isGameFavorited = !!gameStateValue.favoriteGames.find(
+		(item) => item.gameID === gameID
+	);
+
+	const onClickCreateNewModRequest = () => {
+		const { gameID } = router.query;
+		router.push(`/games/${gameID}/requestMod`);
+	};
 
 	return (
 		<ContentBody innerCls="flex-col-reverse lg:flex-row px-10">
@@ -112,7 +97,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 				<SimpleHeader>
 					<div className="flex flex-col md:flex-row justify-between gap-3 md:gap-0">
 						<div className="flex flex-col text-3xl">
-							<h1>{displayName}</h1>
+							<h1>{gameLoading ? "" : displayName}</h1>
 							{user && !isGameFavorited && (
 								<Button
 									type="button"
@@ -120,7 +105,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 									cls="mt-3"
 									onClick={() =>
 										onToggleGameFavoriteStatus(
-											gameData,
+											gameData as Game,
 											isGameFavorited
 										)
 									}
@@ -137,7 +122,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 									cls="mt-3"
 									onClick={() =>
 										onToggleGameFavoriteStatus(
-											gameData,
+											gameData as Game,
 											isGameFavorited
 										)
 									}
@@ -169,7 +154,17 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 					<h2 className="text-2xl font-bold mb-4">
 						Newest Mod Requests
 					</h2>
-					<GameModRequests {...{ gameData }} userID={user?.uid} />
+					{!gameLoading && (
+						<ModRequestList
+							query={query(
+								collection(db, "modRequests").withConverter(
+									modRequestConverter
+								),
+								where("gameID", "==", gameID),
+								orderBy("creationDate", "desc")
+							)}
+						/>
+					)}
 				</div>
 
 				<div className="flex flex-1 flex-col mt-10 gap-2">
@@ -204,7 +199,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 						</div>
 					</div>
 
-					{currModRequests.length > 0 && (
+					{/* {currModRequests.length > 0 && (
 						<Button
 							type="button"
 							variant="violet"
@@ -217,66 +212,16 @@ const GamePage: React.FC<GamePageProps> = ({ gameData }) => {
 						>
 							View All Mods for {displayName}
 						</Button>
-					)}
-
-					{/* <div>
-						<h3 className="text-xl font-bold bg-gray-200 p-4">
-							Most Active Modders
-						</h3>
-						<div className="border border-gray-200 p-4">
-							<ol
-								type="1"
-								className="flex flex-col gap-2 list-decimal ml-4 text-medium"
-							>
-								<li>
-									<a href="">User #1</a>
-								</li>
-								<li>
-									<a href="">User #2</a>
-								</li>
-								<li>
-									<a href="">User #3</a>
-								</li>
-								<li>
-									<a href="">User #4</a>
-								</li>
-								<li>
-									<a href="">User #5</a>
-								</li>
-							</ol>
-						</div>
-					</div> */}
+					)} */}
 				</div>
 			</>
 		</ContentBody>
 	);
 };
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export function getServerSideProps(context: GetServerSidePropsContext) {
 	const { query: { gameID = "" } = {} } = context || {};
-
-	try {
-		// Grab document for this game
-		const gameDocRef = doc(db, "games", gameID as string);
-		const gameDoc = await getDoc(gameDocRef);
-
-		return {
-			props: {
-				gameData: gameDoc.exists()
-					? JSON.parse(
-							safeJsonStringify({
-								id: gameDoc.id,
-								...gameDoc.data()
-							})
-					  )
-					: null
-			}
-		};
-	} catch (error) {
-		// TODO: Create error page
-		console.error("/games/<id> getServerSideProps error", error);
-		return null;
-	}
+	return { props: { gameID } };
 }
 
 export default GamePage;

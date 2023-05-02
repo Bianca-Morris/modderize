@@ -1,15 +1,14 @@
+import React, { useState } from "react";
 import {
 	getDownloadURL,
 	ref,
 	SettableMetadata,
-	StorageReference,
-	updateMetadata,
 	uploadBytes
 } from "firebase/storage";
-import React, { useState } from "react";
+
 import { storage } from "../firebase/clientApp";
 
-const useStorage = () => {
+const useStorageAPI = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 
@@ -50,4 +49,4 @@ const useStorage = () => {
 	};
 };
 
-export default useStorage;
+export default useStorageAPI;

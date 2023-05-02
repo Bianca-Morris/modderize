@@ -12,7 +12,7 @@ import { useRecoilState } from "recoil";
 import { gameModalState } from "../../../atoms/gameModalAtom";
 import { auth, db } from "../../../firebase/clientApp";
 import { extractMetadataFromFile } from "../../../helpers";
-import useStorage from "../../../hooks/useStorage";
+import useStorageAPI from "../../../hooks/useStorageAPI";
 import Button from "../../basic/Button";
 import FileUploadInput from "../../basic/FileUploadInput";
 import Input from "../../basic/Input";
@@ -36,7 +36,11 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
 
-	const { uploadFile, loading: fileLoading, error: fileError } = useStorage();
+	const {
+		uploadFile,
+		loading: fileLoading,
+		error: fileError
+	} = useStorageAPI();
 
 	const { open } = modalState;
 

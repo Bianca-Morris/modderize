@@ -13,16 +13,15 @@ import {
 import { auth, db } from "../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { UserDoc } from "../types/docTypes";
+import { userDocAtom } from "../atoms/userDocAtom";
+import { useRecoilState, useResetRecoilState } from "recoil";
 
 /**
  * Returns an object containing a set of methods for interacting with User documents
  */
 const useUserDocs = () => {
-	const [userDoc, setUserDoc] = useState<UserDoc>();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
-
-	const [user] = useAuthState(auth);
 
 	/**
 	 * Async function to query user docs and determine if user with passed in username exists
@@ -73,7 +72,7 @@ const useUserDocs = () => {
 		await setDoc(userDocRef, cleanUser);
 	};
 
-	const retrieveUserDoc = async (uid: string) => {
+	const getUserDoc = async (uid: string) => {
 		setLoading(true);
 
 		const userDocRef = doc(db, "users", uid);
@@ -117,38 +116,13 @@ const useUserDocs = () => {
 		await updateUserDoc(uid, updateObj);
 	};
 
-	const refreshLoggedInUserDoc = async () => {
-		if (!user) {
-			console.log("User not logged in. Can't retrieve user doc.");
-			return;
-		}
-		const newestUserDoc = (await retrieveUserDoc(user.uid)) as UserDoc;
-		setUserDoc(newestUserDoc);
-	};
-
-	const clearUserDoc = () => {
-		setUserDoc(undefined);
-	};
-
-	// On user change, grab user doc and update it
-	useEffect(() => {
-		if (user) {
-			refreshLoggedInUserDoc();
-		} else if (!user && !!userDoc) {
-			clearUserDoc();
-		}
-	}, [user]);
-
 	return {
-		clearUserDoc,
 		isUsernameTaken,
 		isEmailTaken,
 		createUserDocument,
-		retrieveUserDoc,
+		getUserDoc,
 		updateUserDoc,
 		updateUserDocField,
-		refreshLoggedInUserDoc,
-		userDoc,
 		loading,
 		error
 	};

@@ -63,38 +63,6 @@ const useGameData = () => {
 		}
 	};
 
-	/**
-	 * @deprecated Was going to be used for dropdown filters; no longer necessary
-	 * @returns
-	 */
-	const getDropdownGames = async () => {
-		setError("");
-		setLoading(true);
-
-		try {
-			const coll = collection(db, "games");
-			const q = query(coll, limit(7));
-			const querySnapshot = await getDocs(q);
-			setLoading(false);
-
-			const gamesArr = [] as Game[];
-			querySnapshot.forEach((doc) => {
-				// doc.data() is never undefined for query doc snapshots
-				const thisGame = {
-					id: doc.id,
-					...doc.data()
-				} as Game;
-				gamesArr.push(thisGame);
-			});
-
-			return gamesArr;
-		} catch (error: any) {
-			console.error("getAllGames error", error);
-			setError(error.message);
-			return [];
-		}
-	};
-
 	const getFavoriteGames = async () => {
 		setError("");
 		setLoading(true);
@@ -216,7 +184,6 @@ const useGameData = () => {
 	return {
 		gameStateValue,
 		getAllGames,
-		getDropdownGames,
 		onToggleGameFavoriteStatus,
 		getModRequestsForGameCount,
 		loading

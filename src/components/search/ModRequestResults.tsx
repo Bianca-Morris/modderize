@@ -38,7 +38,6 @@ const ModRequestResults: React.FC<ModRequestResultsProps> = ({
 							key={id}
 							{...{ title, modRequest }}
 							subTitle="This is a subtitle"
-							userIsCreator={false}
 						/>
 					);
 				})}

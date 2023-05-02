@@ -1,49 +1,49 @@
-import type { GetServerSidePropsContext, NextPage } from "next";
-import Head from "next/head";
+import React, { useCallback } from "react";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import type { GetServerSidePropsContext } from "next";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
+import safeJsonStringify from "safe-json-stringify";
+
 import { auth, db } from "../firebase/clientApp";
 
-import CardsSearchResult_Modder from "https://framer.com/m/Cards-SearchResult-Modder-Ziap.js@EuFW80XbgjhlwQZxAi0n";
-import FeaturesJumbotronWithButtons from "https://framer.com/m/Features-JumbotronWithButtons-U3un.js@Nt1jyKYpPeYLViU5bfrE";
-import ContentBody from "../components/layout/ContentBody";
 import SimpleHeader from "../components/general/SimpleHeader";
-import {
-	collection,
-	doc,
-	getDoc,
-	getDocs,
-	limit,
-	orderBy,
-	query
-} from "firebase/firestore";
-import safeJsonStringify from "safe-json-stringify";
 import { Game, ModRequest as ModRequestType } from "../types/docTypes";
 import GameCard from "../components/general/GameCard";
 import Button from "../components/basic/Button";
-import ModRequestShort from "../components/general/ModRequest";
-import useModRequests from "../hooks/useModRequests";
 import ModRequest from "../components/general/ModRequest";
-import Link from "next/link";
 import Jumbotron from "../components/basic/Jumbotron";
-import { useRouter } from "next/router";
+import { modRequestConverter } from "../helpers/converters";
+import ModRequestList from "../components/general/ModRequestList";
 
 type HomePageProps = {
 	topGames: Game[];
-	topMods: ModRequestType[];
-	newestMods: ModRequestType[];
 };
 
-const Home: React.FC<HomePageProps> = ({
-	topGames = [],
-	topMods = [],
-	newestMods = []
-}) => {
-	const [user, loadingUser] = useAuthState(auth);
-	const { uid: userID } = user || {};
+const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
+	const [user] = useAuthState(auth);
 
 	const router = useRouter();
 
-	const { onVote, onDeleteModRequest, onSelectModRequest } = useModRequests();
+	const requestsColl = collection(db, "modRequests").withConverter(
+		modRequestConverter
+	);
+
+	// Grab top 5 mod requests
+	const top5Q = query(requestsColl, orderBy("voteStatus", "desc"), limit(5));
+
+	// Grab newest 5 mod requests
+	const new5Q = query(
+		requestsColl,
+		orderBy("creationDate", "desc"),
+		limit(5)
+	);
+
+	const subtitleRenderFx = useCallback(
+		(mr: ModRequestType) => mr.gameDisplayName || "",
+		[]
+	);
 
 	return (
 		<div className="flex min-h-screen flex-col item-center justify-start pb-2">
@@ -105,36 +105,10 @@ const Home: React.FC<HomePageProps> = ({
 						New Mod Requests
 					</h2>
 					<div className="w-full flex flex-col gap-5 my-5 items-center align-center justify-center">
-						{newestMods.map((mr) => {
-							const {
-								id,
-								title,
-								requesterID,
-								gameID,
-								gameDisplayName
-							} = mr;
-							return (
-								<ModRequest
-									key={id}
-									{...{
-										title
-									}}
-									modRequest={mr}
-									subTitle={
-										<div>
-											<span className="font-medium mr-1">
-												<Link href={`/games/${gameID}`}>
-													{gameDisplayName}
-												</Link>
-											</span>
-										</div>
-									}
-									userIsCreator={requesterID === userID}
-									userVoteValue={undefined}
-									cls="w-full"
-								/>
-							);
-						})}
+						<ModRequestList
+							query={new5Q}
+							{...{ subtitleRenderFx }}
+						/>
 					</div>
 				</div>
 				<div className="flex-1">
@@ -142,39 +116,10 @@ const Home: React.FC<HomePageProps> = ({
 						Popular Mod Requests
 					</h2>
 					<div className="w-full flex flex-col gap-5 my-5 items-center align-center justify-center">
-						{topMods.map((mr) => {
-							const {
-								id,
-								title,
-								requesterID,
-								gameID,
-								gameDisplayName
-							} = mr;
-							return (
-								<ModRequest
-									key={id}
-									{...{
-										title,
-										onVote,
-										onDeleteModRequest,
-										onSelectModRequest
-									}}
-									modRequest={mr}
-									subTitle={
-										<div>
-											<span className="font-medium mr-1">
-												<Link href={`/games/${gameID}`}>
-													{gameDisplayName}
-												</Link>
-											</span>
-										</div>
-									}
-									userIsCreator={requesterID === userID}
-									userVoteValue={undefined}
-									cls="w-full"
-								/>
-							);
-						})}
+						<ModRequestList
+							query={top5Q}
+							{...{ subtitleRenderFx }}
+						/>
 					</div>
 				</div>
 			</div>
@@ -194,45 +139,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 		const gameDocs = await getDocs(gameQ);
 
 		// Parse for props obj
-		const top4Games = gameDocs.docs.map((doc) =>
-			JSON.parse(
-				safeJsonStringify({
-					id: doc.id,
-					...doc.data()
-				})
-			)
-		);
-
-		const requestsColl = collection(db, "modRequests");
-
-		// Grab top 5 mod requests
-		const top5Q = query(
-			requestsColl,
-			orderBy("voteStatus", "desc"),
-			limit(5)
-		);
-		const top5ModDocs = await getDocs(top5Q);
-
-		// Parse for props obj
-		const top5Mods = top5ModDocs.docs.map((doc) =>
-			JSON.parse(
-				safeJsonStringify({
-					id: doc.id,
-					...doc.data()
-				})
-			)
-		);
-
-		// Grab newest 5 mod requests
-		const new5Q = query(
-			requestsColl,
-			orderBy("creationDate", "desc"),
-			limit(5)
-		);
-		const new5ModDocs = await getDocs(new5Q);
-
-		// Parse for props obj
-		const new5Mods = new5ModDocs.docs.map((doc) =>
+		const top5Games = gameDocs.docs.map((doc) =>
 			JSON.parse(
 				safeJsonStringify({
 					id: doc.id,
@@ -243,9 +150,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 		return {
 			props: {
-				topGames: !gameDocs.empty ? top4Games : [],
-				topMods: !top5ModDocs.empty ? top5Mods : [],
-				newestMods: !new5ModDocs.empty ? new5Mods : []
+				topGames: !gameDocs.empty ? top5Games : []
 			}
 		};
 	} catch (error) {

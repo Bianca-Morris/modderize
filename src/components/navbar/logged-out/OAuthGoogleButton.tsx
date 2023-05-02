@@ -15,12 +15,12 @@ const OAuthGoogleButton: React.FC = () => {
 	// Note: can't use the userDoc from useUserDocs; it auto-refreshes when user changes,
 	// but there might be a race condition between this and the check that needs to occur in the
 	// useEffect triggered when user logs in; so doing a manual check
-	const { createUserDocument, retrieveUserDoc } = useUserDocs();
+	const { createUserDocument, getUserDoc } = useUserDocs();
 
 	useEffect(() => {
 		if (userCred) {
 			(async () => {
-				const userDocument = await retrieveUserDoc(userCred.user.uid);
+				const userDocument = await getUserDoc(userCred.user.uid);
 
 				if (!userDocument) {
 					// Looks like this is an initial sign-in, create user Doc.

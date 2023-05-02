@@ -11,29 +11,31 @@ import { useSetRecoilState } from "recoil";
 import { profileEditModalState } from "../../atoms/profileEditModalAtom";
 import { auth, db } from "../../firebase/clientApp";
 import { extractMetadataFromFile } from "../../helpers";
-import useStorage from "../../hooks/useStorage";
+import useStorageAPI from "../../hooks/useStorageAPI";
+import useUserDoc from "../../hooks/useUserDoc";
 import useUserDocs from "../../hooks/useUserDocs";
 import Button from "../basic/Button";
 import FileUploadInput from "../basic/FileUploadInput";
 import Input from "../basic/Input";
 import Textarea from "../basic/Textarea";
 
-type EditProfileFormProps = {
-	initialAbout: string;
-	initialDonationLink: string;
-	postSubmitReload: () => void;
-};
-
-const EditProfileForm: React.FC<EditProfileFormProps> = ({
-	initialAbout = "",
-	initialDonationLink = "",
-	postSubmitReload
-}) => {
+const EditProfileForm: React.FC = () => {
+	// Authenticate user
 	const [user] = useAuthState(auth);
 	const { uid } = user || {};
+
+	// Grab values from original user doc for initializing the profile form state
+	const { userDoc } = useUserDoc();
+	const { about: initialAbout, donationLink: initialDonationLink } =
+		userDoc || {};
+
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState<boolean>();
-	const { uploadFile, loading: fileLoading, error: fileError } = useStorage();
+	const {
+		uploadFile,
+		loading: fileLoading,
+		error: fileError
+	} = useStorageAPI();
 	const setOpenProfileEditModalStateValue = useSetRecoilState(
 		profileEditModalState
 	);
@@ -85,8 +87,6 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
 		}
 
 		await updateUserDoc(user.uid, updateObj);
-
-		postSubmitReload();
 
 		setLoading(false);
 

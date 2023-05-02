@@ -1,37 +1,28 @@
-import {
-	HandThumbDownIcon as ThumbDownIconSolid,
-	HandThumbUpIcon as ThumbUpIconSolid
-} from "@heroicons/react/20/solid";
-import {
-	HandThumbDownIcon as ThumbDownIconOutline,
-	HandThumbUpIcon as ThumbUpIconOutline
-} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import React, { ReactElement, useState } from "react";
-import useModRequests from "../../hooks/useModRequests";
 import { ModRequest } from "../../types/docTypes";
+import LikeButton from "./LikeButton";
 
 type ModRequestShortProps = {
-	numUpvotes?: number;
 	subTitle: string | ReactElement;
-	userVoteValue?: number;
 	modRequest: ModRequest;
-	userIsCreator: boolean;
 	cls?: string;
 };
 
 const ModRequestShort: React.FC<ModRequestShortProps> = ({
-	numUpvotes = 0,
 	subTitle,
-	userVoteValue,
 	modRequest,
-	userIsCreator,
 	cls
 }) => {
-	const { onVote, onDeleteModRequest, onSelectModRequest } = useModRequests();
 	const [loadingImage, setLoadingImage] = useState(true);
 
-	const { imageURL, completionStatus, id, title } = modRequest;
+	const {
+		imageURL,
+		id: requestID,
+		title,
+		voteStatus,
+		requesterID
+	} = modRequest;
 
 	return (
 		<div
@@ -42,18 +33,8 @@ const ModRequestShort: React.FC<ModRequestShortProps> = ({
 		>
 			<div className="flex flex-col justify-center p-3 w-20">
 				<div className="flex justify-start align-center text-green-600">
-					{userVoteValue === 1 ? (
-						<ThumbUpIconSolid
-							className="w-4 h-4 ml-1 mt-1 mr-2 cursor-pointer"
-							onClick={onVote}
-						/>
-					) : (
-						<ThumbUpIconOutline
-							className="w-4 h-4 ml-1 mt-1 mr-2 cursor-pointer"
-							onClick={onVote}
-						/>
-					)}
-					{numUpvotes}
+					<LikeButton {...{ modRequest }} />
+					{voteStatus}
 				</div>
 			</div>
 			<div className="flex flex-col justify-center">
@@ -74,7 +55,7 @@ const ModRequestShort: React.FC<ModRequestShortProps> = ({
 			</div>
 			<div className="flex flex-col justify-center pl-3">
 				<span className="font-bold text-gray-800 leading-5 overflow-clip">
-					<Link href={`/requests/${id}`}>{title}</Link>
+					<Link href={`/requests/${requestID}`}>{title}</Link>
 				</span>
 				<span className="text-sm text-gray-700 mw-full">
 					{subTitle}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { User } from "firebase/auth";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { profileEditModalState } from "../../atoms/profileEditModalAtom";
 import useUserDocs from "../../hooks/useUserDocs";
@@ -12,6 +12,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
 import ProfileOpenModsByRequesterID from "../general/ProfileOpenModsByRequesterID";
 import ProfileModsByStatus from "../general/ProfileModsByStatus";
+import { userDocAtom } from "../../atoms/userDocAtom";
+import useUserDoc from "../../hooks/useUserDoc";
 
 type MyProfileProps = {
 	userData: User;
@@ -21,8 +23,9 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 	const [modalKey, setModalKey] = useState<number>(0);
 	const [user] = useAuthState(auth);
 
-	const { userDoc, refreshLoggedInUserDoc, updateUserDocField, loading } =
-		useUserDocs();
+	const { updateUserDocField, loading: updatingUserDoc } = useUserDocs();
+	const { userDoc, loading: loadingUserDoc } = useUserDoc();
+
 	const {
 		isActiveModder = false,
 		about = "",
@@ -33,18 +36,12 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 		profileEditModalState
 	);
 
-	useEffect(() => {
-		refreshLoggedInUserDoc();
-	}, []);
-
 	const handleOpenModal = () => {
 		setOpenProfileEditModalStateValue((prev) => ({
 			...prev,
 			open: true
 		}));
 	};
-
-	const userDocLoaded = !!userDoc;
 
 	// When user or user doc is updated, refresh the form and reset to new values
 	useEffect(() => {
@@ -59,13 +56,9 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 
 	return (
 		<div>
-			{userDocLoaded && (
+			{!loadingUserDoc && !!userDoc && (
 				<EditProfileModal key={modalKey}>
-					<EditProfileForm
-						initialAbout={about}
-						initialDonationLink={donationLink}
-						postSubmitReload={refreshLoggedInUserDoc}
-					/>
+					<EditProfileForm />
 				</EditProfileModal>
 			)}
 			<GenericProfile
@@ -80,7 +73,7 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 				onEditProfile={handleOpenModal}
 			>
 				<Toggle
-					{...{ loading }}
+					loading={loadingUserDoc || updatingUserDoc}
 					label={
 						isActiveModder
 							? "I'm open to accepting mod requests"
@@ -94,8 +87,6 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 							"isActiveModder",
 							newState
 						);
-						// Update state here
-						await refreshLoggedInUserDoc();
 					}}
 				/>
 				<hr className="my-3" />

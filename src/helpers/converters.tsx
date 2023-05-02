@@ -5,7 +5,7 @@ import {
 	SnapshotOptions,
 	WithFieldValue
 } from "firebase/firestore";
-import { Game, ModRequest } from "../types/docTypes";
+import { Game, ModRequest, UserDoc } from "../types/docTypes";
 
 /**
  * Methods used to add and remove IDs from various item types
@@ -98,3 +98,26 @@ export const modRequestConverter: FirestoreDataConverter<ModRequest> = {
 		};
 	}
 };
+
+// export const userConverter: FirestoreDataConverter<UserDoc> = {
+// 	toFirestore(userDoc: WithFieldValue<UserDoc>): DocumentData {
+// 		return {
+
+// 		};
+// 	},
+// 	fromFirestore(
+// 		snapshot: QueryDocumentSnapshot,
+// 		options: SnapshotOptions
+// 	): UserDoc {
+// 		const data = snapshot.data(options);
+// 		const { id } = snapshot;
+// 		const { uid, creatorID, isAdmin, isActiveModder,  } = data;
+// 		return {
+// 			uid,
+// 			isAdmin,
+// 			isActiveModder
+// 			// creatorID,
+
+// 		};
+// 	}
+// };

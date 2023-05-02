@@ -10,10 +10,8 @@ import { auth } from "../../../firebase/clientApp";
 import Dropdown from "../../basic/Dropdown";
 import { classNames } from "../../../helpers";
 import CreateNewGameButton from "./CreateNewGameButton";
-import useGameData from "../../../hooks/useGameData";
-import { Game } from "../../../types/docTypes";
-import useUserDocs from "../../../hooks/useUserDocs";
 import { useRouter } from "next/router";
+import useUserDoc from "../../../hooks/useUserDoc";
 
 type GamesDropdownProps = {};
 
@@ -23,13 +21,13 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 	const gamePageActive = router.asPath.startsWith("/games");
 
 	const [user] = useAuthState(auth);
-	const { userDoc } = useUserDocs();
+	const { userDoc } = useUserDoc();
 
 	const gameStateValue = useRecoilValue(gameState);
 	const { favoriteGames = [], allGames = [] } = gameStateValue;
 
 	const anyFavoriteGames = favoriteGames.length > 0;
-	console.log("GamesDropdown userDoc", userDoc);
+
 	return (
 		<Dropdown
 			btnCls={classNames(
