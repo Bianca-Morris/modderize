@@ -1,17 +1,14 @@
 import { doc, getDoc } from "firebase/firestore";
 import { GetServerSidePropsContext } from "next";
-import React, { useState } from "react";
+import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import safeJsonStringify from "safe-json-stringify";
-import Button from "../../../components/basic/Button";
-import Input from "../../../components/basic/Input";
-import Textarea from "../../../components/basic/Textarea";
 import NewGameModRequestForm from "../../../components/forms/NewGameModRequestForm";
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import ContentBody from "../../../components/layout/ContentBody";
 import GameNotFoundPage from "../../../components/pages/GameNotFound";
 import { auth, db } from "../../../firebase/clientApp";
-import { Game, ModRequest } from "../../../types/docTypes";
+import { Game } from "../../../types/docTypes";
 
 /**
  * Will be page for creating a mod request

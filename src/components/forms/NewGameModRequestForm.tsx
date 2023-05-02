@@ -39,7 +39,8 @@ const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 			title,
 			description,
 			requesterID: user?.uid,
-			requesterDisplayName: user.email!.split("@")[0],
+			requesterDisplayName:
+				user?.displayName || user.email!.split("@")[0],
 			creationDate: serverTimestamp() as Timestamp,
 			lastModified: serverTimestamp() as Timestamp,
 			voteStatus: 0,
