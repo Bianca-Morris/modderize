@@ -1,66 +1,48 @@
-/**
- * Page for viewing all of the mod requests for a particular game
- */
-import { doc, getDoc } from "@firebase/firestore";
-import { GetServerSidePropsContext } from "next";
-import { Head } from "next/document";
 import React, { useEffect, useState } from "react";
+import { doc } from "@firebase/firestore";
+import { GetServerSidePropsContext } from "next";
 import { auth, db } from "../../../firebase/clientApp";
-import safeJsonStringify from "safe-json-stringify";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
+import { collection, orderBy, query, where } from "firebase/firestore";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { HeartIcon, PlusIcon, WrenchIcon } from "@heroicons/react/20/solid";
 
 import { Game } from "../../../types/docTypes";
 import Button from "../../../components/basic/Button";
 import SimpleHeader from "../../../components/general/SimpleHeader";
-import { HeartIcon, PlusIcon, WrenchIcon } from "@heroicons/react/20/solid";
-import ModRequest from "../../../components/general/ModRequest";
 import useGameData from "../../../hooks/useGameData";
-import { useRouter } from "next/router";
+
 import ContentBody from "../../../components/layout/ContentBody";
-import GameModRequests from "../../../components/general/GameModRequests";
-import { useSetRecoilState } from "recoil";
-import { gameState } from "../../../atoms/gamesAtom";
-import useModRequests from "../../../hooks/useModRequests";
-import {
-	useCollectionData,
-	useDocumentData
-} from "react-firebase-hooks/firestore";
 import GameNotFoundPage from "../../../components/pages/GameNotFound";
-import { collection, orderBy, query, where } from "firebase/firestore";
 import {
 	gameConverter,
 	modRequestConverter
 } from "../../../helpers/converters";
 import ModRequestList from "../../../components/general/ModRequestList";
+import useFavoriteGames from "../../../hooks/useFavoriteGames";
 
 type GamePageProps = {
 	gameID: string;
 };
 
+/**
+ * Page for viewing all of the mod requests for a particular game
+ */
 const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 	const router = useRouter();
-	const setGameStateValue = useSetRecoilState(gameState);
 	const [modRequestCount, setModRequestCount] = useState(0);
-	const {
-		gameStateValue,
-		onToggleGameFavoriteStatus,
-		loading,
-		getModRequestsForGameCount
-	} = useGameData();
+	const { onToggleGameFavoriteStatus, loading, getModRequestsForGameCount } =
+		useGameData();
 
 	const collectionRef = collection(db, "games").withConverter(gameConverter);
 	const gameDocRef = doc(collectionRef, gameID);
 
 	const [gameData, gameLoading, gameError] = useDocumentData(gameDocRef);
+	const { favoriteGames = [] } = useFavoriteGames();
 
 	// On page load
 	useEffect(() => {
-		// Set the current game to this one in recoil state
-		setGameStateValue((prev) => ({
-			...prev,
-			currentGame: gameData as Game
-		}));
-
 		// Grab the count of game mods available for this game and store in state
 		getModRequestsForGameCount(gameID)
 			.then((count) => {
@@ -82,7 +64,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 
 	const { displayName, numberOfPlayers, imageURL } = gameData || {};
 
-	const isGameFavorited = !!gameStateValue.favoriteGames.find(
+	const isGameFavorited = !!favoriteGames.find(
 		(item) => item.gameID === gameID
 	);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { User } from "firebase/auth";
 import {
 	collection,
@@ -10,11 +10,7 @@ import {
 	updateDoc,
 	where
 } from "firebase/firestore";
-import { auth, db } from "../firebase/clientApp";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { UserDoc } from "../types/docTypes";
-import { userDocAtom } from "../atoms/userDocAtom";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { db } from "../firebase/clientApp";
 
 /**
  * Returns an object containing a set of methods for interacting with User documents

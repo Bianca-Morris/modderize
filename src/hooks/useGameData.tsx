@@ -12,9 +12,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
-import { GameSnippet, gameState } from "../atoms/gamesAtom";
+import { gameState } from "../atoms/gamesAtom";
 import { auth, db } from "../firebase/clientApp";
-import { Game } from "../types/docTypes";
+import { Game, GameSnippet } from "../types/docTypes";
 
 const useGameData = () => {
 	const [user] = useAuthState(auth);
@@ -26,10 +26,6 @@ const useGameData = () => {
 		gameData: Game,
 		isFavorited: boolean
 	) => {
-		// is the user signed in?
-
-		// if not => open auth modal, prompt them to sign in
-
 		if (isFavorited) {
 			unfavoriteGame(gameData.id);
 			return;
@@ -63,31 +59,6 @@ const useGameData = () => {
 		}
 	};
 
-	const getFavoriteGames = async () => {
-		setError("");
-		setLoading(true);
-		try {
-			// get snippets for currently logged in user.
-			const snippetDocs = await getDocs(
-				collection(db, `users/${user?.uid}/gameSnippets`)
-			);
-
-			// loop through firebase docs and convert to JS objects w/data
-			const snippets = snippetDocs.docs.map((doc) => ({ ...doc.data() }));
-
-			// add this data to global app state
-			setGameStateValue((prev) => ({
-				...prev,
-				favoriteGames: snippets as GameSnippet[]
-			}));
-		} catch (error: any) {
-			console.error("useGameData error getting snippets", error);
-			setError(error.message);
-		}
-
-		setLoading(false);
-	};
-
 	const getModRequestsForGameCount = async (gameID: string) => {
 		const coll = collection(db, "modRequests");
 		const q = query(coll, where("gameID", "==", gameID));
@@ -119,12 +90,6 @@ const useGameData = () => {
 
 			// execute the batch writes and wait until complete
 			await batch.commit();
-
-			// update the recoil state with the new snippet
-			setGameStateValue((prev) => ({
-				...prev,
-				favoriteGames: [...prev.favoriteGames, newSnippet]
-			}));
 		} catch (error: any) {
 			console.error("favoriteGame Error", error);
 			setError(error.message);
@@ -147,14 +112,6 @@ const useGameData = () => {
 
 			// execute the batch writes and wait until complete
 			await batch.commit();
-
-			// update the recoil state to remove the snippet for this game
-			setGameStateValue((prev) => ({
-				...prev,
-				favoriteGames: prev.favoriteGames.filter(
-					(item) => item.gameID !== gameID
-				)
-			}));
 		} catch (error: any) {
 			console.error("unfavoriteGame Error", error);
 			setError(error.message);
@@ -162,12 +119,6 @@ const useGameData = () => {
 
 		setLoading(false);
 	};
-
-	// When user is loaded, grab their favorite games and add to state
-	useEffect(() => {
-		if (!user) return;
-		getFavoriteGames();
-	}, [user]);
 
 	// On first load, grab all of the games
 	useEffect(() => {

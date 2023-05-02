@@ -1,11 +1,8 @@
 import { doc, writeBatch } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import React, { useState } from "react";
+import { useSetRecoilState } from "recoil";
 import { authModalState } from "../atoms/authModalAtom";
-import { modRequestState } from "../atoms/modRequestAtom";
-import { auth, db } from "../firebase/clientApp";
-import useUserDocs from "./useUserDocs";
+import { db } from "../firebase/clientApp";
 import {
 	eq as findIndexOf,
 	add as addInPlace,
@@ -17,8 +14,6 @@ import { ModRequest, UserDoc } from "../types/docTypes";
 const useModRequests = () => {
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [modRequestStateValue, setModRequestStateValue] =
-		useRecoilState(modRequestState);
 	const setAuthModalState = useSetRecoilState(authModalState);
 
 	const hasUserLikedRequest = (user, userDoc, requestID: string) => {
@@ -101,8 +96,6 @@ const useModRequests = () => {
 	};
 
 	return {
-		modRequestStateValue,
-		setModRequestStateValue,
 		onVote,
 		hasUserLikedRequest
 	};

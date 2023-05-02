@@ -12,6 +12,7 @@ import { classNames } from "../../../helpers";
 import CreateNewGameButton from "./CreateNewGameButton";
 import { useRouter } from "next/router";
 import useUserDoc from "../../../hooks/useUserDoc";
+import useFavoriteGames from "../../../hooks/useFavoriteGames";
 
 type GamesDropdownProps = {};
 
@@ -23,10 +24,13 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 	const [user] = useAuthState(auth);
 	const { userDoc } = useUserDoc();
 
-	const gameStateValue = useRecoilValue(gameState);
-	const { favoriteGames = [], allGames = [] } = gameStateValue;
-
+	// Listening to favorite games in favorite games hook, so it auto-updates on changes
+	const { favoriteGames = [] } = useFavoriteGames();
 	const anyFavoriteGames = favoriteGames.length > 0;
+
+	// Storing a list of all games in global recoil state, since this is unlikely to change
+	const gameStateValue = useRecoilValue(gameState);
+	const { allGames = [] } = gameStateValue;
 
 	return (
 		<Dropdown

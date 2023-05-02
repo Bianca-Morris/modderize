@@ -45,3 +45,8 @@ export interface ModRequestSansID extends DocumentData {
 export interface ModRequest extends ModRequestSansID {
     id: string;  // ID gets populated by firebase
 }
+
+export interface GameSnippet {
+    gameID: string;
+	gameName: string;
+}
