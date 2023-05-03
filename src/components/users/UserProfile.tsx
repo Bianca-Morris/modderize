@@ -44,9 +44,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 				showRequestMod={!!activeUser && isActiveModder}
 			>
 				<div className="mb-10">
-					<h2 className="text-2xl font-bold mb-4">
-						My Completed Mod Requests
-					</h2>
+					<h2 className="text-2xl font-bold mb-4">My Mods</h2>
 					<ProfileModsByStatus status="complete" modderID={uid} />
 				</div>
 

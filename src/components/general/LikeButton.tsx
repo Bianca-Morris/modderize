@@ -22,16 +22,17 @@ const LikeButton: React.FC<LikeButtonProps> = ({ modRequest }) => {
 	const { id: requestID, requesterID } = modRequest;
 
 	const userIsCreator = user?.uid === requesterID;
+
+	// Can't vote on own post, or if not logged in.
+	if (!user || userIsCreator || !userDoc) {
+		return <ThumbUpIconOutline className={`w-4 h-4 ml-1 mt-1 mr-2`} />;
+	}
+
 	const userLikedRequest = hasUserLikedRequest(user, userDoc, requestID);
 
 	const onHandleVote = async (e: React.MouseEvent) => {
 		await onVote(modRequest, user, userDoc as UserDoc);
 	};
-
-	// Can't vote on own post, or if not logged in.
-	if (!user || userIsCreator) {
-		return <ThumbUpIconOutline className={`w-4 h-4 ml-1 mt-1 mr-2`} />;
-	}
 
 	return !userLikedRequest ? (
 		<ThumbUpIconOutline

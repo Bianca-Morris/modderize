@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { User } from "firebase/auth";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import { profileEditModalState } from "../../atoms/profileEditModalAtom";
 import useUserDocs from "../../hooks/useUserDocs";
@@ -8,11 +9,9 @@ import Toggle from "../basic/Toggle";
 import EditProfileForm from "../forms/EditProfileForm";
 import EditProfileModal from "../modals/EditProfileModal";
 import GenericProfile from "./GenericProfile";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
 import ProfileOpenModsByRequesterID from "../general/ProfileOpenModsByRequesterID";
 import ProfileModsByStatus from "../general/ProfileModsByStatus";
-import { userDocAtom } from "../../atoms/userDocAtom";
 import useUserDoc from "../../hooks/useUserDoc";
 
 type MyProfileProps = {
