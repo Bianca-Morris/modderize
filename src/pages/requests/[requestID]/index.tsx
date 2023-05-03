@@ -2,17 +2,15 @@
  * Page for viewing all of the mod requests for a particular game
  */
 import React from "react";
-import { doc, getDoc } from "@firebase/firestore";
+import { doc, DocumentReference } from "@firebase/firestore";
 import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 import dayjs from "dayjs";
-import safeJsonStringify from "safe-json-stringify";
 import relativeTime from "dayjs/plugin/relativeTime";
 import {
 	ArchiveBoxIcon,
-	HandThumbDownIcon,
-	HandThumbUpIcon,
 	PencilIcon,
 	WrenchScrewdriverIcon
 } from "@heroicons/react/20/solid";
@@ -21,17 +19,27 @@ import { auth, db } from "../../../firebase/clientApp";
 import { ModRequest as ModRequestType } from "../../../types/docTypes";
 import Button from "../../../components/basic/Button";
 import SimpleHeader from "../../../components/general/SimpleHeader";
+import useModRequests from "../../../hooks/useModRequests";
+import LikeButton from "../../../components/general/LikeButton";
 
 dayjs.extend(relativeTime);
 
 type ModRequestPageProps = {
-	modRequestData?: ModRequestType;
+	requestID: string;
 };
 
-const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
+const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	const [user] = useAuthState(auth);
 
-	if (!modRequestData) {
+	// Grab document for this mod request
+	const modRequestRef = doc(db, "modRequests", requestID || "placeholder");
+	const [modRequestData, loading, error, snapshot] = useDocumentData(
+		modRequestRef as DocumentReference<ModRequestType>
+	);
+
+	const { assignModRequestToSelf } = useModRequests();
+
+	if (!loading && !modRequestData) {
 		return (
 			<div className="flex min-h-screen flex-col item-center justify-start pb-2">
 				<SimpleHeader>
@@ -63,6 +71,9 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 		gameDisplayName,
 		modderID,
 		modderStatus,
+		modderDisplayName,
+		modderProfileImageURL,
+		voteStatus,
 		completionStatus,
 		lastModified,
 		creationDate
@@ -72,10 +83,10 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 
 	const isRequester = requesterID === user?.uid;
 	const isModder = modderID === user?.uid && modderStatus === "accepted";
-	const noModderAssigned =
-		!modderID &&
-		modderStatus !== "accepted" &&
-		modderStatus !== "requested";
+	const noModderAssigned = !modderID && modderStatus === "open";
+	const modderAssignedButNotConfirmed =
+		modderID && modderStatus === "requested";
+	const modderAssigned = modderID && modderStatus === "accepted";
 
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-start pb-2">
@@ -108,15 +119,15 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 									{requesterDisplayName}
 								</Link>
 							</span>
-							<span className="text-sm text-gray-400 pl-1">
-								(
-								{dayjs(
-									new Date(creationDate?.seconds * 1000)
-								).fromNow()}
-								)
-							</span>
+							{creationDate && (
+								<span className="text-sm text-gray-400 pl-1">
+									{dayjs(
+										new Date(creationDate?.seconds * 1000)
+									).fromNow()}
+								</span>
+							)}
 						</div>
-						{hasBeenModified && (
+						{lastModified && hasBeenModified && (
 							<div>
 								<strong>Last Modified:</strong>
 								<span className="ml-1">
@@ -134,15 +145,11 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 						</div>
 					</div>
 					<div className="flex align-center">
-						<div className="flex flex-col justify-center p-3 w-20">
-							<div className="flex justify-start align-center text-green-600">
-								<HandThumbUpIcon className="w-4 h-4 ml-1 mt-1 mr-2" />
-								3
-							</div>
-							<div className="flex justify-start align-center text-red-600">
-								<HandThumbDownIcon className="w-4 h-4 mt-1 ml-1 mr-2" />
-								0
-							</div>
+						<div className="flex justify-center p-3 w-20 text-green-600">
+							{modRequestData && (
+								<LikeButton modRequest={modRequestData} />
+							)}
+							{voteStatus}
 						</div>
 					</div>
 				</div>
@@ -163,13 +170,50 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 								Modder Info
 							</h3>
 							<div className="border border-gray-200 p-4">
-								<div className="flex w-full items-center justify-center">
+								<div className="flex w-full items-center justify-center gap-5">
 									{!modderID && (
 										<>
 											No modder currently assigned to this
 											project.
 										</>
 									)}
+									{modderProfileImageURL && (
+										<img
+											src={modderProfileImageURL}
+											className="shadow-xl rounded-full align-middle border-none h-12 w-12"
+										></img>
+									)}
+									<div>
+										{modderID && modderDisplayName && (
+											<div>
+												<strong>Assigned to:</strong>
+												<span className="ml-1">
+													<Link
+														href={`/users/${modderID}`}
+														className="underline text-indigo-800 hover:text-indigo-600"
+													>
+														{modderDisplayName}
+													</Link>
+												</span>
+											</div>
+										)}
+										{modderAssignedButNotConfirmed && (
+											<div>
+												<strong>Status:</strong>
+												<span className="ml-1">
+													Requested
+												</span>
+											</div>
+										)}
+										{modderAssigned && (
+											<div>
+												<strong>Status:</strong>
+												<span className="ml-1">
+													Accepted
+												</span>
+											</div>
+										)}
+									</div>
 								</div>
 							</div>
 						</div>
@@ -196,9 +240,50 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 								</Button>
 							)}
 							{!!user && !isRequester && noModderAssigned && (
-								<Button type="button" variant="blue">
+								<Button
+									type="button"
+									variant="blue"
+									onClick={
+										!modRequestData
+											? undefined
+											: () =>
+													assignModRequestToSelf(
+														modRequestData
+													)
+									}
+								>
 									<WrenchScrewdriverIcon className="w-4 h-4 mr-3" />
 									Work on This Request
+								</Button>
+							)}
+							{isModder && modderAssigned && (
+								<Button
+									type="button"
+									variant="red"
+									cls="flex-1 mt-4 bold"
+								>
+									<ArchiveBoxIcon className="w-4 h-4 mr-3" />
+									Withdraw
+								</Button>
+							)}
+							{isModder && modderAssignedButNotConfirmed && (
+								<Button
+									type="button"
+									variant="red"
+									cls="flex-1 mt-4 bold"
+								>
+									<ArchiveBoxIcon className="w-4 h-4 mr-3" />
+									Refuse Request
+								</Button>
+							)}
+							{isModder && modderAssigned && (
+								<Button
+									type="button"
+									variant="indigo"
+									cls="flex-1 mt-4 bold"
+								>
+									<PencilIcon className="w-4 h-4 mr-3" />
+									Complete Request
 								</Button>
 							)}
 						</div>
@@ -212,28 +297,11 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ modRequestData }) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 	const { query: { requestID = "" } = {} } = context || {};
 
-	try {
-		// Grab document for this mod request
-		const modRequestRef = doc(db, "modRequests", requestID as string);
-		const modRequestDoc = await getDoc(modRequestRef);
-
-		return {
-			props: {
-				modRequestData: modRequestDoc.exists()
-					? JSON.parse(
-							safeJsonStringify({
-								id: modRequestDoc.id,
-								...modRequestDoc.data()
-							})
-					  )
-					: null
-			}
-		};
-	} catch (error) {
-		// TODO: Create error page
-		console.error("/requests/<id> getServerSideProps error", error);
-		return null;
-	}
+	return {
+		props: {
+			requestID
+		}
+	};
 }
 
 export default ModRequestPage;

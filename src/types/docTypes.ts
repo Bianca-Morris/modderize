@@ -35,6 +35,8 @@ export interface ModRequestSansID extends DocumentData {
 
     modderStatus: "requested" | "accepted" | "open";
     modderID?: string;
+    modderDisplayName?: string;
+    modderProfileImageURL?: string;
 
     voteStatus: number;
 

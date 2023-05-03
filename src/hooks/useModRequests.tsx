@@ -1,8 +1,14 @@
-import { doc, writeBatch } from "firebase/firestore";
+import {
+	doc,
+	serverTimestamp,
+	Timestamp,
+	updateDoc,
+	writeBatch
+} from "firebase/firestore";
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "../atoms/authModalAtom";
-import { db } from "../firebase/clientApp";
+import { auth, db } from "../firebase/clientApp";
 import {
 	eq as findIndexOf,
 	add as addInPlace,
@@ -10,13 +16,19 @@ import {
 } from "sorted-array-functions";
 import { User } from "firebase/auth";
 import { ModRequest, UserDoc } from "../types/docTypes";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const useModRequests = () => {
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
 	const setAuthModalState = useSetRecoilState(authModalState);
+	const [user] = useAuthState(auth);
 
-	const hasUserLikedRequest = (user, userDoc, requestID: string) => {
+	const hasUserLikedRequest = (
+		user: User,
+		userDoc: UserDoc,
+		requestID: string
+	) => {
 		if (!user || !userDoc) {
 			return false;
 		}
@@ -95,9 +107,51 @@ const useModRequests = () => {
 		}
 	};
 
+	const updateModRequest = async (id: string, updateObject: {}) => {
+		setLoading(true);
+		setError("");
+		console.log("update mod request");
+
+		try {
+			const updated = await updateDoc(
+				doc(db, "modRequests", id),
+				updateObject
+			);
+			console.log("updated", updated);
+		} catch (err: any) {
+			console.error("updateModRequest error", err);
+			setError(
+				err.message ||
+					"Something went wrong while updating a mod request doc."
+			);
+		}
+
+		setLoading(false);
+	};
+
+	const assignModRequestToSelf = async (modRequest: ModRequest) => {
+		if (!user) {
+			setAuthModalState({ open: true, view: "login" });
+			return;
+		}
+		const updateObject = {
+			modderID: user.uid,
+			modderStatus: "accepted",
+			modderDisplayName: user.displayName,
+			modderProfileImageURL: user.photoURL,
+			lastModified: serverTimestamp() as Timestamp,
+			completionStatus: "in progress"
+		};
+		await updateModRequest(modRequest.id, updateObject);
+	};
+
+	const assignModRequestToOther = async () => {};
+
 	return {
 		onVote,
-		hasUserLikedRequest
+		hasUserLikedRequest,
+		assignModRequestToSelf,
+		assignModRequestToOther
 	};
 };
 
