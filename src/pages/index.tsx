@@ -84,9 +84,18 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 			</Jumbotron>
 			<div className="w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
 				<div className="py-16 w-full">
-					<h2 className="text-2xl font-bold font-medium text-gray-900 mb-3 ml-4">
-						Top Games
-					</h2>
+					<div className="flex justify-between">
+						<h2 className="text-2xl font-bold font-medium text-gray-900 mb-3 ml-4">
+							Top Games
+						</h2>
+						<Link
+							href="/games"
+							className="text-md text-violet-800 underline mr-4"
+						>
+							View All
+						</Link>
+					</div>
+
 					<div className="lg:w-full flex flex-wrap gap-5 my-5 items-center align-center justify-center">
 						{topGames.map((game) => (
 							<GameCard

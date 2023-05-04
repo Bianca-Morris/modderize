@@ -12,7 +12,7 @@ type ModRequestShortProps = {
 const ModRequestShort: React.FC<ModRequestShortProps> = ({
 	subTitle,
 	modRequest,
-	cls
+	cls = ""
 }) => {
 	const [loadingImage, setLoadingImage] = useState(true);
 
@@ -53,8 +53,8 @@ const ModRequestShort: React.FC<ModRequestShortProps> = ({
 					<div className="bg-gray-300 w-16 h-16 rounded"></div>
 				)}
 			</div>
-			<div className="flex flex-col justify-center pl-3">
-				<span className="font-bold text-gray-800 leading-5 overflow-clip">
+			<div className="flex flex-col justify-center pl-3 max-w-xs">
+				<span className="font-bold text-gray-800 leading-5 truncate">
 					<Link href={`/requests/${requestID}`}>{title}</Link>
 				</span>
 				<span className="text-sm text-gray-700 mw-full">

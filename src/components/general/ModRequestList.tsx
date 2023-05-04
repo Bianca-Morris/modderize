@@ -29,7 +29,7 @@ const ModRequestList: React.FC<ModRequestListProps> = ({
 	const [currModRequests = [], loading, error] = useCollectionData(query);
 
 	return (
-		<div className="flex flex-col gap-3">
+		<div className="flex flex-col gap-3 w-full">
 			{loading && <ModRequestLoader />}
 			{!loading && currModRequests.length === 0 && noResultsRenderFx()}
 			{currModRequests.map((mr) => {
