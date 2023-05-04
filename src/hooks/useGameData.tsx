@@ -1,10 +1,8 @@
 import {
-	collection,
 	doc,
 	getCountFromServer,
 	getDocs,
 	increment,
-	limit,
 	query,
 	where,
 	writeBatch
@@ -14,6 +12,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
 import { gameAtom } from "../atoms/gamesAtom";
 import { auth, db } from "../firebase/clientApp";
+import { gamesCol, modRequestsCol } from "../firebase/collections";
 import { Game, GameSnippet } from "../types/docTypes";
 
 const useGameData = () => {
@@ -38,7 +37,7 @@ const useGameData = () => {
 		setLoading(true);
 
 		try {
-			const querySnapshot = await getDocs(collection(db, "games"));
+			const querySnapshot = await getDocs(gamesCol);
 			setLoading(false);
 
 			const gamesArr = [] as Game[];
@@ -60,7 +59,7 @@ const useGameData = () => {
 	};
 
 	const getModRequestsForGameCount = async (gameID: string) => {
-		const coll = collection(db, "modRequests");
+		const coll = modRequestsCol;
 		const q = query(coll, where("gameID", "==", gameID));
 		const snapshot = await getCountFromServer(q);
 		return snapshot.data().count;

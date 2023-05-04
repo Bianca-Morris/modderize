@@ -1,21 +1,21 @@
 import React, { useCallback } from "react";
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { getDocs, limit, orderBy, query } from "firebase/firestore";
 import type { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import safeJsonStringify from "safe-json-stringify";
 
-import { auth, db } from "../firebase/clientApp";
+import { auth } from "../firebase/clientApp";
 
 import SimpleHeader from "../components/general/SimpleHeader";
 import { Game, ModRequest as ModRequestType } from "../types/docTypes";
 import GameCard from "../components/general/GameCard";
 import Button from "../components/basic/Button";
-import ModRequest from "../components/general/ModRequest";
 import Jumbotron from "../components/basic/Jumbotron";
 import { modRequestConverter } from "../firebase/converters";
 import ModRequestList from "../components/general/ModRequestList";
+import { gamesCol, modRequestsCol } from "../firebase/collections";
 
 type HomePageProps = {
 	topGames: Game[];
@@ -26,9 +26,7 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 
 	const router = useRouter();
 
-	const requestsColl = collection(db, "modRequests").withConverter(
-		modRequestConverter
-	);
+	const requestsColl = modRequestsCol.withConverter(modRequestConverter);
 
 	// Grab top 5 mod requests
 	const top5Q = query(requestsColl, orderBy("voteStatus", "desc"), limit(5));
@@ -139,7 +137,7 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 	try {
 		// Grab top five games for the home page (sorted by number of players)
-		const gameColl = collection(db, "games");
+		const gameColl = gamesCol;
 		const gameQ = query(
 			gameColl,
 			orderBy("numberOfPlayers", "desc"),

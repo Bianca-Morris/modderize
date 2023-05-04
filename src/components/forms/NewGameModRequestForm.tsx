@@ -1,13 +1,8 @@
 import { User } from "firebase/auth";
-import {
-	addDoc,
-	collection,
-	serverTimestamp,
-	Timestamp
-} from "firebase/firestore";
+import { addDoc, serverTimestamp, Timestamp } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { db } from "../../firebase/clientApp";
+import { modRequestsCol } from "../../firebase/collections";
 import { ModRequestSansID } from "../../types/docTypes";
 import Alert from "../basic/Alert";
 import Button from "../basic/Button";
@@ -52,10 +47,7 @@ const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 		try {
 			setError(false);
 			setLoading(true);
-			const modRequestDocRef = await addDoc(
-				collection(db, "modRequests"),
-				newModRequest
-			);
+			await addDoc(modRequestsCol, newModRequest);
 			setLoading(false);
 
 			// redirect the user back to the game page

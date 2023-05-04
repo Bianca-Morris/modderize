@@ -1,5 +1,4 @@
 import {
-	collection,
 	limit,
 	orderBy,
 	Query,
@@ -10,6 +9,7 @@ import {
 	where
 } from "firebase/firestore";
 import { db } from "./firebase/clientApp";
+import { gamesCol, modRequestsCol } from "./firebase/collections";
 import { gameConverter, modRequestConverter } from "./firebase/converters";
 
 export function validateEmail(email) {
@@ -70,7 +70,7 @@ const DOCUMENTS_PER_PAGE = 15;
 
 export function constructModRequestQuery(prevDocSnaps?: QuerySnapshot) {
 	// Query the games collection
-	const coll = collection(db, "modRequests").withConverter(modRequestConverter);
+	const coll = modRequestsCol.withConverter(modRequestConverter);
 
 	// Some basic values for all sort (TODO: Maybe make these dynamic?)
 	const sortField = "title";
@@ -97,7 +97,7 @@ export function constructGameQuery(
 	prevDocSnaps?: QuerySnapshot
 ) {
 	// Query the games collection
-	const coll = collection(db, "games").withConverter(gameConverter);
+	const coll = gamesCol.withConverter(gameConverter);
 
 	// Some basic values for all sort (TODO: Maybe make these dynamic?)
 	const sortField = "displayName";

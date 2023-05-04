@@ -1,8 +1,8 @@
 import { UserIcon } from "@heroicons/react/20/solid";
-import { collection, query, where, writeBatch } from "firebase/firestore";
+import { query, where } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
-import { db } from "../../firebase/clientApp";
+import { modRequestsCol } from "../../firebase/collections";
 import useFirebaseAPI from "../../hooks/useFirebaseAPI";
 import Button from "../basic/Button";
 
@@ -34,7 +34,7 @@ const ModderCard: React.FC<ModderCardProps> = ({
 		// Grab the count of completed and pending documents for this user
 		// Maybe would be better to do in a batch?
 		try {
-			const modCollection = collection(db, "modRequests");
+			const modCollection = modRequestsCol;
 			const completedModCountQ = query(
 				modCollection,
 				where("modderID", "==", uid),

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { User } from "firebase/auth";
 import {
-	collection,
 	doc,
 	getDoc,
 	getDocs,
@@ -11,6 +10,7 @@ import {
 	where
 } from "firebase/firestore";
 import { db } from "../firebase/clientApp";
+import { usersCol } from "../firebase/collections";
 
 /**
  * Returns an object containing a set of methods for interacting with User documents
@@ -25,7 +25,7 @@ const useUserDocs = () => {
 	 * @returns Boolean
 	 */
 	const isUsernameTaken = async (username: string) => {
-		const usersRef = collection(db, "users");
+		const usersRef = usersCol;
 
 		// Check the users table for users with the same displayName
 		const userQuery = query(usersRef, where("displayName", "==", username));
@@ -43,7 +43,7 @@ const useUserDocs = () => {
 	 * @returns Boolean
 	 */
 	const isEmailTaken = async (email: string) => {
-		const usersRef = collection(db, "users");
+		const usersRef = usersCol;
 
 		// Check the users table for users with the same email address
 		const userQuery = query(usersRef, where("email", "==", email));

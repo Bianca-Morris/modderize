@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 
 import { useCollectionDataStatic } from "../../hooks/useCollectionDataStatic";
-import { collection, DocumentData, query, where } from "firebase/firestore";
-import { db } from "../../firebase/clientApp";
+import { query, where } from "firebase/firestore";
 import Button from "../../components/basic/Button";
-import ModRequestResults from "../../components/search/ModRequestResults";
 import { ReallySimpleInfiniteScroll } from "react-really-simple-infinite-scroll";
 import SimpleHeader from "../../components/general/SimpleHeader";
 import ContentBody from "../../components/layout/ContentBody";
@@ -14,13 +12,14 @@ import ModderCard from "../../components/general/ModderCard";
 import { UserDoc } from "../../types/docTypes";
 import useFirebaseAPI from "../../hooks/useFirebaseAPI";
 import Link from "next/link";
+import { usersCol } from "../../firebase/collections";
 
 type ModdersPageProps = {
 	username?: string;
 };
 
 const ModdersPage: React.FC<ModdersPageProps> = ({ username }) => {
-	const usersRef = collection(db, "users");
+	const usersRef = usersCol;
 
 	let modderQuery = query(usersRef, where("isActiveModder", "==", true));
 	if (username) {

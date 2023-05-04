@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { doc } from "@firebase/firestore";
 import { GetServerSidePropsContext } from "next";
-import { auth, db } from "../../../firebase/clientApp";
+import { auth } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
-import { collection, orderBy, query, where } from "firebase/firestore";
+import { orderBy, query, where } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { HeartIcon, PlusIcon, WrenchIcon } from "@heroicons/react/20/solid";
 
@@ -21,6 +21,7 @@ import {
 } from "../../../firebase/converters";
 import ModRequestList from "../../../components/general/ModRequestList";
 import useFavoriteGames from "../../../hooks/useFavoriteGames";
+import { gamesCol, modRequestsCol } from "../../../firebase/collections";
 
 type GamePageProps = {
 	gameID: string;
@@ -35,7 +36,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 	const { onToggleGameFavoriteStatus, loading, getModRequestsForGameCount } =
 		useGameData();
 
-	const collectionRef = collection(db, "games").withConverter(gameConverter);
+	const collectionRef = gamesCol.withConverter(gameConverter);
 	const gameDocRef = doc(collectionRef, gameID);
 
 	const [gameData, gameLoading, gameError] = useDocumentData(gameDocRef);
@@ -139,7 +140,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 					{!gameLoading && (
 						<ModRequestList
 							query={query(
-								collection(db, "modRequests").withConverter(
+								modRequestsCol.withConverter(
 									modRequestConverter
 								),
 								where("gameID", "==", gameID),

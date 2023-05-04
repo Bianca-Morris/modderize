@@ -1,11 +1,12 @@
 import React, { useCallback } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { collection, limit, orderBy, query, where } from "firebase/firestore";
+import { limit, orderBy, query, where } from "firebase/firestore";
 
-import { auth, db } from "../../firebase/clientApp";
+import { auth } from "../../firebase/clientApp";
 import { modRequestConverter } from "../../firebase/converters";
 import Link from "next/link";
 import ModRequestList from "./ModRequestList";
+import { modRequestsCol } from "../../firebase/collections";
 
 type ProfileModsByStatusProps = {
 	status: "in progress" | "complete" | "archived";
@@ -22,9 +23,7 @@ const ProfileModsByStatus: React.FC<ProfileModsByStatusProps> = ({
 	modderID
 }) => {
 	const [user] = useAuthState(auth);
-	const coll = collection(db, "modRequests").withConverter(
-		modRequestConverter
-	);
+	const coll = modRequestsCol.withConverter(modRequestConverter);
 
 	const modRequestQuery = query(
 		coll,

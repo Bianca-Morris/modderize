@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { collection, limit, orderBy, query, where } from "firebase/firestore";
+import { limit, orderBy, query, where } from "firebase/firestore";
 import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -9,6 +9,7 @@ import { auth, db } from "../../firebase/clientApp";
 import { modRequestConverter } from "../../firebase/converters";
 import ModRequestList from "./ModRequestList";
 import { ModRequest } from "../../types/docTypes";
+import { modRequestsCol } from "../../firebase/collections";
 
 dayjs.extend(relativeTime);
 
@@ -21,9 +22,7 @@ const ProfileOpenModsByRequesterID: React.FC<
 > = ({ requesterID }) => {
 	const [user] = useAuthState(auth);
 
-	const coll = collection(db, "modRequests").withConverter(
-		modRequestConverter
-	);
+	const coll = modRequestsCol.withConverter(modRequestConverter);
 
 	const userIsRequester = user && user.uid === requesterID;
 	const modRequestQuery = query(

@@ -1,7 +1,7 @@
-import { collection, orderBy, where, query } from "firebase/firestore";
+import { orderBy, where, query } from "firebase/firestore";
 import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { db } from "../../firebase/clientApp";
+import { modRequestsCol } from "../../firebase/collections";
 import { modRequestConverter } from "../../firebase/converters";
 import { Game, ModRequest as ModRequestType } from "../../types/docTypes";
 import ModRequest from "./ModRequest";
@@ -14,7 +14,7 @@ type GameModRequestsProps = {
 const GameModRequests: React.FC<GameModRequestsProps> = ({ gameData }) => {
 	const { id: gameID = "" } = gameData;
 	const modRequestQuery = query(
-		collection(db, "modRequests").withConverter(modRequestConverter),
+		modRequestsCol.withConverter(modRequestConverter),
 		where("gameID", "==", gameID),
 		orderBy("creationDate", "desc")
 	);
