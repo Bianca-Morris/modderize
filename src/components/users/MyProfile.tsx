@@ -12,7 +12,7 @@ import { auth } from "../../firebase/clientApp";
 import ProfileOpenModsByRequesterID from "../general/ProfileOpenModsByRequesterID";
 import ProfileModsByStatus from "../general/ProfileModsByStatus";
 import useUserDoc from "../../hooks/useUserDoc";
-import { modalControllerState } from "../../atoms/modalControllerAtom";
+import { modalControllerAtom } from "../../atoms/modalControllerAtom";
 
 type MyProfileProps = {
 	userData: User;
@@ -30,7 +30,7 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 		donationLink = ""
 	} = userDoc || {};
 
-	const setModalControllerState = useSetRecoilState(modalControllerState);
+	const setModalControllerState = useSetRecoilState(modalControllerAtom);
 
 	const handleOpenModal = () => {
 		setModalControllerState((prev) => ({

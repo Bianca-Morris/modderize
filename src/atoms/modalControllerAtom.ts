@@ -15,7 +15,7 @@ const defaultModalState: ModalControllerState = {
     authModalView: "login"
 }
 
-export const modalControllerState = atom<ModalControllerState>({
-    key: "modalControllerState",
+export const modalControllerAtom = atom<ModalControllerState>({
+    key: "modalControllerAtom",
     default: defaultModalState
 })

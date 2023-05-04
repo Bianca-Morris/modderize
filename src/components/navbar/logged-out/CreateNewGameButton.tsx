@@ -3,11 +3,11 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { classNames } from "../../../helpers";
 import { useSetRecoilState } from "recoil";
 
-import { modalControllerState } from "../../../atoms/modalControllerAtom";
+import { modalControllerAtom } from "../../../atoms/modalControllerAtom";
 
 const CreateNewGameButton: React.FC = () => {
 	// This button should not appear for non-admin users
-	const setGameModalState = useSetRecoilState(modalControllerState);
+	const setGameModalState = useSetRecoilState(modalControllerAtom);
 
 	return (
 		<a

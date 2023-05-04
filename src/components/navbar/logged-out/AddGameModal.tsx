@@ -9,7 +9,7 @@ import { Transition, Dialog } from "@headlessui/react";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
-import { modalControllerState } from "../../../atoms/modalControllerAtom";
+import { modalControllerAtom } from "../../../atoms/modalControllerAtom";
 import { auth, db } from "../../../firebase/clientApp";
 import { extractMetadataFromFile } from "../../../helpers";
 import useStorageAPI from "../../../hooks/useStorageAPI";
@@ -25,7 +25,7 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 	// Auth State
 	const [user] = useAuthState(auth);
 	// Modal State
-	const [modalState, setModalState] = useRecoilState(modalControllerState);
+	const [modalState, setModalState] = useRecoilState(modalControllerAtom);
 	// Form State
 	const [gameID, setGameID] = useState("");
 	const [charsRemaining, setCharsRemaining] = useState(

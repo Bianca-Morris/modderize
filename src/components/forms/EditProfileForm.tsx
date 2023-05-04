@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
-import { modalControllerState } from "../../atoms/modalControllerAtom";
+import { modalControllerAtom } from "../../atoms/modalControllerAtom";
 import { auth, db } from "../../firebase/clientApp";
 import { extractMetadataFromFile } from "../../helpers";
 import useStorageAPI from "../../hooks/useStorageAPI";
@@ -36,7 +36,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ userDoc }) => {
 		loading: fileLoading,
 		error: fileError
 	} = useStorageAPI();
-	const setModalControllerState = useSetRecoilState(modalControllerState);
+	const setModalControllerState = useSetRecoilState(modalControllerAtom);
 	const [image, setImage] = useState<File>();
 	const [editProfileForm, setEditProfileForm] = useState({
 		about: userDoc.about,

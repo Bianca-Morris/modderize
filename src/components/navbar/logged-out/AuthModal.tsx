@@ -4,11 +4,11 @@ import { useRecoilState } from "recoil";
 import AuthPanels from "./AuthPanels";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/clientApp";
-import { modalControllerState } from "../../../atoms/modalControllerAtom";
+import { modalControllerAtom } from "../../../atoms/modalControllerAtom";
 import { ModalViews } from "../../../types/misc";
 
 const AuthModal: React.FC = () => {
-	const [modalState, setModalState] = useRecoilState(modalControllerState);
+	const [modalState, setModalState] = useRecoilState(modalControllerAtom);
 	const [user, loading, error] = useAuthState(auth);
 
 	const { authModalOpen: open, authModalView: view } = modalState;

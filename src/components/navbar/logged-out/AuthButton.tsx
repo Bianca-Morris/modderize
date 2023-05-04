@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { modalControllerState } from "../../../atoms/modalControllerAtom";
+import { modalControllerAtom } from "../../../atoms/modalControllerAtom";
 import Button from "../../basic/Button";
 import AuthModal from "./AuthModal";
 
@@ -9,7 +9,7 @@ type AuthButtonProps = {
 };
 
 const AuthButton: React.FC<AuthButtonProps> = () => {
-	const setAuthModalState = useSetRecoilState(modalControllerState);
+	const setAuthModalState = useSetRecoilState(modalControllerAtom);
 
 	return (
 		<>

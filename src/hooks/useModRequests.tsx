@@ -17,12 +17,12 @@ import {
 import { User } from "firebase/auth";
 import { ModRequest, UserDoc } from "../types/docTypes";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { modalControllerState } from "../atoms/modalControllerAtom";
+import { modalControllerAtom } from "../atoms/modalControllerAtom";
 
 const useModRequests = () => {
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
-	const setAuthModalState = useSetRecoilState(modalControllerState);
+	const setAuthModalState = useSetRecoilState(modalControllerAtom);
 	const [user] = useAuthState(auth);
 
 	const hasUserLikedRequest = (
