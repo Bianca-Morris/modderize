@@ -16,7 +16,7 @@ interface GenericProfileProps extends PropsWithChildren {
 	showTopDonationLink?: boolean;
 	onEditProfile?: () => void;
 	showRequestMod: boolean;
-	onRequestMod?: () => {};
+	onRequestMod?: () => void;
 }
 
 const GenericProfile: React.FC<GenericProfileProps> = ({

@@ -97,7 +97,9 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 				</div>
 
 				<div className="">
-					<h2 className="text-2xl font-bold mb-4">My Mod Requests</h2>
+					<h2 className="text-2xl font-bold mb-4">
+						Mods I've Requested
+					</h2>
 					<ProfileOpenModsByRequesterID requesterID={uid} />
 				</div>
 			</GenericProfile>

@@ -1,5 +1,6 @@
 import { User } from "firebase/auth";
 import { DocumentData } from "firebase/firestore";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
@@ -17,6 +18,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 	const [viewingUserDoc, setViewingUserDoc] = useState<DocumentData | null>();
 	const { getUserDoc } = useUserDocs();
 	const [activeUser] = useAuthState(auth);
+	const router = useRouter();
 
 	const {
 		isActiveModder = false,
@@ -32,6 +34,10 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 		return getUserDoc(uid).then((doc) => setViewingUserDoc(doc));
 	};
 
+	const onRequestMod = () => {
+		router.push(`/users/${uid}/userModRequest`);
+	};
+
 	return (
 		<div>
 			<GenericProfile
@@ -39,7 +45,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 				profileURL={photoURL || undefined}
 				description={about}
 				showTopDonationLink={isActiveModder && donationLink}
-				{...{ donationLink }}
+				{...{ donationLink, onRequestMod }}
 				showEdit={false}
 				showRequestMod={!!activeUser && isActiveModder}
 			>
@@ -50,7 +56,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 
 				<div className="">
 					<h2 className="text-2xl font-bold mb-4">
-						My Open Mod Requests
+						Mods I've Requested
 					</h2>
 					<ProfileOpenModsByRequesterID requesterID={uid} />
 				</div>
