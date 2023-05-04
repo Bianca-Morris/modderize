@@ -5,7 +5,7 @@ import { useRecoilValue } from "recoil";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import { gameState } from "../../../atoms/gamesAtom";
+import { gameAtom } from "../../../atoms/gamesAtom";
 import { auth } from "../../../firebase/clientApp";
 import Dropdown from "../../basic/Dropdown";
 import { classNames } from "../../../helpers";
@@ -29,7 +29,7 @@ const GamesDropdown: React.FC<GamesDropdownProps> = () => {
 	const anyFavoriteGames = favoriteGames.length > 0;
 
 	// Storing a list of all games in global recoil state, since this is unlikely to change
-	const gameStateValue = useRecoilValue(gameState);
+	const gameStateValue = useRecoilValue(gameAtom);
 	const { allGames = [] } = gameStateValue;
 
 	return (

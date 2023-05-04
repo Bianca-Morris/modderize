@@ -2,7 +2,7 @@ import { Query, QuerySnapshot } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { gameState } from "../../atoms/gamesAtom";
+import { gameAtom } from "../../atoms/gamesAtom";
 import Button from "../../components/basic/Button";
 import GameCard from "../../components/general/GameCard";
 import SimpleHeader from "../../components/general/SimpleHeader";
@@ -16,7 +16,7 @@ const GamesPage: React.FC = () => {
 	const { query: queryParams = null } = useRouter();
 	const { keyword = "" } = queryParams || {};
 
-	const [gameStateValue, setGameStateValue] = useRecoilState(gameState);
+	const [gameStateValue, setGameStateValue] = useRecoilState(gameAtom);
 	const { allGames = [] } = gameStateValue || {};
 	const { getAllGames } = useGameData();
 

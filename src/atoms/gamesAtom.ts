@@ -7,7 +7,7 @@ interface GameState {
 
 const defaultGameState: GameState = {}
 
-export const gameState = atom<GameState>({
-    key: 'gameState',
+export const gameAtom = atom<GameState>({
+    key: 'gameAtom',
     default: defaultGameState
 })

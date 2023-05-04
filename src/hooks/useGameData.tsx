@@ -12,13 +12,13 @@ import {
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
-import { gameState } from "../atoms/gamesAtom";
+import { gameAtom } from "../atoms/gamesAtom";
 import { auth, db } from "../firebase/clientApp";
 import { Game, GameSnippet } from "../types/docTypes";
 
 const useGameData = () => {
 	const [user] = useAuthState(auth);
-	const [gameStateValue, setGameStateValue] = useRecoilState(gameState);
+	const [gameStateValue, setGameStateValue] = useRecoilState(gameAtom);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 
@@ -133,7 +133,6 @@ const useGameData = () => {
 	}, []);
 
 	return {
-		gameStateValue,
 		getAllGames,
 		onToggleGameFavoriteStatus,
 		getModRequestsForGameCount,
