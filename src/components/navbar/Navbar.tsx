@@ -39,7 +39,16 @@ const Navbar: React.FC = () => {
 								<MenuButtonMobile {...{ open }} />
 							</div>
 							<div className="flex flex-1 items-center justify-start text-white uppercase font-bold">
-								<Link href="/">Modderize</Link>
+								<Link
+									href="/"
+									className="flex flex-row gap-2 justify-center items-center"
+								>
+									<img
+										src="modderize_logo.svg"
+										width="50"
+									></img>
+									Modderize
+								</Link>
 								<div className="hidden sm:ml-6 sm:block">
 									<div className="flex space-x-4">
 										{navigation.map((item) => (
