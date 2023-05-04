@@ -110,7 +110,6 @@ const useModRequests = () => {
 	const updateModRequest = async (id: string, updateObject: {}) => {
 		setLoading(true);
 		setError("");
-		console.log("update mod request");
 
 		try {
 			const updated = await updateDoc(
@@ -145,12 +144,48 @@ const useModRequests = () => {
 		await updateModRequest(modRequest.id, updateObject);
 	};
 
-	const assignModRequestToOther = async () => {};
+	const withdrawFromModRequest = async (modRequestID: string) => {
+		if (!user) {
+			setAuthModalState({ open: true, view: "login" });
+			return;
+		}
+		const updateObject = {
+			modderID: "",
+			modderStatus: "open",
+			modderDisplayName: "",
+			modderProfileImageURL: "",
+			lastModified: serverTimestamp() as Timestamp,
+			completionStatus: "pending modder"
+		};
+		await updateModRequest(modRequestID, updateObject);
+	};
+
+	/**
+	 * Request a mod from a specific user; they need to "accept" it in order to proceed
+	 * @param reqUser
+	 * @param modRequest
+	 */
+	const assignModRequestToOther = async (
+		reqUser: User,
+		modRequest: ModRequest
+	) => {
+		const updateObject = {
+			modderID: reqUser.uid,
+			modderStatus: "requested",
+			modderDisplayName: reqUser.displayName,
+			modderProfileImageURL: reqUser.photoURL,
+			lastModified: serverTimestamp() as Timestamp,
+			completionStatus: "pending modder"
+		};
+		await updateModRequest(modRequest.id, updateObject);
+	};
 
 	return {
+		loading,
 		onVote,
 		hasUserLikedRequest,
 		assignModRequestToSelf,
+		withdrawFromModRequest,
 		assignModRequestToOther
 	};
 };

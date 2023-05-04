@@ -21,6 +21,8 @@ import Button from "../../../components/basic/Button";
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import useModRequests from "../../../hooks/useModRequests";
 import LikeButton from "../../../components/general/LikeButton";
+import { modRequestConverter } from "../../../helpers/converters";
+import { collection } from "firebase/firestore";
 
 dayjs.extend(relativeTime);
 
@@ -32,12 +34,20 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	const [user] = useAuthState(auth);
 
 	// Grab document for this mod request
-	const modRequestRef = doc(db, "modRequests", requestID || "placeholder");
+	const modRequestRef = doc(
+		db,
+		"modRequests",
+		requestID || "placeholder"
+	).withConverter(modRequestConverter);
 	const [modRequestData, loading, error, snapshot] = useDocumentData(
 		modRequestRef as DocumentReference<ModRequestType>
 	);
 
-	const { assignModRequestToSelf } = useModRequests();
+	const {
+		assignModRequestToSelf,
+		withdrawFromModRequest,
+		loading: requestLoading
+	} = useModRequests();
 
 	if (!loading && !modRequestData) {
 		return (
@@ -82,7 +92,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	const hasBeenModified = lastModified?.seconds !== creationDate?.seconds;
 
 	const isRequester = requesterID === user?.uid;
-	const isModder = modderID === user?.uid && modderStatus === "accepted";
+	const isModder = modderID === user?.uid;
 	const noModderAssigned = !modderID && modderStatus === "open";
 	const modderAssignedButNotConfirmed =
 		modderID && modderStatus === "requested";
@@ -239,28 +249,35 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 									Edit Request
 								</Button>
 							)}
-							{!!user && !isRequester && noModderAssigned && (
-								<Button
-									type="button"
-									variant="blue"
-									onClick={
-										!modRequestData
-											? undefined
-											: () =>
-													assignModRequestToSelf(
-														modRequestData
-													)
-									}
-								>
-									<WrenchScrewdriverIcon className="w-4 h-4 mr-3" />
-									Work on This Request
-								</Button>
-							)}
+							{!!user &&
+								!isRequester &&
+								(noModderAssigned ||
+									modderAssignedButNotConfirmed) && (
+									<Button
+										type="button"
+										variant="blue"
+										cls="flex-1 mt-4 bold"
+										onClick={
+											!modRequestData
+												? undefined
+												: () =>
+														assignModRequestToSelf(
+															modRequestData
+														)
+										}
+									>
+										<WrenchScrewdriverIcon className="w-4 h-4 mr-3" />
+										Work on This Request
+									</Button>
+								)}
 							{isModder && modderAssigned && (
 								<Button
 									type="button"
 									variant="red"
 									cls="flex-1 mt-4 bold"
+									onClick={() =>
+										withdrawFromModRequest(requestID)
+									}
 								>
 									<ArchiveBoxIcon className="w-4 h-4 mr-3" />
 									Withdraw
@@ -271,6 +288,9 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 									type="button"
 									variant="red"
 									cls="flex-1 mt-4 bold"
+									onClick={() =>
+										withdrawFromModRequest(requestID)
+									}
 								>
 									<ArchiveBoxIcon className="w-4 h-4 mr-3" />
 									Refuse Request
