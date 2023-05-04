@@ -21,12 +21,24 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
 	const router = useRouter();
 	const [textQuery, setTextQuery] = useState("");
+	const [dropVal, setDropVal] = useState("modders");
 
 	const onStartSearch = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const query = encodeURIComponent(textQuery);
-		router.push(`/games?keyword=${query}`);
+
+		let URL: string;
+
+		if (dropVal === "games") {
+			// Send users to games page
+			URL = `/games?keyword=${query}`;
+		} else {
+			// Send users to modders page
+			URL = `/users/modders?username=${query}`;
+		}
+
+		router.push(URL);
 	};
 
 	return (
@@ -55,6 +67,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
 							id="searchType"
 							name="searchType"
 							className="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm cursor-pointer"
+							value={dropVal}
+							onChange={(e) => setDropVal(e.target.value)}
 						>
 							<option value="games">Games</option>
 							<option value="modders">Modders</option>
