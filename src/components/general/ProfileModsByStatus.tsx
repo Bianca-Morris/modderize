@@ -3,7 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { collection, limit, orderBy, query, where } from "firebase/firestore";
 
 import { auth, db } from "../../firebase/clientApp";
-import { modRequestConverter } from "../../helpers/converters";
+import { modRequestConverter } from "../../firebase/converters";
 import Link from "next/link";
 import ModRequestList from "./ModRequestList";
 

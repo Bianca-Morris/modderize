@@ -10,7 +10,7 @@ import {
 	where
 } from "firebase/firestore";
 import { db } from "./firebase/clientApp";
-import { gameConverter, modRequestConverter } from "./helpers/converters";
+import { gameConverter, modRequestConverter } from "./firebase/converters";
 
 export function validateEmail(email) {
 	// Regex from https://www.tutorialspoint.com/How-to-validate-email-address-in-JavaScript

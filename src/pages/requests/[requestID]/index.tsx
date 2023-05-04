@@ -21,7 +21,7 @@ import Button from "../../../components/basic/Button";
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import useModRequests from "../../../hooks/useModRequests";
 import LikeButton from "../../../components/general/LikeButton";
-import { modRequestConverter } from "../../../helpers/converters";
+import { modRequestConverter } from "../../../firebase/converters";
 import { collection } from "firebase/firestore";
 
 dayjs.extend(relativeTime);

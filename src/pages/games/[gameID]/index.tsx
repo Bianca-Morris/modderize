@@ -18,7 +18,7 @@ import GameNotFoundPage from "../../../components/pages/GameNotFound";
 import {
 	gameConverter,
 	modRequestConverter
-} from "../../../helpers/converters";
+} from "../../../firebase/converters";
 import ModRequestList from "../../../components/general/ModRequestList";
 import useFavoriteGames from "../../../hooks/useFavoriteGames";
 

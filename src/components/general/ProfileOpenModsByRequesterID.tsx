@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import { auth, db } from "../../firebase/clientApp";
-import { modRequestConverter } from "../../helpers/converters";
+import { modRequestConverter } from "../../firebase/converters";
 import ModRequestList from "./ModRequestList";
 import { ModRequest } from "../../types/docTypes";
 

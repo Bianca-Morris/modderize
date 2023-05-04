@@ -2,7 +2,7 @@ import { collection, orderBy, where, query } from "firebase/firestore";
 import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "../../firebase/clientApp";
-import { modRequestConverter } from "../../helpers/converters";
+import { modRequestConverter } from "../../firebase/converters";
 import { Game, ModRequest as ModRequestType } from "../../types/docTypes";
 import ModRequest from "./ModRequest";
 import ModRequestLoader from "./ModRequestLoader";

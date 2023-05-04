@@ -14,7 +14,7 @@ import GameCard from "../components/general/GameCard";
 import Button from "../components/basic/Button";
 import ModRequest from "../components/general/ModRequest";
 import Jumbotron from "../components/basic/Jumbotron";
-import { modRequestConverter } from "../helpers/converters";
+import { modRequestConverter } from "../firebase/converters";
 import ModRequestList from "../components/general/ModRequestList";
 
 type HomePageProps = {
