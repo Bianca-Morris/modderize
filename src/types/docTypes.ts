@@ -1,3 +1,8 @@
+/**
+ * Types that are associated with Documents, Collections, or Subcollections in Firebase
+ * Can be converted to/from versions with IDs via converters in /firebase/converters
+ */
+
 import { DocumentData, DocumentReference, Timestamp } from "@firebase/firestore";
 import { User } from "firebase/auth";
 

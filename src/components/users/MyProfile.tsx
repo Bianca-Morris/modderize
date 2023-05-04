@@ -3,7 +3,6 @@ import { User } from "firebase/auth";
 import { useSetRecoilState } from "recoil";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import { profileEditModalState } from "../../atoms/profileEditModalAtom";
 import useUserDocs from "../../hooks/useUserDocs";
 import Toggle from "../basic/Toggle";
 import EditProfileForm from "../forms/EditProfileForm";
@@ -13,6 +12,7 @@ import { auth } from "../../firebase/clientApp";
 import ProfileOpenModsByRequesterID from "../general/ProfileOpenModsByRequesterID";
 import ProfileModsByStatus from "../general/ProfileModsByStatus";
 import useUserDoc from "../../hooks/useUserDoc";
+import { modalControllerState } from "../../atoms/modalControllerAtom";
 
 type MyProfileProps = {
 	userData: User;
@@ -30,14 +30,12 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 		donationLink = ""
 	} = userDoc || {};
 
-	const setOpenProfileEditModalStateValue = useSetRecoilState(
-		profileEditModalState
-	);
+	const setModalControllerState = useSetRecoilState(modalControllerState);
 
 	const handleOpenModal = () => {
-		setOpenProfileEditModalStateValue((prev) => ({
+		setModalControllerState((prev) => ({
 			...prev,
-			open: true
+			profileEditModalOpen: true
 		}));
 	};
 

@@ -9,7 +9,7 @@ import { Transition, Dialog } from "@headlessui/react";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
-import { gameModalState } from "../../../atoms/gameModalAtom";
+import { modalControllerState } from "../../../atoms/modalControllerAtom";
 import { auth, db } from "../../../firebase/clientApp";
 import { extractMetadataFromFile } from "../../../helpers";
 import useStorageAPI from "../../../hooks/useStorageAPI";
@@ -25,7 +25,7 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 	// Auth State
 	const [user] = useAuthState(auth);
 	// Modal State
-	const [modalState, setModalState] = useRecoilState(gameModalState);
+	const [modalState, setModalState] = useRecoilState(modalControllerState);
 	// Form State
 	const [gameID, setGameID] = useState("");
 	const [charsRemaining, setCharsRemaining] = useState(
@@ -42,7 +42,7 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 		error: fileError
 	} = useStorageAPI();
 
-	const { open } = modalState;
+	const { gameCreationModalOpen: open } = modalState;
 
 	// Reset when opened anew
 	useEffect(() => {
@@ -57,9 +57,10 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 	}, [open]);
 
 	const handleClose = () => {
-		setModalState({
-			open: false
-		});
+		setModalState((prev) => ({
+			...prev,
+			gameCreationModalOpen: false
+		}));
 	};
 
 	const handleChangeDisplayName = (
@@ -153,7 +154,10 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 
 			console.log("Game created! Closing modal");
 			setLoading(false);
-			setModalState({ open: false });
+			setModalState((prev) => ({
+				...prev,
+				gameCreationModalOpen: false
+			}));
 		} catch (error: any) {
 			console.log("handleCreateGame", error);
 			setError(error.message);

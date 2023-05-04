@@ -7,7 +7,7 @@ import {
 } from "firebase/firestore";
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { authModalState } from "../atoms/authModalAtom";
+
 import { auth, db } from "../firebase/clientApp";
 import {
 	eq as findIndexOf,
@@ -17,11 +17,12 @@ import {
 import { User } from "firebase/auth";
 import { ModRequest, UserDoc } from "../types/docTypes";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { modalControllerState } from "../atoms/modalControllerAtom";
 
 const useModRequests = () => {
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
-	const setAuthModalState = useSetRecoilState(authModalState);
+	const setAuthModalState = useSetRecoilState(modalControllerState);
 	const [user] = useAuthState(auth);
 
 	const hasUserLikedRequest = (
@@ -51,7 +52,11 @@ const useModRequests = () => {
 		console.info("user inside onVote", user, userDoc);
 		// Prompt the user to log in if they aren't...
 		if (!user || !userDoc) {
-			setAuthModalState({ open: true, view: "login" });
+			setAuthModalState((prev) => ({
+				...prev,
+				authModalOpen: true,
+				authModalView: "login"
+			}));
 			return;
 		}
 
@@ -130,7 +135,11 @@ const useModRequests = () => {
 
 	const assignModRequestToSelf = async (modRequest: ModRequest) => {
 		if (!user) {
-			setAuthModalState({ open: true, view: "login" });
+			setAuthModalState((prev) => ({
+				...prev,
+				authModalOpen: true,
+				authModalView: "login"
+			}));
 			return;
 		}
 		const updateObject = {
@@ -146,7 +155,11 @@ const useModRequests = () => {
 
 	const withdrawFromModRequest = async (modRequestID: string) => {
 		if (!user) {
-			setAuthModalState({ open: true, view: "login" });
+			setAuthModalState((prev) => ({
+				...prev,
+				authModalOpen: true,
+				authModalView: "login"
+			}));
 			return;
 		}
 		const updateObject = {

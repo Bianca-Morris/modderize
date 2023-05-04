@@ -1,29 +1,34 @@
 import React, { Fragment, useRef, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { authModalState } from "../../../atoms/authModalAtom";
 import { useRecoilState } from "recoil";
 import AuthPanels from "./AuthPanels";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/clientApp";
+import { modalControllerState } from "../../../atoms/modalControllerAtom";
+import { ModalViews } from "../../../types/misc";
 
 const AuthModal: React.FC = () => {
-	const [modalState, setModalState] = useRecoilState(authModalState);
+	const [modalState, setModalState] = useRecoilState(modalControllerState);
 	const [user, loading, error] = useAuthState(auth);
 
-	const { open, view } = modalState;
+	const { authModalOpen: open, authModalView: view } = modalState;
 
 	const handleClose = () => {
 		setModalState((prev) => ({
 			...prev,
-			open: false
+			authModalOpen: false
 		}));
 	};
 
 	const handleSwitch = (
 		e: React.MouseEvent<Element, MouseEvent>,
-		newView
+		newView: ModalViews
 	) => {
-		setModalState({ open: true, view: newView });
+		setModalState((prev) => ({
+			...prev,
+			authModalOpen: true,
+			authModalView: newView
+		}));
 	};
 
 	const cancelButtonRef = useRef(null);

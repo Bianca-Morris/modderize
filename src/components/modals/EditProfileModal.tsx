@@ -8,19 +8,19 @@ import React, {
 import { Dialog, Transition } from "@headlessui/react";
 import { useRecoilState } from "recoil";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { profileEditModalState } from "../../atoms/profileEditModalAtom";
 import { auth } from "../../firebase/clientApp";
+import { modalControllerState } from "../../atoms/modalControllerAtom";
 
 const EditProfileModal: React.FC<PropsWithChildren> = ({ children }) => {
-	const [modalState, setModalState] = useRecoilState(profileEditModalState);
+	const [modalState, setModalState] = useRecoilState(modalControllerState);
 	const [user, loading, error] = useAuthState(auth);
 
-	const { open } = modalState;
+	const { profileEditModalOpen: open } = modalState;
 
 	const handleClose = () => {
 		setModalState((prev) => ({
 			...prev,
-			open: false
+			profileEditModalOpen: false
 		}));
 	};
 

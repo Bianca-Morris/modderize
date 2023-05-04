@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
-import { profileEditModalState } from "../../atoms/profileEditModalAtom";
+import { modalControllerState } from "../../atoms/modalControllerAtom";
 import { auth, db } from "../../firebase/clientApp";
 import { extractMetadataFromFile } from "../../helpers";
 import useStorageAPI from "../../hooks/useStorageAPI";
@@ -36,9 +36,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ userDoc }) => {
 		loading: fileLoading,
 		error: fileError
 	} = useStorageAPI();
-	const setOpenProfileEditModalStateValue = useSetRecoilState(
-		profileEditModalState
-	);
+	const setModalControllerState = useSetRecoilState(modalControllerState);
 	const [image, setImage] = useState<File>();
 	const [editProfileForm, setEditProfileForm] = useState({
 		about: userDoc.about,
@@ -91,7 +89,10 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ userDoc }) => {
 		setLoading(false);
 
 		// Close the modal
-		setOpenProfileEditModalStateValue((prev) => ({ ...prev, open: false }));
+		setModalControllerState((prev) => ({
+			...prev,
+			profileEditModalOpen: false
+		}));
 	};
 
 	const handleTextInput = (

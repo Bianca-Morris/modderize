@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { authModalState } from "../../../atoms/authModalAtom";
+import { modalControllerState } from "../../../atoms/modalControllerAtom";
 import AuthPanelLogin from "./AuthPanelLogin";
 import AuthPanelRegister from "./AuthPanelRegister";
 import AuthPanelResetPassword from "./AuthPanelResetPassword";
@@ -10,8 +10,8 @@ type AuthPanelsProps = {
 };
 
 const AuthPanels: React.FC<AuthPanelsProps> = ({ handleSwitch }) => {
-	const modalState = useRecoilValue(authModalState);
-	const { view } = modalState;
+	const modalState = useRecoilValue(modalControllerState);
+	const { authModalView: view } = modalState;
 	return (
 		<>
 			{view == "login" && <AuthPanelLogin {...{ handleSwitch }} />}
