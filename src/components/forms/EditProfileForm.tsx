@@ -14,20 +14,20 @@ import { extractMetadataFromFile } from "../../helpers";
 import useStorageAPI from "../../hooks/useStorageAPI";
 import useUserDoc from "../../hooks/useUserDoc";
 import useUserDocs from "../../hooks/useUserDocs";
+import { UserDoc } from "../../types/docTypes";
 import Button from "../basic/Button";
 import FileUploadInput from "../basic/FileUploadInput";
 import Input from "../basic/Input";
 import Textarea from "../basic/Textarea";
 
-const EditProfileForm: React.FC = () => {
+type EditProfileFormProps = {
+	userDoc: UserDoc; // Fix for useUserDoc not working here... @TODO need to look into why
+};
+
+const EditProfileForm: React.FC<EditProfileFormProps> = ({ userDoc }) => {
 	// Authenticate user
 	const [user] = useAuthState(auth);
 	const { uid } = user || {};
-
-	// Grab values from original user doc for initializing the profile form state
-	const { userDoc } = useUserDoc();
-	const { about: initialAbout, donationLink: initialDonationLink } =
-		userDoc || {};
 
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState<boolean>();
@@ -41,8 +41,8 @@ const EditProfileForm: React.FC = () => {
 	);
 	const [image, setImage] = useState<File>();
 	const [editProfileForm, setEditProfileForm] = useState({
-		about: initialAbout,
-		donationLink: initialDonationLink
+		about: userDoc.about,
+		donationLink: userDoc.donationLink
 	});
 	const { updateUserDoc } = useUserDocs();
 
@@ -120,6 +120,10 @@ const EditProfileForm: React.FC = () => {
 			}
 		}
 	};
+
+	useEffect(() => {
+		console.log("userDoc", userDoc);
+	}, []);
 
 	return (
 		<form onSubmit={handleSubmit}>

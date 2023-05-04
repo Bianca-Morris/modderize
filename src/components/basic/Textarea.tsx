@@ -21,7 +21,7 @@ const Textarea: React.FC<TextareaProps> = ({
 	value,
 	required,
 	disabled,
-	cls,
+	cls = "",
 	wrapperCls,
 	rows
 }) => {

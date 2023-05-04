@@ -19,7 +19,6 @@ type MyProfileProps = {
 };
 
 const MyProfile: React.FC<MyProfileProps> = () => {
-	const [modalKey, setModalKey] = useState<number>(0);
 	const [user] = useAuthState(auth);
 
 	const { updateUserDocField, loading: updatingUserDoc } = useUserDocs();
@@ -42,11 +41,6 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 		}));
 	};
 
-	// When user or user doc is updated, refresh the form and reset to new values
-	useEffect(() => {
-		setModalKey(modalKey + 1);
-	}, [userDoc, user]);
-
 	if (!user) {
 		return null;
 	}
@@ -56,8 +50,8 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 	return (
 		<div>
 			{!loadingUserDoc && !!userDoc && (
-				<EditProfileModal key={modalKey}>
-					<EditProfileForm />
+				<EditProfileModal>
+					<EditProfileForm {...{ userDoc }} />
 				</EditProfileModal>
 			)}
 			<GenericProfile
