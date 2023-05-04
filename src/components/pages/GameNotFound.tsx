@@ -1,4 +1,5 @@
 import React from "react";
+import A from "../basic/A";
 import Button from "../basic/Button";
 import SimpleHeader from "../general/SimpleHeader";
 import ContentBody from "../layout/ContentBody";
@@ -19,9 +20,9 @@ const GameNotFoundPage: React.FC = () => {
 					<h2>This game doesn't seem to be on Modderize.</h2>
 					<p>
 						Check the spelling of the ID or&nbsp;
-						<a className="underline text-gray-500" href="/games">
+						<A variant="gray" href="/games">
 							Browse by Game
-						</a>
+						</A>
 						.
 					</p>
 					<Button type="button" variant="gray" cls="mt-3">

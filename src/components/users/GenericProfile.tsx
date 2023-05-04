@@ -1,6 +1,7 @@
 import { ShareIcon, UserIcon } from "@heroicons/react/20/solid";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import React, { PropsWithChildren } from "react";
+import A from "../basic/A";
 import Button from "../basic/Button";
 import SharePopover from "../general/SharePopover";
 import SimpleHeader from "../general/SimpleHeader";
@@ -55,14 +56,15 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 					{donationLink && showTopDonationLink && (
 						<div className="flex text-xs mt-1">
 							(
-							<a
+							<A
+								tagType="a"
 								href={donationLink}
 								target="_blank"
 								rel="noreferrer"
-								className="text-violet-700 underline"
+								variant="violet"
 							>
 								{donationLink}
-							</a>
+							</A>
 							)
 						</div>
 					)}

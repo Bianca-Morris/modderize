@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { HeartIcon } from "@heroicons/react/24/outline";
+import A from "../basic/A";
 
 const navigation = [
 	{ name: "Privacy Policy", href: "#" },
@@ -60,12 +61,14 @@ const Footer: React.FC = () => {
 					<HeartIcon className="h-4 w-4 my-4" />
 				</div>
 				by
-				<a
-					className="ml-1 underline text-violet-300"
+				<A
+					variant="lightViolet"
+					tagType="a"
+					cls="ml-1"
 					href="https://www.biancamorris.com"
 				>
 					Bianca Morris
-				</a>
+				</A>
 			</div>
 		</div>
 	);

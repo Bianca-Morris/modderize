@@ -3,6 +3,7 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 import { auth } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
+import A from "../../basic/A";
 import Button from "../../basic/Button";
 import Input from "../../basic/Input";
 import OAuthGoogleButton from "./OAuthGoogleButton";
@@ -44,15 +45,17 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 	return (
 		<form onSubmit={onSubmit}>
 			<div className="flex flex-col justify-center align-center">
-				<a
-					className="text-sm text-center text-gray-500 underline cursor-pointer"
+				<A
+					cls="text-sm text-center"
+					variant="gray"
+					tagType="a"
 					href={undefined}
 					onClick={(e: React.MouseEvent<Element, MouseEvent>) =>
 						handleSwitch(e, "signup")
 					}
 				>
 					Don't have an account? Register
-				</a>
+				</A>
 			</div>
 			<div className="mt-8 mx-8 flex flex-col">
 				<label htmlFor="email" className="text-left">
@@ -96,15 +99,17 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 				<OAuthGoogleButton />
 			</div>
 			<div className="flex flex-col justify-center align-center">
-				<a
-					className="text-sm text-center text-gray-500 underline cursor-pointer"
+				<A
+					cls="text-sm text-center"
+					variant="gray"
+					tagType="a"
 					href={undefined}
 					onClick={(e: React.MouseEvent<Element, MouseEvent>) =>
 						handleSwitch(e, "resetPassword")
 					}
 				>
 					Forgot Password?
-				</a>
+				</A>
 			</div>
 		</form>
 	);

@@ -7,6 +7,7 @@ import { modRequestConverter } from "../../firebase/converters";
 import Link from "next/link";
 import ModRequestList from "./ModRequestList";
 import { modRequestsCol } from "../../firebase/collections";
+import A from "../basic/A";
 
 type ProfileModsByStatusProps = {
 	status: "in progress" | "complete" | "archived";
@@ -40,12 +41,12 @@ const ProfileModsByStatus: React.FC<ProfileModsByStatusProps> = ({
 				{statusToNoneAvailableString[status]}{" "}
 				{user && user.uid === modderID && (
 					<>
-						<Link
+						<A
 							href="/requests" // @TODO write out complete URL
-							className="text-violet-700 underline"
+							variant="violet"
 						>
 							Click here
-						</Link>{" "}
+						</A>{" "}
 						to browse open requests.
 					</>
 				)}

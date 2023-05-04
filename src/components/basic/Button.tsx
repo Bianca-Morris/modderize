@@ -2,11 +2,15 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import React, { MouseEventHandler } from "react";
 
 import { PropsWithChildren } from "react";
+import { ButtonVariants } from "../../types/misc";
+
+export const BUTTON_STYLE =
+	"inline-flex items-center rounded-md shadow-sm justify-center text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-25";
 
 const WITHOUT_OUTLINE = " border-transparent px-4 py-2";
 const WITH_OUTLINE = " border-2 px-3 py-1";
 
-const COLOR_VARIANTS = {
+export const COLOR_VARIANTS = {
 	blue: "bg-blue-600 enabled:hover:bg-blue-500 text-white" + WITHOUT_OUTLINE,
 	red: "bg-red-500 enabled:hover:bg-red-400 text-white" + WITHOUT_OUTLINE,
 	purple:
@@ -33,33 +37,7 @@ interface ButtonProps extends PropsWithChildren {
 	onClick?: React.MouseEventHandler<HTMLButtonElement>; // Not entirely necessary when submittnig forms
 	disabled?: boolean;
 	loading?: boolean;
-	variant: // | "black"
-	// | "white"
-	// | "slate"
-	| "grayOutline"
-		| "grayOutline2"
-		| "gray"
-		// | "zinc"
-		// | "neutral"
-		// | "stone"
-		| "red"
-		// | "orange"
-		// | "amber"
-		// | "yellow"
-		// | "lime"
-		// | "green"
-		// | "emerald"
-		// | "teal"
-		// | "cyan"
-		// | "sky"
-		| "blue"
-		| "indigo"
-		| "violet"
-		| "purple"
-		| "noOutline";
-	// | "fuchsia"
-	// | "pink"
-	// | "rose";
+	variant: ButtonVariants;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -75,9 +53,9 @@ const Button: React.FC<ButtonProps> = ({
 		<button
 			{...{ type, disabled }}
 			onClick={onClick}
-			className={`inline-flex items-center rounded-md shadow-sm justify-center
-                        text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-25
-                        ${COLOR_VARIANTS[variant]} ${cls ? cls : ""}`}
+			className={`${BUTTON_STYLE} ${COLOR_VARIANTS[variant]} ${
+				cls ? cls : ""
+			}`}
 		>
 			{loading ? (
 				<div className="animate-spin" role="status">

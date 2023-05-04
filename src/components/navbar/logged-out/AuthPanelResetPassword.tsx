@@ -4,6 +4,7 @@ import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
 import { validateEmail } from "../../../helpers";
+import A from "../../basic/A";
 import Button from "../../basic/Button";
 import Input from "../../basic/Input";
 
@@ -45,15 +46,17 @@ const AuthPanelResetPassword: React.FC<AuthPanelResetPasswordProps> = ({
 	return (
 		<div>
 			<div className="flex flex-col justify-center align-center">
-				<a
-					className="text-sm text-center text-gray-500 underline cursor-pointer"
+				<A
+					cls="text-sm text-center"
+					variant="gray"
+					tagType="a"
 					href={undefined}
 					onClick={(e: React.MouseEvent<Element, MouseEvent>) =>
 						handleSwitch(e, "signup")
 					}
 				>
 					Don't have an account? Register
-				</a>
+				</A>
 			</div>
 			<div className="flex items-center justify-center my-4">
 				<div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
@@ -106,15 +109,17 @@ const AuthPanelResetPassword: React.FC<AuthPanelResetPasswordProps> = ({
 				</>
 			)}
 			<div className="flex flex-col justify-center align-center">
-				<a
-					className="text-sm text-center text-gray-500 underline cursor-pointer"
+				<A
+					cls="text-sm text-center"
+					variant="gray"
+					tagType="a"
 					href={undefined}
 					onClick={(e: React.MouseEvent<Element, MouseEvent>) =>
 						handleSwitch(e, "login")
 					}
 				>
 					Back to Login
-				</a>
+				</A>
 			</div>
 		</div>
 	);

@@ -10,6 +10,7 @@ import Input from "../../basic/Input";
 import OAuthGoogleButton from "./OAuthGoogleButton";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
 import useUserDocs from "../../../hooks/useUserDocs";
+import A from "../../basic/A";
 
 type AuthPanelRegisterProps = {
 	handleSwitch: Function;
@@ -130,15 +131,17 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 	return (
 		<form onSubmit={onSubmit}>
 			<div className="flex flex-col justify-center align-center">
-				<a
-					className="text-sm text-center text-gray-500 underline cursor-pointer"
+				<A
+					cls="text-sm text-center"
+					variant="gray"
+					tagType="a"
 					href={undefined}
 					onClick={(e: React.MouseEvent<Element, MouseEvent>) =>
 						handleSwitch(e, "login")
 					}
 				>
 					Already have an account? Log in
-				</a>
+				</A>
 			</div>
 			<div className="mt-8 mx-8 flex flex-col">
 				<label htmlFor="email" className="text-left">

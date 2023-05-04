@@ -10,6 +10,7 @@ import { modRequestConverter } from "../../firebase/converters";
 import ModRequestList from "./ModRequestList";
 import { ModRequest } from "../../types/docTypes";
 import { modRequestsCol } from "../../firebase/collections";
+import A from "../basic/A";
 
 dayjs.extend(relativeTime);
 
@@ -38,12 +39,9 @@ const ProfileOpenModsByRequesterID: React.FC<
 				No open mod requests.{" "}
 				{userIsRequester && (
 					<>
-						<Link
-							href="/games"
-							className="text-violet-700 underline"
-						>
+						<A href="/games" variant="violet">
 							Click here
-						</Link>{" "}
+						</A>{" "}
 						to get started.
 					</>
 				)}
