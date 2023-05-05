@@ -53,9 +53,9 @@ const Button: React.FC<ButtonProps> = ({
 		<button
 			{...{ type, disabled }}
 			onClick={onClick}
-			className={`${BUTTON_STYLE} ${
-				COLOR_VARIANTS[variant]
-			} uppercase font-bolder ${cls ? cls : ""}`}
+			className={`${BUTTON_STYLE} ${COLOR_VARIANTS[variant]} ${
+				cls ? cls : ""
+			}`}
 		>
 			{loading ? (
 				<div className="animate-spin" role="status">
