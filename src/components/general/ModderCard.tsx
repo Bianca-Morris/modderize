@@ -2,6 +2,7 @@ import { UserIcon } from "@heroicons/react/20/solid";
 import { query, where } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import { modRequestsCol } from "../../firebase/collections";
 import useFirebaseAPI from "../../hooks/useFirebaseAPI";
 import Button from "../basic/Button";
@@ -62,7 +63,10 @@ const ModderCard: React.FC<ModderCardProps> = ({
 		<div className="flex flex-col justify-center items-center align-center p-5 gap-3">
 			<div>
 				{photoURL ? (
-					<img
+					<Image
+						width={128}
+						height={128}
+						alt={displayName}
 						src={photoURL}
 						className="shadow-xl rounded-full align-middle border-none h-52 w-52"
 					/>

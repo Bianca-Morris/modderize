@@ -1,4 +1,6 @@
 import React from "react";
+import Image from "next/image";
+
 import A from "../components/basic/A";
 import Jumbotron from "../components/basic/Jumbotron";
 import H1 from "../components/basic/typography/H1";
@@ -30,8 +32,10 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 				<div className="flex flex-col lg:flex-row px-10 lg:px-0 gap-10 my-10">
 					<div className="flex-1">
 						<figure className="flex flex-col center">
-							<img
-								className="rounded-3xl"
+							<Image
+								width={208}
+								height={208}
+								className="rounded-3xl w-full"
 								src="/images/axville-XaTRLucavKQ-unsplash-compressed.jpeg"
 								alt="Young man plays computer games with friends"
 							/>

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import A from "../components/basic/A";
 import H1 from "../components/basic/typography/H1";
 import H2 from "../components/basic/typography/H2";
@@ -27,12 +29,14 @@ function Error({ statusCode }) {
 			</>
 			<>
 				<div className="mt-10 w-full flex flex-col justify-center items-center align-center">
-					<figure className="mb-10 max-w-full">
-						<img
-							className="w-full rounded-lg"
-							src="images/pexels-amir-ghoorchiani-1183434.jpeg"
+					<figure className="mb-10">
+						<Image
+							width="640"
+							height="427"
+							className="min-w-full rounded-lg"
+							src="/images/pexels-amir-ghoorchiani-1183434.jpeg"
 							alt="Sad kitty apologizes for error"
-						></img>
+						></Image>
 						<figcaption className="text-xs pl-2 pt-1">
 							Photo by{" "}
 							<A

@@ -15,6 +15,7 @@ import AddGameModal from "./logged-out/AddGameModal";
 import Link from "next/link";
 import useGameData from "../../hooks/useGameData";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Navbar: React.FC = () => {
 	const router = useRouter();
@@ -43,10 +44,12 @@ const Navbar: React.FC = () => {
 									href="/"
 									className="flex flex-row gap-2 justify-center items-center"
 								>
-									<img
+									<Image
 										src="modderize_logo.svg"
 										width="50"
-									></img>
+										height="50"
+										alt="Modderize Logo"
+									></Image>
 									Modderize
 								</Link>
 								<div className="hidden sm:ml-6 sm:block">

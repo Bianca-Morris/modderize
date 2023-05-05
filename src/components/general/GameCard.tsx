@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 type GameCardProps = {
 	displayName: string;
@@ -22,7 +23,9 @@ const GameCard: React.FC<GameCardProps> = ({
 				</div>
 			)}
 			{imageURL && (
-				<img
+				<Image
+					width={208}
+					height={208}
 					src={imageURL}
 					alt={"Image of " + displayName}
 					className="flex items-center align-center justify-center w-52 h-52 rounded"

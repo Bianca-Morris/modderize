@@ -2,6 +2,7 @@ import { doc, setDoc } from "@firebase/firestore";
 import { User } from "firebase/auth";
 import React, { useEffect } from "react";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import Image from "next/image";
 
 import { auth, db } from "../../../firebase/clientApp";
 import useUserDocs from "../../../hooks/useUserDocs";
@@ -37,7 +38,14 @@ const OAuthGoogleButton: React.FC = () => {
 				onClick={() => signInWithGoogle()}
 				{...{ loading }}
 			>
-				<img src="/images/Google_Logo.svg"></img>Continue with Google
+				<Image
+					className="mr-2"
+					width={25}
+					height={25}
+					alt="Google Logo"
+					src="/images/Google_Logo.svg"
+				></Image>
+				Continue with Google
 			</Button>
 			{error && (
 				<div className="text-sm text-center text-red-600 mt-2">

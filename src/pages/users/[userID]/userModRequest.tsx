@@ -2,6 +2,7 @@ import { User } from "firebase/auth";
 import { doc } from "firebase/firestore";
 import { GetServerSidePropsContext } from "next";
 import React from "react";
+import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import H1 from "../../../components/basic/typography/H1";
@@ -54,7 +55,9 @@ const UserModRequestPage: React.FC<UserModRequestPageProps> = ({
 							<div className="md:col-span-1">
 								<div className="px-4 sm:px-0">
 									{photoURL && (
-										<img
+										<Image
+											height={128}
+											width={128}
 											src={photoURL}
 											alt={`${displayName}'s profile pic`}
 											className="rounded-full m-auto mb-5"

@@ -4,6 +4,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { signOut } from "@firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Image from "next/image";
 
 import { auth } from "../../../firebase/clientApp";
 import UserMenuItem from "./UserMenuItem";
@@ -30,7 +31,9 @@ const UserMenuButton: React.FC<UserMenuButtonProps> = () => {
 				<Menu.Button className="flex rounded-full text-gray-400 bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
 					<span className="sr-only">Open user menu</span>
 					{photoURL && (
-						<img
+						<Image
+							width={128}
+							height={128}
 							className="h-8 w-8 rounded-full"
 							src={photoURL}
 							alt="User Profile Picture"

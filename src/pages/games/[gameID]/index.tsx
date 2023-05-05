@@ -4,6 +4,7 @@ import { GetServerSidePropsContext } from "next";
 import { auth } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { orderBy, query, where } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import {
@@ -161,7 +162,9 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 					<div className="flex flex-col gap-0">
 						{imageURL && (
 							<div className="flex justify-center mb-3">
-								<img
+								<Image
+									width={208}
+									height={208}
 									src={imageURL}
 									alt={displayName + " Cover Image"}
 									className="w-52 h-52 rounded"

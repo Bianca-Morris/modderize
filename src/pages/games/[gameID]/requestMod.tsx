@@ -1,6 +1,7 @@
 import { doc, getDoc } from "firebase/firestore";
 import { GetServerSidePropsContext } from "next";
 import React from "react";
+import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import safeJsonStringify from "safe-json-stringify";
 import H1 from "../../../components/basic/typography/H1";
@@ -43,11 +44,13 @@ const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
 						<div className="md:col-span-1">
 							<div className="px-4 sm:px-0">
 								{imageURL && (
-									<img
+									<Image
+										width={208}
+										height={208}
 										className="rounded-md m-auto mb-5"
 										src={imageURL}
 										alt={gameDisplayName + " Poster"}
-									></img>
+									></Image>
 								)}
 								<H3 cls="leading-6 text-gray-900 text-center">
 									{gameDisplayName}

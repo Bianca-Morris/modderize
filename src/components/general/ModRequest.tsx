@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React, { ReactElement, useState } from "react";
+import Image from "next/image";
 import { ModRequest } from "../../types/docTypes";
 import LikeButton from "./LikeButton";
 
@@ -42,12 +43,14 @@ const ModRequestShort: React.FC<ModRequestShortProps> = ({
 					<div className="bg-gray-200 w-16 h-16 rounded animate-pulse"></div>
 				)}
 				{!loadingImage && imageURL && (
-					<img
+					<Image
+						width={208}
+						height={208}
 						className="bg-gray-300 w-16 h-16 rounded"
 						src={imageURL}
 						alt="Mod Request Thumbnail"
 						onLoad={() => setLoadingImage(false)}
-					></img>
+					></Image>
 				)}
 				{!imageURL && (
 					<div className="bg-gray-300 w-16 h-16 rounded"></div>

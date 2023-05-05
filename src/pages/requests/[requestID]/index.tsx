@@ -4,6 +4,7 @@
 import React from "react";
 import { doc, DocumentReference } from "@firebase/firestore";
 import { GetServerSidePropsContext } from "next";
+import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import dayjs from "dayjs";
@@ -196,14 +197,17 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 							<div className="border border-gray-200 p-4">
 								<div className="flex flex-col w-full items-center justify-center gap-5">
 									{gameID && allGames.length > 0 && (
-										<img
+										<Image
+											width={196}
+											height={196}
 											src={
 												allGames.filter(
 													(game) => gameID === game.id
-												)[0]?.imageURL
+												)[0]?.imageURL || ""
 											}
+											alt="Selected game poster"
 											className="shadow-xl rounded-lg align-middle border-none h-12 w-12"
-										></img>
+										></Image>
 									)}
 									<div>
 										{gameID && gameDisplayName && (
@@ -234,10 +238,13 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 										</>
 									)}
 									{modderProfileImageURL && (
-										<img
+										<Image
+											width={128}
+											height={128}
+											alt="Modder profile"
 											src={modderProfileImageURL}
 											className="shadow-xl rounded-full align-middle border-none h-12 w-12"
-										></img>
+										></Image>
 									)}
 									<div>
 										{modderID && modderDisplayName && (

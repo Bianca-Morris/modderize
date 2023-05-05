@@ -6,6 +6,8 @@ import {
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren } from "react";
+import Image from "next/image";
+
 import A from "../basic/A";
 import Button from "../basic/Button";
 import H2 from "../basic/typography/H2";
@@ -49,7 +51,10 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 			<>
 				<div className="flex flex-1 flex-col mt-10 items-center">
 					{profileURL ? (
-						<img
+						<Image
+							alt={displayName}
+							width={128}
+							height={128}
 							src={profileURL}
 							className="shadow-xl rounded-full align-middle border-none h-52 w-52"
 						/>
