@@ -73,9 +73,9 @@ const ModderCard: React.FC<ModderCardProps> = ({
 				)}
 			</div>
 			<div className="w-full p-3 m-2">
-				<h2 className=" text-2xl font-bold text-center mb-2 truncate">
+				<div className="text-2xl font-bold text-center mb-2 truncate">
 					{displayName}
-				</h2>
+				</div>
 				<div className="text-green-800">
 					<strong className="font-bold pr-2">Completed:</strong>
 					{completed}

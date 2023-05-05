@@ -13,6 +13,7 @@ import ProfileOpenModsByRequesterID from "../general/ProfileOpenModsByRequesterI
 import ProfileModsByStatus from "../general/ProfileModsByStatus";
 import useUserDoc from "../../hooks/useUserDoc";
 import { modalControllerAtom } from "../../atoms/modalControllerAtom";
+import H2 from "../basic/typography/H2";
 
 type MyProfileProps = {
 	userData: User;
@@ -82,16 +83,12 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 				/>
 				<hr className="my-3" />
 				<div className="mb-10">
-					<h2 className="text-2xl font-bold mb-4">
-						My Mods In-Progress
-					</h2>
+					<H2 cls="mb-4">My Mods In-Progress</H2>
 					<ProfileModsByStatus status="in progress" modderID={uid} />
 				</div>
 
 				<div className="">
-					<h2 className="text-2xl font-bold mb-4">
-						Mods I've Requested
-					</h2>
+					<H2 cls="mb-4">Mods I've Requested</H2>
 					<ProfileOpenModsByRequesterID requesterID={uid} />
 				</div>
 			</GenericProfile>

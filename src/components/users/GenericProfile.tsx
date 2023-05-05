@@ -3,6 +3,7 @@ import { PencilIcon } from "@heroicons/react/24/outline";
 import React, { PropsWithChildren } from "react";
 import A from "../basic/A";
 import Button from "../basic/Button";
+import H2 from "../basic/typography/H2";
 import SharePopover from "../general/SharePopover";
 import SimpleHeader from "../general/SimpleHeader";
 import ContentBody from "../layout/ContentBody";
@@ -51,7 +52,7 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 						</div>
 					)}
 
-					<h2 className="mt-10 text-2xl font-bold">{displayName}</h2>
+					<H2 cls="mt-10">{displayName}</H2>
 					{email && <div className="text-gray-700">{email}</div>}
 					{donationLink && showTopDonationLink && (
 						<div className="flex text-xs mt-1">

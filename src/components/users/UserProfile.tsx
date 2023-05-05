@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
 import useUserDocs from "../../hooks/useUserDocs";
+import H2 from "../basic/typography/H2";
 import ProfileModsByStatus from "../general/ProfileModsByStatus";
 import ProfileOpenModsByRequesterID from "../general/ProfileOpenModsByRequesterID";
 import GenericProfile from "./GenericProfile";
@@ -50,14 +51,12 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 				showRequestMod={!!activeUser && isActiveModder}
 			>
 				<div className="mb-10">
-					<h2 className="text-2xl font-bold mb-4">My Mods</h2>
+					<H2 cls="mb-4">My Mods</H2>
 					<ProfileModsByStatus status="complete" modderID={uid} />
 				</div>
 
 				<div className="">
-					<h2 className="text-2xl font-bold mb-4">
-						Mods I've Requested
-					</h2>
+					<H2 cls="mb-4">Mods I've Requested</H2>
 					<ProfileOpenModsByRequesterID requesterID={uid} />
 				</div>
 			</GenericProfile>

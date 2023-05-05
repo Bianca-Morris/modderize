@@ -10,6 +10,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import MyProfile from "../../../components/users/MyProfile";
 import UserProfile from "../../../components/users/UserProfile";
 import H1 from "../../../components/basic/typography/H1";
+import H2 from "../../../components/basic/typography/H2";
+import H3 from "../../../components/basic/typography/H3";
 
 type UserPageProps = {
 	userData: User;
@@ -27,10 +29,8 @@ const UserPage: React.FC<UserPageProps> = ({ userData }) => {
 				</SimpleHeader>
 				<div className="w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
 					<div className="py-6">
-						<h1 className="text-xl font-bold font-medium text-gray-900 mb-3">
-							Sorry!
-						</h1>
-						<h2>This user doesn't seem to be on Modderize.</h2>
+						<H2 cls="text-gray-900 mb-3">Sorry!</H2>
+						<H3>This user doesn't seem to be on Modderize.</H3>
 						<p>The account may have been deleted or banned.</p>
 					</div>
 				</div>

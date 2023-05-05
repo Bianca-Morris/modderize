@@ -1,6 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
 import React, { useState } from "react";
+import H3 from "../basic/typography/H3";
 
 type SectionType = {
 	id: string;
@@ -20,7 +21,7 @@ const CollapsibleFilter: React.FC<CollapsibleFilterProps> = ({ section }) => {
 			key={section.id}
 			className="border-t border-gray-200 px-4 py-6"
 		>
-			<h3 className="-mx-2 -my-3 flow-root">
+			<H3 cls="-mx-2 -my-3 flow-root">
 				<Disclosure.Button
 					onClick={() => setOpen(!open)}
 					className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500"
@@ -36,7 +37,7 @@ const CollapsibleFilter: React.FC<CollapsibleFilterProps> = ({ section }) => {
 						)}
 					</span>
 				</Disclosure.Button>
-			</h3>
+			</H3>
 			<Disclosure.Panel className="pt-6">
 				<div className="space-y-6">
 					{section.options.map((option, optionIdx) => (

@@ -2,6 +2,8 @@ import React from "react";
 import A from "../basic/A";
 import Button from "../basic/Button";
 import H1 from "../basic/typography/H1";
+import H2 from "../basic/typography/H2";
+import H3 from "../basic/typography/H3";
 import SimpleHeader from "../general/SimpleHeader";
 import ContentBody from "../layout/ContentBody";
 
@@ -15,10 +17,8 @@ const GameNotFoundPage: React.FC = () => {
 			</SimpleHeader>
 			<>
 				<div className="py-6">
-					<h1 className="text-xl font-bold font-medium text-gray-900 mb-3">
-						Sorry!
-					</h1>
-					<h2>This game doesn't seem to be on Modderize.</h2>
+					<H2 cls="font-bold text-gray-900 mb-3">Sorry!</H2>
+					<H3>This game doesn't seem to be on Modderize.</H3>
 					<p>
 						Check the spelling of the ID or&nbsp;
 						<A variant="gray" href="/games">

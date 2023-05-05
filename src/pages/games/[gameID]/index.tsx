@@ -23,6 +23,8 @@ import ModRequestList from "../../../components/general/ModRequestList";
 import useFavoriteGames from "../../../hooks/useFavoriteGames";
 import { gamesCol, modRequestsCol } from "../../../firebase/collections";
 import H1 from "../../../components/basic/typography/H1";
+import H2 from "../../../components/basic/typography/H2";
+import H3 from "../../../components/basic/typography/H3";
 
 type GamePageProps = {
 	gameID: string;
@@ -126,7 +128,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 									onClick={onClickCreateNewModRequest}
 								>
 									<PlusIcon className="w-5 h-5 mr-3" />
-									Open New Mod Request
+									Open Mod Request
 								</Button>
 							)}
 						</div>
@@ -135,9 +137,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 			</>
 			<>
 				<div className="flex flex-col flex-auto mt-10">
-					<h2 className="text-2xl font-bold mb-4">
-						Newest Mod Requests
-					</h2>
+					<H2 cls="mb-4">Newest Mod Requests</H2>
 					{!gameLoading && (
 						<ModRequestList
 							query={query(
@@ -162,9 +162,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 								/>
 							</div>
 						)}
-						<h3 className="text-xl font-bold bg-gray-200 p-4">
-							Game Info
-						</h3>
+						<H3 cls="bg-gray-200 p-4">Game Info</H3>
 						<div className="border border-gray-200 p-4">
 							<div className="flex w-full items-center justify-center">
 								<HeartIcon className="w-4 h-4 mr-2" />

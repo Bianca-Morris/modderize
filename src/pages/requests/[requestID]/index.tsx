@@ -4,7 +4,6 @@
 import React from "react";
 import { doc, DocumentReference } from "@firebase/firestore";
 import { GetServerSidePropsContext } from "next";
-import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import dayjs from "dayjs";
@@ -24,6 +23,8 @@ import LikeButton from "../../../components/general/LikeButton";
 import { modRequestConverter } from "../../../firebase/converters";
 import A from "../../../components/basic/A";
 import H1 from "../../../components/basic/typography/H1";
+import H2 from "../../../components/basic/typography/H2";
+import H3 from "../../../components/basic/typography/H3";
 
 dayjs.extend(relativeTime);
 
@@ -63,7 +64,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 						<H1 cls="text-xl font-bold font-medium text-gray-900 mb-3">
 							Sorry!
 						</H1>
-						<h2>This mod request doesn't seem to exist.</h2>
+						<H2>This mod request doesn't seem to exist.</H2>
 						<p>It may have been archived or deleted.</p>
 					</div>
 				</div>
@@ -116,7 +117,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 							&nbsp;&gt;&nbsp;
 							<span className="font-bold">Mod Request</span>
 						</div>
-						<h2 className="text-3xl font-bold mb-4"></h2>
+						<H2 cls="text-3xl font-bold mb-4"></H2>
 						<div>
 							<strong>Requested By:</strong>
 							<span className="ml-1">
@@ -165,18 +166,14 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 				<div className="flex flex-col lg:flex-row px-5 lg:px-0 mt-10 justify-between gap-10">
 					<div className="flex flex-col">
 						<div className="max-w-2xl">
-							<h2 className="text-xl font-bold mb-5 font-bold">
-								Mod Description:
-							</h2>
+							<H2 cls="mb-5">Mod Description:</H2>
 
 							<p className="whitespace-pre-wrap">{description}</p>
 						</div>
 					</div>
 					<div className="flex flex-1 flex-col gap-2">
 						<div className="flex flex-col gap-0">
-							<h3 className="text-xl font-bold bg-gray-200 p-4">
-								Modder Info
-							</h3>
+							<H3 cls="bg-gray-200 p-4">Modder Info</H3>
 							<div className="border border-gray-200 p-4">
 								<div className="flex w-full items-center justify-center gap-5">
 									{!modderID && (

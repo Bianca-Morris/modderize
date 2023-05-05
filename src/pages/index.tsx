@@ -18,6 +18,7 @@ import ModRequestList from "../components/general/ModRequestList";
 import { gamesCol, modRequestsCol } from "../firebase/collections";
 import A from "../components/basic/A";
 import H1 from "../components/basic/typography/H1";
+import H2 from "../components/basic/typography/H2";
 
 type HomePageProps = {
 	topGames: Game[];
@@ -85,9 +86,7 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 			<div className="w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
 				<div className="py-16 w-full">
 					<div className="flex justify-between">
-						<h2 className="text-2xl font-bold font-medium text-gray-900 mb-3 ml-4">
-							Top Games
-						</h2>
+						<H2 cls="text-gray-900 mb-3 ml-4">Top Games</H2>
 						<A href="/games" cls="text-md mr-4" variant="indigo">
 							View All
 						</A>
@@ -107,9 +106,7 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 			<hr />
 			<div className="w-full flex flex-col lg:flex-row mx-auto py-16 max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
 				<div className="flex-1">
-					<h2 className="text-2xl font-bold font-medium text-gray-900 mb-3 ml-4">
-						New Mod Requests
-					</h2>
+					<H2 cls="text-gray-900 mb-3 ml-4">New Mod Requests</H2>
 					<div className="w-full flex flex-col gap-5 my-5 items-center align-center justify-center">
 						<ModRequestList
 							query={new5Q}
@@ -118,9 +115,7 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 					</div>
 				</div>
 				<div className="flex-1">
-					<h2 className="text-2xl font-bold font-medium text-gray-900 mb-3 ml-4">
-						Popular Mod Requests
-					</h2>
+					<H2 cls="text-gray-900 mb-3 ml-4">Popular Mod Requests</H2>
 					<div className="w-full flex flex-col gap-5 my-5 items-center align-center justify-center">
 						<ModRequestList
 							query={top5Q}

@@ -4,6 +4,7 @@ import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import safeJsonStringify from "safe-json-stringify";
 import H1 from "../../../components/basic/typography/H1";
+import H3 from "../../../components/basic/typography/H3";
 import NewGameModRequestForm from "../../../components/forms/NewGameModRequestForm";
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import ContentBody from "../../../components/layout/ContentBody";
@@ -41,9 +42,9 @@ const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
 					<div className="md:grid md:grid-cols-3 md:gap-6">
 						<div className="md:col-span-1">
 							<div className="px-4 sm:px-0">
-								<h3 className="text-base font-semibold leading-6 text-gray-900">
+								<H3 cls="leading-6 text-gray-900">
 									{gameDisplayName}
-								</h3>
+								</H3>
 								<p className="mt-1 text-sm text-gray-600">
 									This mod request will be open to the
 									entire&nbsp;
