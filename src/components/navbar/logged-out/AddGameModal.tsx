@@ -1,12 +1,5 @@
-import {
-	doc,
-	getDoc,
-	runTransaction,
-	serverTimestamp,
-	setDoc
-} from "@firebase/firestore";
-import { Transition, Dialog } from "@headlessui/react";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import { doc, runTransaction, serverTimestamp } from "@firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
 import { modalControllerAtom } from "../../../atoms/modalControllerAtom";
@@ -16,6 +9,7 @@ import useStorageAPI from "../../../hooks/useStorageAPI";
 import Button from "../../basic/Button";
 import FileUploadInput from "../../basic/FileUploadInput";
 import Input from "../../basic/Input";
+import Modal from "../../basic/Modal";
 
 type AddGameModalProps = {};
 
@@ -181,170 +175,111 @@ const AddGameModal: React.FC<AddGameModalProps> = () => {
 		}
 	};
 
-	return (
-		<Transition.Root show={open} as={Fragment}>
-			<Dialog
-				as="div"
-				className="relative z-10"
-				// initialFocus={nameInputRef} TODO: Maybe set in future
-				onClose={handleClose}
+	const footer = (
+		<>
+			<Button
+				type="button"
+				onClick={handleClose}
+				variant="red"
+				{...{ loading }}
 			>
-				<Transition.Child
-					as={Fragment}
-					enter="ease-out duration-300"
-					enterFrom="opacity-0"
-					enterTo="opacity-100"
-					leave="ease-in duration-200"
-					leaveFrom="opacity-100"
-					leaveTo="opacity-0"
-				>
-					<div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-				</Transition.Child>
+				Cancel
+			</Button>
+			<Button
+				type="button"
+				cls="ml-2"
+				onClick={handleCreateGame}
+				variant="gray"
+				{...{ loading }}
+			>
+				Add New Game
+			</Button>
+		</>
+	);
 
-				<div className="fixed inset-0 z-10 overflow-y-auto">
-					<div className="flex min-h-full items-start justify-center p-4 text-center sm:items-center sm:p-0">
-						<Transition.Child
-							as={Fragment}
-							enter="ease-out duration-300"
-							enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-							enterTo="opacity-100 translate-y-0 sm:scale-100"
-							leave="ease-in duration-200"
-							leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-							leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-						>
-							<Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-								<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-									<div className="flex items-center justify-center">
-										<div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
-											<Dialog.Title
-												as="h1"
-												className="text-xl text-center font-bold font-medium text-gray-900 mb-4"
-											>
-												Add New Game (Admin Only)
-											</Dialog.Title>
-											<hr />
-											<div className="mt-4">
-												<label
-													htmlFor="about"
-													className="block text-sm font-medium text-gray-700"
-												>
-													Game Display Name
-												</label>
-												<p className="my-2 text-sm text-gray-500">
-													A human-readable version of
-													the game's name; can contain
-													special characters. Please
-													check for duplicates before
-													creating.
-												</p>
-												<div className="mt-1">
-													<Input
-														id="name"
-														name="name"
-														type="text"
-														placeholder="Ex: The Elder Scrolls IV - Oblivion"
-														value={gameDisplayName}
-														onChange={
-															handleChangeDisplayName
-														}
-													/>
-												</div>
-											</div>
-											<div className="mt-4">
-												<label
-													htmlFor="about"
-													className="block text-sm font-medium text-gray-700"
-												>
-													Game ID
-												</label>
-												<p className="my-2 text-sm text-gray-500">
-													This should be a unique
-													identifier that contains no
-													special characters aside
-													from the underscore and is
-													limited in length.
-												</p>
-												<div className="mt-1">
-													<Input
-														id="gameID"
-														name="gameID"
-														type="text"
-														placeholder="ex. TES4_Oblivion"
-														value={gameID}
-														onChange={
-															handleChangeGameID
-														}
-													/>
-												</div>
-												<span
-													className={`block mt-4 text-xs ${
-														charsRemaining === 0
-															? "text-red-400"
-															: "text-gray-400"
-													}`}
-												>
-													{charsRemaining} Characters
-													remaining
-												</span>
-											</div>
-											<div className="mt-4">
-												<label className="block text-sm font-medium text-gray-700">
-													Game Image
-												</label>
-												<div className="mt-2 w-full">
-													<FileUploadInput
-														id="gameImageFile"
-														required
-														disabled={
-															loading ||
-															fileLoading
-														}
-														fileInputHelp="PNG or JPG (MAX. 60kb,
-															RECOMMENDED 208x208px)."
-														fileName={image?.name}
-														accept="image/jpeg"
-														{...{
-															handleImageChange
-														}}
-													/>
-												</div>
-											</div>
-											{error && (
-												<span
-													className="block mt-4 text-sm 
-													 text-red-400"
-												>
-													{error || fileError}
-												</span>
-											)}
-										</div>
-									</div>
-								</div>
-								<div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:justify-end sm:px-6">
-									<Button
-										type="button"
-										onClick={handleClose}
-										variant="red"
-										{...{ loading }}
-									>
-										Cancel
-									</Button>
-									<Button
-										type="button"
-										cls="ml-2"
-										onClick={handleCreateGame}
-										variant="gray"
-										{...{ loading }}
-									>
-										Add New Game
-									</Button>
-								</div>
-							</Dialog.Panel>
-						</Transition.Child>
-					</div>
+	return (
+		<Modal
+			{...{ open, handleClose, footer }}
+			title="Add New Game (Admin Only)"
+		>
+			<hr />
+			<div className="mt-4">
+				<label
+					htmlFor="about"
+					className="block text-sm font-medium text-gray-700"
+				>
+					Game Display Name
+				</label>
+				<p className="my-2 text-sm text-gray-500">
+					A human-readable version of the game's name; can contain
+					special characters. Please check for duplicates before
+					creating.
+				</p>
+				<div className="mt-1">
+					<Input
+						id="name"
+						name="name"
+						type="text"
+						placeholder="Ex: The Elder Scrolls IV - Oblivion"
+						value={gameDisplayName}
+						onChange={handleChangeDisplayName}
+					/>
 				</div>
-			</Dialog>
-		</Transition.Root>
+			</div>
+			<div className="mt-4">
+				<label
+					htmlFor="about"
+					className="block text-sm font-medium text-gray-700"
+				>
+					Game ID
+				</label>
+				<p className="my-2 text-sm text-gray-500">
+					This should be a unique identifier that contains no special
+					characters aside from the underscore and is limited in
+					length.
+				</p>
+				<div className="mt-1">
+					<Input
+						id="gameID"
+						name="gameID"
+						type="text"
+						placeholder="ex. TES4_Oblivion"
+						value={gameID}
+						onChange={handleChangeGameID}
+					/>
+				</div>
+				<span
+					className={`block mt-4 text-xs ${
+						charsRemaining === 0 ? "text-red-400" : "text-gray-400"
+					}`}
+				>
+					{charsRemaining} Characters remaining
+				</span>
+			</div>
+			<div className="mt-4">
+				<label className="block text-sm font-medium text-gray-700">
+					Game Image
+				</label>
+				<div className="mt-2 w-full">
+					<FileUploadInput
+						id="gameImageFile"
+						required
+						disabled={loading || fileLoading}
+						fileInputHelp="PNG or JPG (MAX. 60kb, RECOMMENDED 208x208px)."
+						fileName={image?.name}
+						accept="image/jpeg"
+						{...{
+							handleImageChange
+						}}
+					/>
+				</div>
+			</div>
+			{error && (
+				<span className="block mt-4 text-sm text-red-400">
+					{error || fileError}
+				</span>
+			)}
+		</Modal>
 	);
 };
 export default AddGameModal;

@@ -145,3 +145,16 @@ export function extractMetadataFromFile(file: File) {
 		size: file.size
 	};
 }
+
+export function calculateAuthModalTitle(view) {
+	switch(view) {
+		case "resetPassword":
+			return "Reset Password";
+		case "signup":
+			return "Register";
+		case "login":
+			return "Login";
+		default:
+			return "Error loading title";
+	}
+}
