@@ -9,6 +9,7 @@ import Button from "../../../components/basic/Button";
 import { useAuthState } from "react-firebase-hooks/auth";
 import MyProfile from "../../../components/users/MyProfile";
 import UserProfile from "../../../components/users/UserProfile";
+import H1 from "../../../components/basic/typography/H1";
 
 type UserPageProps = {
 	userData: User;
@@ -20,8 +21,8 @@ const UserPage: React.FC<UserPageProps> = ({ userData }) => {
 		return (
 			<div className="flex min-h-screen flex-col item-center justify-start pb-2">
 				<SimpleHeader>
-					<div className="flex text-center text-3xl">
-						<h1>Error: User Not Found</h1>
+					<div className="flex text-center">
+						<H1>Error: User Not Found</H1>
 					</div>
 				</SimpleHeader>
 				<div className="w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">

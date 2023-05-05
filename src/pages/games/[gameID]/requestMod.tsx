@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import safeJsonStringify from "safe-json-stringify";
+import H1 from "../../../components/basic/typography/H1";
 import NewGameModRequestForm from "../../../components/forms/NewGameModRequestForm";
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import ContentBody from "../../../components/layout/ContentBody";
@@ -30,7 +31,7 @@ const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
 				<SimpleHeader>
 					<div className="flex justify-center">
 						<div className="flex flex-col text-3xl">
-							<h1>Create New Mod Request</h1>
+							<H1>Create New Mod Request</H1>
 						</div>
 					</div>
 				</SimpleHeader>

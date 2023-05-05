@@ -4,6 +4,7 @@ import { GetServerSidePropsContext } from "next";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocumentData } from "react-firebase-hooks/firestore";
+import H1 from "../../../components/basic/typography/H1";
 import NewUserModRequestForm from "../../../components/forms/NewUserModRequestForm";
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import ContentBody from "../../../components/layout/ContentBody";
@@ -39,8 +40,8 @@ const UserModRequestPage: React.FC<UserModRequestPageProps> = ({
 				<>
 					<SimpleHeader>
 						<div className="flex justify-center">
-							<div className="flex flex-col text-3xl">
-								<h1>Request Mod From User</h1>
+							<div className="flex flex-col">
+								<H1>Request Mod From User</H1>
 							</div>
 						</div>
 					</SimpleHeader>

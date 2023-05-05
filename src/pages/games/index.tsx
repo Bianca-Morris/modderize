@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { gameAtom } from "../../atoms/gamesAtom";
 import Button from "../../components/basic/Button";
+import H1 from "../../components/basic/typography/H1";
 import GameCard from "../../components/general/GameCard";
 import SimpleHeader from "../../components/general/SimpleHeader";
 import ContentBody from "../../components/layout/ContentBody";
@@ -56,7 +57,7 @@ const GamesPage: React.FC = () => {
 			<SimpleHeader>
 				<div className="flex w-100 justify-between items-center">
 					<div className="flex flex-col text-3xl">
-						<h1>Games</h1>
+						<H1>Games</H1>
 
 						{keyword && (
 							<span className="capitalize text-sm">

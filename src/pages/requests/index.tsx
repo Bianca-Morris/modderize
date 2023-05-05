@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import safeJsonStringify from "safe-json-stringify";
 import Button from "../../components/basic/Button";
+import H1 from "../../components/basic/typography/H1";
 import SimpleHeader from "../../components/general/SimpleHeader";
 import ContentBody from "../../components/layout/ContentBody";
 import ModRequestResults from "../../components/search/ModRequestResults";
@@ -61,7 +62,7 @@ const ModRequestsPage: React.FC = () => {
 			<SimpleHeader>
 				<div className="flex w-100 justify-between items-center">
 					<div className="flex flex-col text-3xl">
-						<h1>ModRequests</h1>
+						<H1>Mod Requests</H1>
 
 						{/* {textQuery && (
 							<span className="capitalize text-sm">

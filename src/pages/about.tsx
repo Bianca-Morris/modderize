@@ -1,6 +1,7 @@
 import React from "react";
 import A from "../components/basic/A";
 import Jumbotron from "../components/basic/Jumbotron";
+import H1 from "../components/basic/typography/H1";
 import SimpleHeader from "../components/general/SimpleHeader";
 import ContentBody from "../components/layout/ContentBody";
 
@@ -13,7 +14,7 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 				<SimpleHeader>
 					<div className="flex w-100 justify-between">
 						<div className="flex flex-col text-3xl">
-							<h1>About Modderize</h1>
+							<H1>About Modderize</H1>
 						</div>
 					</div>
 				</SimpleHeader>

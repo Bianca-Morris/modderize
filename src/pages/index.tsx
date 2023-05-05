@@ -17,6 +17,7 @@ import { modRequestConverter } from "../firebase/converters";
 import ModRequestList from "../components/general/ModRequestList";
 import { gamesCol, modRequestsCol } from "../firebase/collections";
 import A from "../components/basic/A";
+import H1 from "../components/basic/typography/H1";
 
 type HomePageProps = {
 	topGames: Game[];
@@ -50,7 +51,7 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 				<SimpleHeader>
 					<div className="flex w-100 xjustify-between">
 						<div className="flex flex-col text-3xl">
-							<h1>Welcome, {user.displayName}!</h1>
+							<H1>Welcome, {user.displayName}!</H1>
 						</div>
 					</div>
 				</SimpleHeader>

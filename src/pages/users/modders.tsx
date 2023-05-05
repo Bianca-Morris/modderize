@@ -13,6 +13,7 @@ import { UserDoc } from "../../types/docTypes";
 import useFirebaseAPI from "../../hooks/useFirebaseAPI";
 import Link from "next/link";
 import { usersCol } from "../../firebase/collections";
+import H1 from "../../components/basic/typography/H1";
 
 type ModdersPageProps = {
 	username?: string;
@@ -55,7 +56,7 @@ const ModdersPage: React.FC<ModdersPageProps> = ({ username }) => {
 			<SimpleHeader>
 				<div className="flex w-100 justify-between items-center">
 					<div className="flex flex-col text-3xl">
-						<h1>Modders</h1>
+						<H1>Modders</H1>
 						{username && (
 							<span className="capitalize text-sm">
 								Searching for User: {username}

@@ -23,6 +23,7 @@ import useModRequests from "../../../hooks/useModRequests";
 import LikeButton from "../../../components/general/LikeButton";
 import { modRequestConverter } from "../../../firebase/converters";
 import A from "../../../components/basic/A";
+import H1 from "../../../components/basic/typography/H1";
 
 dayjs.extend(relativeTime);
 
@@ -53,15 +54,15 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 		return (
 			<div className="flex min-h-screen flex-col item-center justify-start pb-2">
 				<SimpleHeader>
-					<div className="flex text-center text-3xl">
-						<h1>Error: Mod Request Not Found</h1>
+					<div className="flex text-center">
+						<H1>Error: Mod Request Not Found</H1>
 					</div>
 				</SimpleHeader>
 				<div className="w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
 					<div className="py-6">
-						<h1 className="text-xl font-bold font-medium text-gray-900 mb-3">
+						<H1 cls="text-xl font-bold font-medium text-gray-900 mb-3">
 							Sorry!
-						</h1>
+						</H1>
 						<h2>This mod request doesn't seem to exist.</h2>
 						<p>It may have been archived or deleted.</p>
 					</div>
@@ -101,8 +102,8 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-start pb-2">
 			<SimpleHeader>
-				<div className="flex text-center flex-col text-2xl">
-					<h1>{title}</h1>
+				<div className="flex text-center flex-col">
+					<H1>{title}</H1>
 				</div>
 			</SimpleHeader>
 			<div className="w-full flex-col mt-10 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">

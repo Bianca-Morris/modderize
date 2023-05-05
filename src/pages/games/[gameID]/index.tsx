@@ -22,6 +22,7 @@ import {
 import ModRequestList from "../../../components/general/ModRequestList";
 import useFavoriteGames from "../../../hooks/useFavoriteGames";
 import { gamesCol, modRequestsCol } from "../../../firebase/collections";
+import H1 from "../../../components/basic/typography/H1";
 
 type GamePageProps = {
 	gameID: string;
@@ -80,7 +81,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 				<SimpleHeader>
 					<div className="flex flex-col md:flex-row justify-between gap-3 md:gap-0">
 						<div className="flex flex-col text-3xl">
-							<h1>{gameLoading ? "" : displayName}</h1>
+							<H1>{gameLoading ? "" : displayName}</H1>
 							{user && !isGameFavorited && (
 								<Button
 									type="button"
