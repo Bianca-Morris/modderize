@@ -16,6 +16,7 @@ import Jumbotron from "../components/basic/Jumbotron";
 import { modRequestConverter } from "../firebase/converters";
 import ModRequestList from "../components/general/ModRequestList";
 import { gamesCol, modRequestsCol } from "../firebase/collections";
+import A from "../components/basic/A";
 
 type HomePageProps = {
 	topGames: Game[];
@@ -86,12 +87,9 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 						<h2 className="text-2xl font-bold font-medium text-gray-900 mb-3 ml-4">
 							Top Games
 						</h2>
-						<Link
-							href="/games"
-							className="text-md text-violet-800 underline mr-4"
-						>
+						<A href="/games" cls="text-md mr-4" variant="indigo">
 							View All
-						</Link>
+						</A>
 					</div>
 
 					<div className="lg:w-full flex flex-wrap gap-5 my-5 items-center align-center justify-center">

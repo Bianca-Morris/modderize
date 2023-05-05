@@ -8,7 +8,7 @@ export const LINK_STYLE = "underline cursor-pointer";
 
 export const COLOR_VARIANTS = {
 	lightViolet: "text-violet-300 hover:text-indigo-400",
-	violet: "text-violet-700 hover:text-indigo-500",
+	violet: "text-violet-700 hover:text-violet-500",
 	indigo: "text-indigo-800 hover:text-indigo-600",
 	blue: " ",
 	gray: "text-gray-500 hover:text-gray-300",

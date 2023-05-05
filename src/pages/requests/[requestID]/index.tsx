@@ -22,6 +22,7 @@ import SimpleHeader from "../../../components/general/SimpleHeader";
 import useModRequests from "../../../hooks/useModRequests";
 import LikeButton from "../../../components/general/LikeButton";
 import { modRequestConverter } from "../../../firebase/converters";
+import A from "../../../components/basic/A";
 
 dayjs.extend(relativeTime);
 
@@ -108,12 +109,9 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 				<div className="flex px-5 lg:px-0 w-full flex-col md:flex-row md:justify-between py-4">
 					<div>
 						<div>
-							<Link
-								className="underline text-indigo-800 hover:text-indigo-600"
-								href={`/games/${gameID}`}
-							>
+							<A variant="indigo" href={`/games/${gameID}`}>
 								{gameDisplayName}
-							</Link>
+							</A>
 							&nbsp;&gt;&nbsp;
 							<span className="font-bold">Mod Request</span>
 						</div>
@@ -121,12 +119,12 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 						<div>
 							<strong>Requested By:</strong>
 							<span className="ml-1">
-								<Link
+								<A
 									href={`/users/${requesterID}`}
-									className="underline text-indigo-800 hover:text-indigo-600"
+									variant="indigo"
 								>
 									{requesterDisplayName}
-								</Link>
+								</A>
 							</span>
 							{creationDate && (
 								<span className="text-sm text-gray-400 pl-1">
@@ -197,12 +195,12 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 											<div>
 												<strong>Assigned to:</strong>
 												<span className="ml-1">
-													<Link
+													<A
 														href={`/users/${modderID}`}
-														className="underline text-indigo-800 hover:text-indigo-600"
+														variant="indigo"
 													>
 														{modderDisplayName}
-													</Link>
+													</A>
 												</span>
 											</div>
 										)}

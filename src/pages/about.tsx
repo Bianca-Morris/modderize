@@ -1,4 +1,5 @@
 import React from "react";
+import A from "../components/basic/A";
 import Jumbotron from "../components/basic/Jumbotron";
 import SimpleHeader from "../components/general/SimpleHeader";
 import ContentBody from "../components/layout/ContentBody";
@@ -35,12 +36,14 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 							/>
 							<figcaption className="mt-5 text-xs text-left text-gray-400 w-full min-w-full">
 								(Photo by&nbsp;
-								<a
+								<A
+									variant="gray"
 									href="https://unsplash.com/photos/XaTRLucavKQ"
 									target="_blank"
+									rel="noreferrer"
 								>
 									Axville
-								</a>
+								</A>
 								&nbsp;on Unsplash) Cupiditate id consequatur
 								dolores vel exercitationem provident est
 								possimus consequatur eum debitis dignissimos.
