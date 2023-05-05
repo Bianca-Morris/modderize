@@ -6,7 +6,12 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { orderBy, query, where } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { HeartIcon, PlusIcon, WrenchIcon } from "@heroicons/react/20/solid";
+import {
+	HeartIcon,
+	PlusIcon,
+	ShareIcon,
+	WrenchIcon
+} from "@heroicons/react/20/solid";
 
 import { Game } from "../../../types/docTypes";
 import Button from "../../../components/basic/Button";
@@ -25,6 +30,7 @@ import { gamesCol, modRequestsCol } from "../../../firebase/collections";
 import H1 from "../../../components/basic/typography/H1";
 import H2 from "../../../components/basic/typography/H2";
 import H3 from "../../../components/basic/typography/H3";
+import SharePopover from "../../../components/general/SharePopover";
 
 type GamePageProps = {
 	gameID: string;
@@ -178,6 +184,11 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 								</strong>
 								<span className="ml-2">{modRequestCount}</span>
 							</div>
+						</div>
+						<div className="flex justify-center mt-5">
+							<SharePopover url="https://www.lol.com">
+								<ShareIcon className="h-8 w-8 cursor-pointer hover:fill-indigo-300" />
+							</SharePopover>
 						</div>
 					</div>
 

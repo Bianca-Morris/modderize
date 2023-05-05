@@ -1,5 +1,10 @@
-import { ShareIcon, UserIcon } from "@heroicons/react/20/solid";
+import {
+	InboxArrowDownIcon,
+	ShareIcon,
+	UserIcon
+} from "@heroicons/react/20/solid";
 import { PencilIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
 import React, { PropsWithChildren } from "react";
 import A from "../basic/A";
 import Button from "../basic/Button";
@@ -34,6 +39,8 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 	onRequestMod,
 	children
 }) => {
+	const router = useRouter();
+
 	return (
 		<ContentBody innerCls="flex-col lg:flex-row px-10">
 			<>
@@ -88,6 +95,7 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 								variant="indigo"
 								onClick={onRequestMod}
 							>
+								<InboxArrowDownIcon className="w-4 h-4 mr-2" />{" "}
 								Request Mod
 							</Button>
 						)}

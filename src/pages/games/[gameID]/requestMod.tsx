@@ -22,7 +22,7 @@ const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
 		return <GameNotFoundPage />;
 	}
 
-	const { id: gameID, displayName: gameDisplayName } = gameData;
+	const { id: gameID, displayName: gameDisplayName, imageURL } = gameData;
 
 	const [user] = useAuthState(auth);
 
@@ -42,7 +42,14 @@ const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
 					<div className="md:grid md:grid-cols-3 md:gap-6">
 						<div className="md:col-span-1">
 							<div className="px-4 sm:px-0">
-								<H3 cls="leading-6 text-gray-900">
+								{imageURL && (
+									<img
+										className="rounded-md m-auto mb-5"
+										src={imageURL}
+										alt={gameDisplayName + " Poster"}
+									></img>
+								)}
+								<H3 cls="leading-6 text-gray-900 text-center">
 									{gameDisplayName}
 								</H3>
 								<p className="mt-1 text-sm text-gray-600">
@@ -57,7 +64,11 @@ const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
 						<div className="mt-5 md:col-span-2 md:mt-0">
 							{user && (
 								<NewGameModRequestForm
-									{...{ user, gameID, gameDisplayName }}
+									{...{
+										user,
+										gameID,
+										gameDisplayName
+									}}
 								/>
 							)}
 						</div>

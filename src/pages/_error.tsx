@@ -1,6 +1,7 @@
 import A from "../components/basic/A";
 import H1 from "../components/basic/typography/H1";
 import H2 from "../components/basic/typography/H2";
+import H3 from "../components/basic/typography/H3";
 import SimpleHeader from "../components/general/SimpleHeader";
 import ContentBody from "../components/layout/ContentBody";
 
@@ -15,11 +16,11 @@ function Error({ statusCode }) {
 					<div className="flex justify-center">
 						<div className="flex flex-col text-center">
 							<H1>Error</H1>
-							<H2>
+							<H3>
 								{statusCode
 									? `A ${statusCode} error occurred on the server`
 									: "An error occurred on the client"}
-							</H2>
+							</H3>
 						</div>
 					</div>
 				</SimpleHeader>

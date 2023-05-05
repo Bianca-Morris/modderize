@@ -19,6 +19,10 @@ import { gamesCol, modRequestsCol } from "../firebase/collections";
 import A from "../components/basic/A";
 import H1 from "../components/basic/typography/H1";
 import H2 from "../components/basic/typography/H2";
+import {
+	InboxArrowDownIcon,
+	WrenchScrewdriverIcon
+} from "@heroicons/react/20/solid";
 
 type HomePageProps = {
 	topGames: Game[];
@@ -71,6 +75,7 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 							cls="flex-1"
 							onClick={() => router.push(`/games`)}
 						>
+							<InboxArrowDownIcon className="w-4 h-4 mr-2" />
 							Request a Mod
 						</Button>
 						<Button
@@ -78,6 +83,7 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 							cls="flex-1"
 							onClick={() => router.push(`/requests`)}
 						>
+							<WrenchScrewdriverIcon className="w-4 h-4 mr-2" />
 							Fulfill a Request
 						</Button>
 					</div>

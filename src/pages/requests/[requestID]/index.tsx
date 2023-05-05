@@ -11,6 +11,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import {
 	ArchiveBoxIcon,
 	PencilIcon,
+	ShareIcon,
 	WrenchScrewdriverIcon
 } from "@heroicons/react/20/solid";
 
@@ -25,6 +26,9 @@ import A from "../../../components/basic/A";
 import H1 from "../../../components/basic/typography/H1";
 import H2 from "../../../components/basic/typography/H2";
 import H3 from "../../../components/basic/typography/H3";
+import SharePopover from "../../../components/general/SharePopover";
+import { useRecoilValue } from "recoil";
+import { gameAtom } from "../../../atoms/gamesAtom";
 
 dayjs.extend(relativeTime);
 
@@ -34,6 +38,8 @@ type ModRequestPageProps = {
 
 const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	const [user] = useAuthState(auth);
+	const gameState = useRecoilValue(gameAtom);
+	const { allGames = [] } = gameState;
 
 	// Grab document for this mod request
 	const modRequestRef = doc(
@@ -104,61 +110,33 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 		<div className="flex min-h-screen flex-col items-center justify-start pb-2">
 			<SimpleHeader>
 				<div className="flex text-center flex-col">
-					<H1>{title}</H1>
+					{/* <H1>Mod Request</H1> */}
 				</div>
 			</SimpleHeader>
 			<div className="w-full flex-col mt-10 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
-				<div className="flex px-5 lg:px-0 w-full flex-col md:flex-row md:justify-between py-4">
+				<div className="flex px-5 lg:px-0 w-full flex-row md:justify-between py-4">
 					<div>
-						<div>
-							<A variant="indigo" href={`/games/${gameID}`}>
-								{gameDisplayName}
-							</A>
-							&nbsp;&gt;&nbsp;
-							<span className="font-bold">Mod Request</span>
-						</div>
-						<H2 cls="text-3xl font-bold mb-4"></H2>
-						<div>
-							<strong>Requested By:</strong>
-							<span className="ml-1">
-								<A
-									href={`/users/${requesterID}`}
-									variant="indigo"
-								>
-									{requesterDisplayName}
-								</A>
-							</span>
-							{creationDate && (
-								<span className="text-sm text-gray-400 pl-1">
-									{dayjs(
-										new Date(creationDate?.seconds * 1000)
-									).fromNow()}
-								</span>
-							)}
-						</div>
-						{lastModified && hasBeenModified && (
-							<div>
-								<strong>Last Modified:</strong>
-								<span className="ml-1">
-									{dayjs(
-										new Date(lastModified?.seconds * 1000)
-									).fromNow()}
-								</span>
-							</div>
-						)}
-						<div>
-							<strong>Status:</strong>
-							<span className="ml-1 capitalize">
-								{completionStatus}
-							</span>
-						</div>
+						<A variant="indigo" href={`/games/${gameID}`}>
+							{gameDisplayName}
+						</A>
+						&nbsp;&gt;&nbsp;
+						<span className="font-semibold">Mod Request</span>
 					</div>
-					<div className="flex align-center">
-						<div className="flex justify-center p-3 w-20 text-green-600">
+					<div className="flex align-center justify-center items-center">
+						<div className="flex justify-center mb-2 pr-3 w-20 text-green-600">
 							{modRequestData && (
-								<LikeButton modRequest={modRequestData} />
+								<LikeButton
+									modRequest={modRequestData}
+									size="large"
+								/>
 							)}
-							{voteStatus}
+							<span className="text-2xl mt-1">{voteStatus}</span>
+						</div>
+
+						<div className="flex justify-center">
+							<SharePopover url="https://www.lol.com">
+								<ShareIcon className="h-8 w-8 cursor-pointer hover:fill-indigo-300" />
+							</SharePopover>
 						</div>
 					</div>
 				</div>
@@ -166,12 +144,85 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 				<div className="flex flex-col lg:flex-row px-5 lg:px-0 mt-10 justify-between gap-10">
 					<div className="flex flex-col">
 						<div className="max-w-2xl">
-							<H2 cls="mb-5">Mod Description:</H2>
+							<H2 cls="text-3xl font-bold mb-4">{title}</H2>
 
 							<p className="whitespace-pre-wrap">{description}</p>
+
+							<hr className="my-10" />
+
+							<div>
+								<strong>Requested By:</strong>
+								<span className="ml-1">
+									<A
+										href={`/users/${requesterID}`}
+										variant="indigo"
+									>
+										{requesterDisplayName}
+									</A>
+								</span>
+								{creationDate && (
+									<span className="text-sm text-gray-400 pl-1">
+										{dayjs(
+											new Date(
+												creationDate?.seconds * 1000
+											)
+										).fromNow()}
+									</span>
+								)}
+							</div>
+							{lastModified && hasBeenModified && (
+								<div>
+									<strong>Last Modified:</strong>
+									<span className="ml-1">
+										{dayjs(
+											new Date(
+												lastModified?.seconds * 1000
+											)
+										).fromNow()}
+									</span>
+								</div>
+							)}
+							<div>
+								<strong>Status:</strong>
+								<span className="ml-1 capitalize">
+									{completionStatus}
+								</span>
+							</div>
 						</div>
 					</div>
 					<div className="flex flex-1 flex-col gap-2">
+						<div className="flex flex-col gap-0">
+							<H3 cls="bg-gray-200 p-4">Game Info</H3>
+							<div className="border border-gray-200 p-4">
+								<div className="flex flex-col w-full items-center justify-center gap-5">
+									{gameID && allGames.length > 0 && (
+										<img
+											src={
+												allGames.filter(
+													(game) => gameID === game.id
+												)[0]?.imageURL
+											}
+											className="shadow-xl rounded-lg align-middle border-none h-12 w-12"
+										></img>
+									)}
+									<div>
+										{gameID && gameDisplayName && (
+											<div>
+												<strong>Request for:</strong>
+												<span className="ml-1">
+													<A
+														href={`/games/${gameID}`}
+														variant="indigo"
+													>
+														{gameDisplayName}
+													</A>
+												</span>
+											</div>
+										)}
+									</div>
+								</div>
+							</div>
+						</div>
 						<div className="flex flex-col gap-0">
 							<H3 cls="bg-gray-200 p-4">Modder Info</H3>
 							<div className="border border-gray-200 p-4">

@@ -35,6 +35,7 @@ const UserModRequestPage: React.FC<UserModRequestPageProps> = ({
 		return <div>Invalid requestee ID.</div>;
 	}
 
+	const { photoURL = "", displayName } = requesteeDoc || {};
 	return (
 		<div>
 			<ContentBody>
@@ -52,7 +53,14 @@ const UserModRequestPage: React.FC<UserModRequestPageProps> = ({
 						<div className="md:grid md:grid-cols-3 md:gap-6">
 							<div className="md:col-span-1">
 								<div className="px-4 sm:px-0">
-									<H3 cls="leading-6 text-gray-900">
+									{photoURL && (
+										<img
+											src={photoURL}
+											alt={`${displayName}'s profile pic`}
+											className="rounded-full m-auto mb-5"
+										/>
+									)}
+									<H3 cls="leading-6 text-gray-900 text-center">
 										{requesteeDoc?.displayName}
 									</H3>
 									<p className="mt-1 text-sm text-gray-600">

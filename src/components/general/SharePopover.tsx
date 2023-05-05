@@ -1,4 +1,10 @@
-import React, { LegacyRef, PropsWithChildren, useRef, useState } from "react";
+import React, {
+	LegacyRef,
+	PropsWithChildren,
+	ReactElement,
+	useRef,
+	useState
+} from "react";
 import {
 	EmailShareButton,
 	FacebookShareButton,
@@ -21,19 +27,18 @@ interface SharePopoverProps extends PropsWithChildren {
 }
 
 const SharePopover: React.FC<SharePopoverProps> = ({ children, url }) => {
-	let referenceElement = useRef(null);
-	let popperElement = useRef(null);
-	let { styles, attributes } = usePopper(
-		referenceElement.current,
-		popperElement.current
-		// { placement: "auto-start" } // TODO: Fix weirdness with popover positioning
-	);
+	let [referenceElement, setReferenceElement] = useState<any>(null);
+	let [popperElement, setPopperElement] = useState<any>(null);
+	let { styles, attributes } = usePopper(referenceElement, popperElement);
+
 	return (
 		<Popover>
-			<Popover.Button ref={referenceElement}>{children}</Popover.Button>
+			<Popover.Button ref={setReferenceElement}>
+				{children}
+			</Popover.Button>
 
 			<Popover.Panel
-				ref={popperElement}
+				ref={setPopperElement}
 				style={styles.popper}
 				{...attributes.popper}
 			>

@@ -10,9 +10,18 @@ import useUserDoc from "../../hooks/useUserDoc";
 
 type LikeButtonProps = {
 	modRequest: ModRequest;
+	size?: "small" | "large";
 };
 
-const LikeButton: React.FC<LikeButtonProps> = ({ modRequest }) => {
+const sizeToClass = {
+	small: "w-4 h-4",
+	large: "w-8 h-8"
+};
+
+const LikeButton: React.FC<LikeButtonProps> = ({
+	modRequest,
+	size = "small"
+}) => {
 	const [user] = useAuthState(auth);
 
 	const { userDoc } = useUserDoc();
@@ -25,7 +34,11 @@ const LikeButton: React.FC<LikeButtonProps> = ({ modRequest }) => {
 
 	// Can't vote on own post, or if not logged in.
 	if (!user || userIsCreator || !userDoc) {
-		return <ThumbUpIconOutline className={`w-4 h-4 ml-1 mt-1 mr-2`} />;
+		return (
+			<ThumbUpIconOutline
+				className={`${sizeToClass[size]} ml-1 mt-1 mr-2 text-grey-600`}
+			/>
+		);
 	}
 
 	const userLikedRequest = hasUserLikedRequest(user, userDoc, requestID);
@@ -36,12 +49,12 @@ const LikeButton: React.FC<LikeButtonProps> = ({ modRequest }) => {
 
 	return !userLikedRequest ? (
 		<ThumbUpIconOutline
-			className="w-4 h-4 ml-1 mt-1 mr-2 cursor-pointer"
+			className={`${sizeToClass[size]} ml-1 mt-1 mr-2 cursor-pointer text-green-600 hover:text-green-500`}
 			onClick={onHandleVote}
 		/>
 	) : (
 		<ThumbUpIconSolid
-			className="w-4 h-4 ml-1 mt-1 mr-2 cursor-pointer"
+			className={`${sizeToClass[size]} ml-1 mt-1 mr-2 cursor-pointer text-green-600 hover:text-green-500`}
 			onClick={onHandleVote}
 		/>
 	);
