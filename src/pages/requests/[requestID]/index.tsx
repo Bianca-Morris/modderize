@@ -13,6 +13,7 @@ import {
 	ArchiveBoxIcon,
 	PencilIcon,
 	ShareIcon,
+	TrashIcon,
 	WrenchScrewdriverIcon
 } from "@heroicons/react/20/solid";
 
@@ -30,6 +31,7 @@ import H3 from "../../../components/basic/typography/H3";
 import SharePopover from "../../../components/general/SharePopover";
 import { useRecoilValue } from "recoil";
 import { gameAtom } from "../../../atoms/gamesAtom";
+import { useRouter } from "next/router";
 
 dayjs.extend(relativeTime);
 
@@ -40,6 +42,9 @@ type ModRequestPageProps = {
 const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	const [user] = useAuthState(auth);
 	const gameState = useRecoilValue(gameAtom);
+
+	const router = useRouter();
+
 	const { allGames = [] } = gameState;
 
 	// Grab document for this mod request
@@ -53,6 +58,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	);
 
 	const {
+		deleteOwnModRequest,
 		assignModRequestToSelf,
 		withdrawFromModRequest,
 		loading: requestLoading
@@ -80,7 +86,6 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	}
 
 	const {
-		id,
 		title,
 		description,
 		imageURL,
@@ -106,6 +111,14 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	const modderAssignedButNotConfirmed =
 		modderID && modderStatus === "requested";
 	const modderAssigned = modderID && modderStatus === "accepted";
+
+	const onDeleteModRequest = async () => {
+		if (!requesterID) {
+			return;
+		}
+		await deleteOwnModRequest(requestID, requesterID);
+		router.back();
+	};
 
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-start pb-2">
@@ -282,17 +295,18 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 						</div>
 
 						<div className="flex flex-col justify-center md:flex-row gap-0 md:gap-1 lg:gap-3">
-							{isRequester && (
+							{user && isRequester && (
 								<Button
 									type="button"
 									variant="red"
 									cls="flex-1 mt-4 bold"
+									onClick={onDeleteModRequest}
 								>
-									<ArchiveBoxIcon className="w-4 h-4 mr-3" />
-									Archive Request
+									<TrashIcon className="w-4 h-4 mr-3" />
+									Delete Request
 								</Button>
 							)}
-							{isRequester && (
+							{user && isRequester && (
 								<Button
 									type="button"
 									variant="indigo"

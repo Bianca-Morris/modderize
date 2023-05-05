@@ -1,4 +1,5 @@
 import {
+	deleteDoc,
 	doc,
 	serverTimestamp,
 	Timestamp,
@@ -18,6 +19,7 @@ import { User } from "firebase/auth";
 import { ModRequest, UserDoc } from "../types/docTypes";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { modalControllerAtom } from "../atoms/modalControllerAtom";
+import { modRequestsCol, usersCol } from "../firebase/collections";
 
 const useModRequests = () => {
 	const [error, setError] = useState("");
@@ -77,8 +79,8 @@ const useModRequests = () => {
 			const batch = writeBatch(db);
 
 			// Create refs to documents of interest
-			const userDocRef = doc(db, "users", uid);
-			const requestDocRef = doc(db, "modRequests", requestID);
+			const userDocRef = doc(usersCol, uid);
+			const requestDocRef = doc(modRequestsCol, requestID);
 
 			if (likeExists) {
 				// Delete the like from userDoc (& keep sorted) without mutating
@@ -118,7 +120,7 @@ const useModRequests = () => {
 
 		try {
 			const updated = await updateDoc(
-				doc(db, "modRequests", id),
+				doc(modRequestsCol, id),
 				updateObject
 			);
 			console.log("updated", updated);
@@ -193,13 +195,31 @@ const useModRequests = () => {
 		await updateModRequest(modRequest.id, updateObject);
 	};
 
+	const deleteOwnModRequest = async (
+		modRequestID: string,
+		requesterID: string
+	) => {
+		if (user?.uid !== requesterID) {
+			throw new Error("Cannot delete request you do not own.");
+		}
+
+		try {
+			const docRef = doc(modRequestsCol, modRequestID);
+			await deleteDoc(docRef);
+		} catch (err: any) {
+			console.error("err", err);
+			setError(err.message);
+		}
+	};
+
 	return {
 		loading,
 		onVote,
 		hasUserLikedRequest,
 		assignModRequestToSelf,
 		withdrawFromModRequest,
-		assignModRequestToOther
+		assignModRequestToOther,
+		deleteOwnModRequest
 	};
 };
 
