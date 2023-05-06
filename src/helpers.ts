@@ -67,7 +67,6 @@ export function classNames(...classes) {
 
 const DOCUMENTS_PER_PAGE = 15;
 
-
 export function constructModRequestQuery(prevDocSnaps?: QuerySnapshot) {
 	// Query the games collection
 	const coll = modRequestsCol.withConverter(modRequestConverter);
@@ -102,7 +101,7 @@ export function constructGameQuery(
 	// Some basic values for all sort (TODO: Maybe make these dynamic?)
 	const sortField = "displayName";
 	const sortValue = "asc";
-	
+
 	// Construct a new query
 	let returnQuery: Query;
 
@@ -132,9 +131,10 @@ export function constructGameQuery(
 	return returnQuery;
 }
 
-
-export function getLastVisibleDocument(documentSnapshots: QuerySnapshot): QueryDocumentSnapshot {
-	const lastIndex = documentSnapshots.docs.length-1;
+export function getLastVisibleDocument(
+	documentSnapshots: QuerySnapshot
+): QueryDocumentSnapshot {
+	const lastIndex = documentSnapshots.docs.length - 1;
 	return documentSnapshots.docs[lastIndex];
 }
 
@@ -147,7 +147,7 @@ export function extractMetadataFromFile(file: File) {
 }
 
 export function calculateAuthModalTitle(view) {
-	switch(view) {
+	switch (view) {
 		case "resetPassword":
 			return "Reset Password";
 		case "signup":

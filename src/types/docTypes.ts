@@ -3,57 +3,65 @@
  * Can be converted to/from versions with IDs via converters in /firebase/converters
  */
 
-import { DocumentData, DocumentReference, Timestamp } from "@firebase/firestore";
+import {
+	DocumentData,
+	DocumentReference,
+	Timestamp
+} from "@firebase/firestore";
 import { User } from "firebase/auth";
 
 export interface UserDoc extends User {
-    isAdmin: boolean;
-    isActiveModder: boolean;
-    about: string;
-    donationLink: string;
-    likedPostIDs: string[];
+	isAdmin: boolean;
+	isActiveModder: boolean;
+	about: string;
+	donationLink: string;
+	likedPostIDs: string[];
 }
 
 export interface Game extends DocumentData {
-    id: string;
-    creatorId: string;
-    displayName: string;
-    numberOfPlayers: number; // Number of users that "favorite" the game
-    createdAt?: Timestamp;
-    imageURL?: string;
-    docRef?: DocumentReference;
+	id: string;
+	creatorId: string;
+	displayName: string;
+	numberOfPlayers: number; // Number of users that "favorite" the game
+	createdAt?: Timestamp;
+	imageURL?: string;
+	docRef?: DocumentReference;
 }
 
-export interface ModRequestSansID extends DocumentData {    
-    gameID: string;
-    gameDisplayName?: string;
+export interface ModRequestSansID extends DocumentData {
+	gameID: string;
+	gameDisplayName?: string;
 
-    title: string;
-    description: string;
-    creationDate: Timestamp;
+	title: string;
+	description: string;
+	creationDate: Timestamp;
 
-    requesterID: string;
-    requesterDisplayName: string;
+	requesterID: string;
+	requesterDisplayName: string;
 
-    lastModified: Timestamp;
-    completionStatus: "pending modder" | "in progress" | "complete" | "archived";
+	lastModified: Timestamp;
+	completionStatus:
+		| "pending modder"
+		| "in progress"
+		| "complete"
+		| "archived";
 
-    modderStatus: "requested" | "accepted" | "open";
-    modderID?: string;
-    modderDisplayName?: string;
-    modderProfileImageURL?: string;
+	modderStatus: "requested" | "accepted" | "open";
+	modderID?: string;
+	modderDisplayName?: string;
+	modderProfileImageURL?: string;
 
-    voteStatus: number;
+	voteStatus: number;
 
-    imageURL?: string;
-    docRef?: DocumentReference;
+	imageURL?: string;
+	docRef?: DocumentReference;
 }
 
 export interface ModRequest extends ModRequestSansID {
-    id: string;  // ID gets populated by firebase
+	id: string; // ID gets populated by firebase
 }
 
 export interface GameSnippet {
-    gameID: string;
+	gameID: string;
 	gameName: string;
 }

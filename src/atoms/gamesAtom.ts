@@ -2,12 +2,12 @@ import { atom } from "recoil";
 import { Game } from "../types/docTypes";
 
 interface GameState {
-    allGames?: Game[];
+	allGames?: Game[];
 }
 
-const defaultGameState: GameState = {}
+const defaultGameState: GameState = {};
 
 export const gameAtom = atom<GameState>({
-    key: 'gameAtom',
-    default: defaultGameState
-})
+	key: "gameAtom",
+	default: defaultGameState
+});
