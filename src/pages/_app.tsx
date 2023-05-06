@@ -4,6 +4,7 @@ import Layout from "../components/layout/Layout";
 import { RecoilRoot } from "recoil";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import React from "react";
 
 function App({ Component, pageProps }: AppProps) {
 	const router = useRouter();
