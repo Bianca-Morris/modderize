@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
 									className="flex flex-row gap-2 justify-center items-center"
 								>
 									<Image
-										src="modderize_logo.svg"
+										src="/modderize_logo.svg"
 										width="50"
 										height="50"
 										alt="Modderize Logo"

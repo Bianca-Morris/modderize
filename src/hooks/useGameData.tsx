@@ -213,7 +213,8 @@ const useGameData = () => {
 		createGame,
 		getAllGames,
 		onToggleGameFavoriteStatus,
-		getModRequestsForGameCount
+		getModRequestsForGameCount,
+		loading
 	};
 };
 

@@ -41,6 +41,8 @@ type GamePageProps = {
  * Page for viewing all of the mod requests for a particular game
  */
 const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
+	const [user] = useAuthState(auth);
+
 	const router = useRouter();
 	const [modRequestCount, setModRequestCount] = useState(0);
 	const { onToggleGameFavoriteStatus, loading, getModRequestsForGameCount } =
@@ -67,11 +69,9 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 			});
 	}, [gameID]);
 
-	if (!gameID) {
+	if (!gameData && !gameLoading) {
 		return <GameNotFoundPage />;
 	}
-
-	const [user] = useAuthState(auth);
 
 	const { displayName, numberOfPlayers, imageURL } = gameData || {};
 
