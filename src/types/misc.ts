@@ -34,3 +34,10 @@ export type ButtonVariants = // | "black"
 
 
 export type LinkVariants = "violet" | "indigo" | "blue" | "gray" | "white" | "lightViolet";
+
+
+export type GameFormData = {
+    gameID: string;
+    image?: File;
+    gameDisplayName: string;
+}
