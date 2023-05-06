@@ -5,7 +5,7 @@ import { usePopper } from "react-popper";
 
 interface DropdownProps extends PropsWithChildren {
 	title: string;
-	btnCls: string;
+	btnCls?: string;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({

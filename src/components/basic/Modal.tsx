@@ -2,11 +2,15 @@ import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, PropsWithChildren, ReactNode, useRef } from "react";
 
 interface ModalProps extends PropsWithChildren {
-	open: boolean;
+	open?: boolean;
 	handleClose: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ open, children, handleClose }) => {
+const Modal: React.FC<ModalProps> = ({
+	open = false,
+	children,
+	handleClose
+}) => {
 	// const cancelButtonRef = useRef(null);
 
 	return (

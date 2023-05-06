@@ -9,7 +9,7 @@ type FileUploadInputProps = {
 	accept?: string;
 	handleSubmit?: React.MouseEventHandler;
 	handleImageChange: React.ChangeEventHandler;
-	disabled: boolean;
+	disabled?: boolean;
 	required?: boolean;
 };
 
@@ -18,7 +18,7 @@ const FileUploadInput: React.FC<FileUploadInputProps> = ({
 	fileInputHelp = "JPG (MAX. 50kb, RECOMMENDED 208x208px).",
 	fileName = "No file chosen...",
 	id = "file_input",
-	accept = "image/png, image/jpeg",
+	accept = "image/jpeg",
 	handleSubmit,
 	handleImageChange,
 	disabled = false,

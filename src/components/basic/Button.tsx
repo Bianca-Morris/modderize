@@ -5,7 +5,7 @@ import { PropsWithChildren } from "react";
 import { ButtonVariants } from "../../types/misc";
 
 export const BUTTON_STYLE =
-	"inline-flex items-center rounded-md shadow-sm justify-center text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-25";
+	"inline-flex items-center rounded-md shadow-sm justify-center text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-25 disable:cursor-not-allowed cursor-pointer";
 
 const WITHOUT_OUTLINE = " border-transparent px-4 py-2";
 const WITH_OUTLINE = " border-2 px-3 py-1";

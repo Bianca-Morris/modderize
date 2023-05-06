@@ -10,7 +10,7 @@ export const COLOR_VARIANTS = {
 	lightViolet: "text-violet-300 hover:text-indigo-400",
 	violet: "text-violet-700 hover:text-violet-500",
 	indigo: "text-indigo-800 hover:text-indigo-600",
-	blue: " ",
+	blue: "text-blue-600 hover:text-blue-500",
 	gray: "text-gray-500 hover:text-gray-300",
 	white: "text-white hover:text-gray-200"
 
@@ -53,7 +53,7 @@ const A: React.FC<AProps> = ({
 	tagType = "Link",
 	href,
 	replace = false,
-	prefetch = true,
+	prefetch,
 	passHref = false,
 	scroll = true,
 	shallow = false,

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Switch } from "@headlessui/react";
 
 type ToggleProps = {
-	value: boolean;
+	value?: boolean;
 	label?: string;
 	onToggle: (newState: boolean) => void;
 	loading?: boolean;
