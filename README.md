@@ -41,6 +41,7 @@
       </ul>
     </li>
     <!-- <li><a href="#usage">Usage</a></li> -->
+    <li><a href="#design-documentation">Design Documentation</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -70,7 +71,7 @@ Modderize is a web application for video game modders to track and fulfill featu
 
 ## Getting Started
 
-To get a local copy up and running on your machine, follow these simple example steps. Note: Windows or Linux installations may be slightly different.
+To get a local copy up and running on your machine, follow these simple example steps. Note: This project was build on a Mac; Windows or Linux installations may be slightly different.
 
 ### Prerequisites
 
@@ -113,15 +114,31 @@ There are a few dependencies that will not be installed as a result of the 'loca
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
+<!-- Design Documentation -->
 
-<!-- ## Usage
+## Design Documentation
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+This repository also includes some documentation of the design system/component library used to create this website.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+[![Image from Gyazo](https://i.gyazo.com/ed816cf791c6a8c266571c0b51701d35.png)](https://gyazo.com/ed816cf791c6a8c266571c0b51701d35)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
+In order to access this documentation, set up the environment using the instructions in the [local installation](#local-installation) section above, and then follow the following steps:
+
+1. Ensure the most recent minified CSS bundle is built by running:
+
+```
+npm run minify
+```
+
+2. Run storybook; it should open up in your browser automatically, but if it doesn't, it will run at `localhost:6006`.
+
+```
+npm run storybook
+```
+
+_Note: Not every component used within the application is documented, however, the basic building blocks that do not require data from Firebase to function are mostly accounted for._
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
 

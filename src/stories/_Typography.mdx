@@ -1,0 +1,53 @@
+import { Meta } from "@storybook/blocks";
+import H1 from "../components/basic/typography/H1";
+import H2 from "../components/basic/typography/H2";
+import H3 from "../components/basic/typography/H3";
+
+<Meta title="Modderize/Brand/Typography" />
+
+<style>
+	{`
+    h1.styled, h2.styled, h3.styled {
+      font-family: "Inter", sans-serif !important;
+      border: 0 !important;
+    }
+    .subheading {
+      --mediumdark: '#999999';
+      font-weight: 700;
+      font-size: 13px;
+      color: #999;
+      letter-spacing: 6px;
+      line-height: 24px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      margin-top: 40px;
+    }
+  `}
+</style>
+
+# Typography
+
+The selected font for the Modderize platform is [Inter](https://fonts.google.com/specimen/Inter), a free sans-serif font created by Google.
+[![Image from Gyazo](https://i.gyazo.com/d16930b4c236552919a426a99354b177.gif)](https://gyazo.com/d16930b4c236552919a426a99354b177)
+
+The base font for all text in the repo is this one at 16 pixels and 400 weight. See the "body text" section for an example of what this looks like.
+
+<div className="subheading">Headings</div>
+<H1 cls="styled">Heading 1: Inter</H1>
+<H2 cls="styled">Heading 2: Inter</H2>
+<H3 cls="styled">Heading 3: Inter</H3>
+
+<div className="subheading">Body Text</div>
+The font used for body text that is not a heading is this one: [![Image from Gyazo](https://i.gyazo.com/e1b9658a1d57e5a59605fdc9596e8976.png)](https://gyazo.com/e1b9658a1d57e5a59605fdc9596e8976)
+
+<div className="subheading">Links and Buttons</div>
+The same font-family is used for links and buttons, as well, albeit in different
+colors and with slightly different styling.
+
+For detailed information on how links are displayed, see the [A component documentation](/docs/modderize-a--docs).
+
+<div className="subheading">Jumbotron</div>
+Similarly to links and buttons, the text in Jumbotrons shares similarities and differences
+with the largest headers.
+
+For detailed information on how jumbotron headings are displayed, see the [Jumbotron component documentation](/docs/modderiz-a--docs).

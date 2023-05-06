@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/blocks";
 
-<Meta title="Modderize/DesignDoc" />
+<Meta title="Modderize/Brand/Imagery" />
 
 <style>
 	{`
@@ -108,47 +108,31 @@ import { Meta } from "@storybook/blocks";
   `}
 </style>
 
-# Modderize Design Doc
+# Imagery
 
-[![Image
-from Gyazo](https://i.gyazo.com/ca9e0280365a9d63def40d5b8da8db1b.png)](https://gyazo.com/ca9e0280365a9d63def40d5b8da8db1b)
+<div className="subheading">Logo</div>
+The logo is available in SVG format, and as a ICO file for the site favicon. [![Image
+from Gyazo](https://i.gyazo.com/ca9e0280365a9d63def40d5b8da8db1b.png)](https://gyazo.com/ca9e0280365a9d63def40d5b8da8db1b)[![Image
+from Gyazo](https://i.gyazo.com/8fb512aefec437183568602364643e96.png)](https://gyazo.com/8fb512aefec437183568602364643e96)
 
-<div className="subheading">Branding</div>
+<div className="subheading">Iconography</div>
+Most icons used in Modderize are from the [Hero Icon](https://heroicons.com/) set
+(usually solid or outline variants). These are imported directly into the code as
+React components, but can be downloaded as SVGs from the Hero Icons website for use
+in mockups and prototypes. [![Image from Gyazo](https://i.gyazo.com/8d50240c72bc8fb5da4ecc22aaea59ac.gif)](https://gyazo.com/8d50240c72bc8fb5da4ecc22aaea59ac)
 
-<div className="link-list">
-	<a
-		className="link-item"
-		href="/docs/modderize-brand-colors--docs"
-		target="_blank"
-	>
-		<span>
-			<strong>Colors</strong>
-			Palettes and codes
-		</span>
-	</a>
-	<a
-		className="link-item"
-		href="/docs/modderize-brand-imagery--docs"
-		target="_blank"
-	>
-		<span>
-			<strong>Imagery</strong>
-			Visual identity, iconography, etc.
-		</span>
-	</a>
-	<a
-		className="link-item"
-		href="/docs/modderize-brand-typography--docs"
-		target="_blank"
-	>
-		<span>
-			<strong>Typography</strong>
-			Font-faces, sizing, components
-		</span>
-	</a>
-</div>
+The other icons are typically brand icons, which are usually from the [react-share package](https://www.npmjs.com/package/react-share).
+[![Image from Gyazo](https://i.gyazo.com/d27d98772e59f0198c1c45494904ee5e.png)](https://gyazo.com/d27d98772e59f0198c1c45494904ee5e)
 
-<div className="tip-wrapper">
-	<span className="tip">Tip</span>Click a component on the sidebar or one of
-	the links below to dive in!
-</div>
+<div className="subheading">Photography</div>
+Photography used throughout the website is all sourced from royalty free media sites.
+[Unsplash](https://www.unsplash.com/) and [Pexels](https://www.pexels.com/) are the
+two I've used the most. Static photos should be compressed after downloading and
+uploaded in webp format.
+
+<div className="subheading">User-Uploaded Images</div>
+User-uploaded images such as screenshots for mods or avatars are typically uploaded
+as JPEGs; these are less performant, but are a more common format for lay users than
+webp. There are hard limits on file size when it comes to these images, although
+those differ by the recommended resolution. On average, keeping user upload file
+sizes beneath 500kb is the goal.

@@ -15,9 +15,9 @@ const commonArgs = {title: "I am important text"}
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Default: Story = {
-  args: {
-    ...commonArgs
-  },
+    args: {
+        ...commonArgs
+    },
 };
 
 export const WithSubtitle: Story = {
