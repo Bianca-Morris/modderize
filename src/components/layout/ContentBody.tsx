@@ -1,18 +1,5 @@
-import React, {
-	JSXElementConstructor,
-	PropsWithChildren,
-	ReactElement,
-	ReactFragment,
-	ReactPortal
-} from "react";
-
-type functionOutput =
-	| string
-	| number
-	| ReactElement<any, string | JSXElementConstructor<any>>
-	| ReactFragment
-	| ReactPortal;
-type Nullable<T> = T | null;
+import React, { PropsWithChildren } from "react";
+import { FunctionOutput, Nullable } from "../../types/misc";
 
 interface ContentBodyProps extends PropsWithChildren {
 	innerCls?: string;
@@ -24,8 +11,8 @@ const ContentBody: React.FC<ContentBodyProps> = ({
 	outerCls,
 	innerCls
 }) => {
-	let header: Nullable<functionOutput> = null;
-	let body: Nullable<functionOutput> = null;
+	let header: Nullable<FunctionOutput> = null;
+	let body: Nullable<FunctionOutput> = null;
 
 	const childElements = React.Children.toArray(children);
 

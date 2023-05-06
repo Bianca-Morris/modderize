@@ -12,6 +12,7 @@ import ContentBody from "../../../components/layout/ContentBody";
 import GameNotFoundPage from "../../../components/pages/GameNotFound";
 import { auth, db } from "../../../firebase/clientApp";
 import { Game } from "../../../types/docTypes";
+import ModEditPageLayout from "../../../components/layout/ModEditPageLayout";
 
 /**
  * Will be page for creating a mod request
@@ -38,46 +39,40 @@ const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
 					</div>
 				</SimpleHeader>
 			</>
-			<>
-				<div className="mt-10">
-					<div className="md:grid md:grid-cols-3 md:gap-6">
-						<div className="md:col-span-1">
-							<div className="px-4 sm:px-0">
-								{imageURL && (
-									<Image
-										width={208}
-										height={208}
-										className="rounded-md m-auto mb-5"
-										src={imageURL}
-										alt={gameDisplayName + " Poster"}
-									></Image>
-								)}
-								<H3 cls="leading-6 text-gray-900 text-center">
-									{gameDisplayName}
-								</H3>
-								<p className="mt-1 text-sm text-gray-600">
-									This mod request will be open to the
-									entire&nbsp;
-									{gameDisplayName} community. To request a
-									mod from a specific creator, go to their
-									profile and click "Request Mod".
-								</p>
-							</div>
-						</div>
-						<div className="mt-5 md:col-span-2 md:mt-0">
-							{user && (
-								<NewGameModRequestForm
-									{...{
-										user,
-										gameID,
-										gameDisplayName
-									}}
-								/>
-							)}
-						</div>
-					</div>
-				</div>
-			</>
+
+			<ModEditPageLayout>
+				<>
+					{imageURL && (
+						<Image
+							width={208}
+							height={208}
+							className="rounded-md m-auto mb-5"
+							src={imageURL}
+							alt={gameDisplayName + " Poster"}
+						></Image>
+					)}
+					<H3 cls="leading-6 text-gray-900 text-center">
+						{gameDisplayName}
+					</H3>
+					<p className="mt-1 text-sm text-gray-600">
+						This mod request will be open to the entire&nbsp;
+						{gameDisplayName} community. To request a mod from a
+						specific creator, go to their profile and click "Request
+						Mod".
+					</p>
+				</>
+				<>
+					{user && (
+						<NewGameModRequestForm
+							{...{
+								user,
+								gameID,
+								gameDisplayName
+							}}
+						/>
+					)}
+				</>
+			</ModEditPageLayout>
 		</ContentBody>
 	);
 };

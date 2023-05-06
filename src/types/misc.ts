@@ -2,6 +2,8 @@
  * Assorted types that don't belong exclusively to a firebase document
  */
 
+import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from "react";
+
 export type ModalViews = "login" | "signup" | "resetPassword";
 
 export type ButtonVariants = // | "black"
@@ -41,3 +43,12 @@ export type GameFormData = {
     image?: File;
     gameDisplayName: string;
 }
+
+export type Nullable<T> = T | null;
+
+export type FunctionOutput =
+	| string
+	| number
+	| ReactElement<any, string | JSXElementConstructor<any>>
+	| ReactFragment
+	| ReactPortal;

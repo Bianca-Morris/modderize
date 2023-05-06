@@ -11,6 +11,7 @@ import NewUserModRequestForm from "../../../components/forms/NewUserModRequestFo
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import ContentBody from "../../../components/layout/ContentBody";
 import { auth, db } from "../../../firebase/clientApp";
+import ModEditPageLayout from "../../../components/layout/ModEditPageLayout";
 
 type UserModRequestPageProps = {
 	requesteeID: string;
@@ -49,45 +50,36 @@ const UserModRequestPage: React.FC<UserModRequestPageProps> = ({
 						</div>
 					</SimpleHeader>
 				</>
-				<>
-					<div className="mt-10">
-						<div className="md:grid md:grid-cols-3 md:gap-6">
-							<div className="md:col-span-1">
-								<div className="px-4 sm:px-0">
-									{photoURL && (
-										<Image
-											height={128}
-											width={128}
-											src={photoURL}
-											alt={`${displayName}'s profile pic`}
-											className="rounded-full m-auto mb-5"
-										/>
-									)}
-									<H3 cls="leading-6 text-gray-900 text-center">
-										{requesteeDoc?.displayName}
-									</H3>
-									<p className="mt-1 text-sm text-gray-600">
-										This mod request will be sent
-										specifically to{" "}
-										{requesteeDoc?.displayName}, and will
-										appear on their user dashboard the next
-										time they log in. If they refuse the
-										request, it will become open for other
-										creators in the game community to take
-										on.
-									</p>
-								</div>
-							</div>
-							<div className="mt-5 md:col-span-2 md:mt-0">
-								{currentUser && requesteeDoc && (
-									<NewUserModRequestForm
-										requestee={requesteeDoc as User}
-									/>
-								)}
-							</div>
-						</div>
-					</div>
-				</>
+				<ModEditPageLayout>
+					<>
+						{photoURL && (
+							<Image
+								height={128}
+								width={128}
+								src={photoURL}
+								alt={`${displayName}'s profile pic`}
+								className="rounded-full m-auto mb-5"
+							/>
+						)}
+						<H3 cls="leading-6 text-gray-900 text-center">
+							{requesteeDoc?.displayName}
+						</H3>
+						<p className="mt-1 text-sm text-gray-600">
+							This mod request will be sent specifically to{" "}
+							{requesteeDoc?.displayName}, and will appear on
+							their user dashboard the next time they log in. If
+							they refuse the request, it will become open for
+							other creators in the game community to take on.
+						</p>
+					</>
+					<>
+						{currentUser && requesteeDoc && (
+							<NewUserModRequestForm
+								requestee={requesteeDoc as User}
+							/>
+						)}
+					</>
+				</ModEditPageLayout>
 			</ContentBody>
 		</div>
 	);
