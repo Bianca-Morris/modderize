@@ -4,6 +4,8 @@ import Image from "next/image";
 import { ModRequest } from "../../types/docTypes";
 import LikeButton from "./LikeButton";
 import { PhotoIcon } from "@heroicons/react/24/outline";
+import Badge from "../basic/Badge";
+import ModRequestStatusBadge from "./ModRequestStatusBadge";
 
 type ModRequestCardProps = {
 	subTitle: string | ReactElement;
@@ -24,14 +26,14 @@ const ModRequestCard: React.FC<ModRequestCardProps> = ({
 		imageURL,
 		id: requestID,
 		title,
-		voteStatus,
-		requesterID
+		modderStatus,
+		completionStatus
 	} = modRequest;
 
 	return (
 		<div
 			className={
-				"flex max-w-full rounded border-gray-200 border align-center min-h-[66px]" +
+				"flex max-w-full flex-col sm:flex-row rounded border-gray-200 border align-center min-h-[66px]" +
 				cls
 			}
 		>
@@ -62,13 +64,20 @@ const ModRequestCard: React.FC<ModRequestCardProps> = ({
 					)}
 				</div>
 			)}
-			<div className="flex flex-col justify-center pl-3 max-w-xs">
-				<span className="font-bold text-gray-800 leading-5 truncate">
-					<Link href={`/requests/${requestID}`}>{title}</Link>
-				</span>
-				<span className="text-sm text-gray-700 mw-full">
-					{subTitle}
-				</span>
+			<div className="w-full flex flex-col sm:flex-row sm:justify-between">
+				<div className="flex flex-col justify-center pl-3 max-w-[100%] sm:max-w-xs">
+					<span className="font-bold text-gray-800 leading-5 truncate">
+						<Link href={`/requests/${requestID}`}>{title}</Link>
+					</span>
+					<span className="text-sm text-gray-700 mw-full">
+						{subTitle}
+					</span>
+				</div>
+				<div className="flex items-center sm:justify-end justify-center p-5 sm:p-0">
+					<ModRequestStatusBadge
+						{...{ modderStatus, completionStatus }}
+					/>
+				</div>
 			</div>
 		</div>
 	);
