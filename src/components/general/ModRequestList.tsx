@@ -2,7 +2,7 @@ import { Query } from "firebase/firestore";
 import React, { ReactElement } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { ModRequest as ModRequestType } from "../../types/docTypes";
-import ModRequest from "./ModRequest";
+import ModRequestCard from "./ModRequestCard";
 import ModRequestLoader from "./ModRequestLoader";
 
 type ModRequestListProps = {
@@ -36,7 +36,7 @@ const ModRequestList: React.FC<ModRequestListProps> = ({
 				const { id, title, requesterDisplayName } = mr;
 				const subTitle = subtitleRenderFx(mr);
 				return (
-					<ModRequest
+					<ModRequestCard
 						key={id}
 						{...{
 							title,

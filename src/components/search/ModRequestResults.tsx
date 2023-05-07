@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import React from "react";
 import { ReallySimpleInfiniteScroll } from "react-really-simple-infinite-scroll";
 import { ModRequest as ModRequestType } from "../../types/docTypes";
-import ModRequestShort from "../general/ModRequest";
+import ModRequestCard from "../general/ModRequestCard";
 
 type ModRequestResultsProps = {
 	hasMore: boolean;
@@ -34,7 +33,7 @@ const ModRequestResults: React.FC<ModRequestResultsProps> = ({
 				{results.map((modRequest) => {
 					const { title, id } = modRequest;
 					return (
-						<ModRequestShort
+						<ModRequestCard
 							key={id}
 							{...{ title, modRequest }}
 							subTitle="This is a subtitle"

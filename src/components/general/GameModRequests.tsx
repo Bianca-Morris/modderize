@@ -3,8 +3,8 @@ import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { modRequestsCol } from "../../firebase/collections";
 import { modRequestConverter } from "../../firebase/converters";
-import { Game, ModRequest as ModRequestType } from "../../types/docTypes";
-import ModRequest from "./ModRequest";
+import { Game, ModRequest } from "../../types/docTypes";
+import ModRequestCard from "./ModRequestCard";
 import ModRequestLoader from "./ModRequestLoader";
 
 type GameModRequestsProps = {
@@ -30,12 +30,12 @@ const GameModRequests: React.FC<GameModRequestsProps> = ({ gameData }) => {
 			{currModRequests.map((mr) => {
 				const { id, title, requesterDisplayName } = mr;
 				return (
-					<ModRequest
+					<ModRequestCard
 						key={id}
 						{...{
 							title
 						}}
-						modRequest={mr as ModRequestType}
+						modRequest={mr as ModRequest}
 						subTitle={
 							<div>
 								<span className="font-medium mr-1">

@@ -5,14 +5,14 @@ import { ModRequest } from "../../types/docTypes";
 import LikeButton from "./LikeButton";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 
-type ModRequestShortProps = {
+type ModRequestCardProps = {
 	subTitle: string | ReactElement;
 	modRequest: ModRequest;
-	showImage: boolean;
+	showImage?: boolean;
 	cls?: string;
 };
 
-const ModRequestShort: React.FC<ModRequestShortProps> = ({
+const ModRequestCard: React.FC<ModRequestCardProps> = ({
 	subTitle,
 	modRequest,
 	showImage = false,
@@ -73,4 +73,4 @@ const ModRequestShort: React.FC<ModRequestShortProps> = ({
 		</div>
 	);
 };
-export default ModRequestShort;
+export default ModRequestCard;
