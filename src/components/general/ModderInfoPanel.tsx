@@ -1,5 +1,7 @@
-import Image from "next/image";
 import React from "react";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+
 import A from "../basic/A";
 import H3 from "../basic/typography/H3";
 
@@ -22,7 +24,10 @@ const ModderInfoPanel: React.FC<ModderInfoPanelProps> = ({
 }) => {
 	return (
 		<div className="flex flex-col gap-0">
-			<H3 cls="bg-gray-200 p-4">Modder Info</H3>
+			<H3 cls="flex items-center bg-gray-200 p-4">
+				<UserCircleIcon className="h-6 w-8" />
+				Modder Info
+			</H3>
 			<div className="border border-gray-200 p-4">
 				<div className="flex w-full items-center justify-center gap-5">
 					{!modderID && (

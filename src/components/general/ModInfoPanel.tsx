@@ -1,3 +1,4 @@
+import { PaperClipIcon } from "@heroicons/react/20/solid";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import React from "react";
@@ -13,7 +14,10 @@ const ModInfoPanel: React.FC<ModInfoPanelProps> = ({ imageURL, modURL }) => {
 	const domain = new URL(modURL).hostname;
 	return (
 		<div className="flex flex-col gap-0">
-			<H3 cls="bg-gray-200 p-4">Mod Info</H3>
+			<H3 cls="flex items-center bg-gray-200 p-4">
+				<PaperClipIcon className="h-6 w-8" />
+				Mod Info
+			</H3>
 			<div className="border border-gray-200 p-4">
 				<div className="flex flex-col w-full items-center justify-center gap-2">
 					{imageURL && (

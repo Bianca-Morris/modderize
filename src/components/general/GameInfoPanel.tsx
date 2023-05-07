@@ -1,3 +1,4 @@
+import { WindowIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import React from "react";
 import { useRecoilValue } from "recoil";
@@ -17,7 +18,10 @@ const GameInfoPanel: React.FC<GameInfoPanelProps> = React.memo(
 
 		return (
 			<div className="flex flex-col gap-0">
-				<H3 cls="bg-gray-200 p-4">Game Info</H3>
+				<H3 cls="flex items-center bg-gray-200 p-4">
+					<WindowIcon className="h-6 w-8" />
+					Game Info
+				</H3>
 				<div className="border border-gray-200 p-4">
 					<div className="flex flex-col w-full items-center justify-center gap-5">
 						{gameID && allGames.length > 0 && (
