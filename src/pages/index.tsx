@@ -61,13 +61,17 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 					</div>
 				</SimpleHeader>
 			)}
-			<Jumbotron title="Your Wildest Dreams Come True">
+			<Jumbotron
+				title="POWER TO THE PLAYERS"
+				subtitle="Modderize is Making Mods Happen"
+			>
 				<div className="flex-1 flex flex-col bg-white rounded p-5 gap-5">
 					<div>
-						Modderize is making it easier than ever to create,
-						share, and consume the mod content your gaming community
-						wants to see. Request from your favorite creators or
-						build the feature a fellow gamer has been dreaming of.
+						We're making it easier than ever to collaborate with
+						fellow gamers on mods for your favorite games. Share mod
+						ideas with talented modders, or contribute by fulfilling
+						a community mod request. Join the Modderize community
+						today, and embrace the modding revolution!
 					</div>
 					<div className="flex flex-col md:flex-row gap-5">
 						<Button

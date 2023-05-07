@@ -22,8 +22,8 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 				</SimpleHeader>
 
 				<Jumbotron
-					title="Connecting Modders and Gamers, Globally"
-					subtitle="Modderize Is Building Community"
+					title="Connecting Modders with Gamers"
+					subtitle="Modderize Is Modernizing The World of Modding"
 				>
 					{<div className="flex-1 flex flex-col p-5 gap-5"></div>}
 				</Jumbotron>
