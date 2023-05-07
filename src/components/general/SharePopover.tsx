@@ -43,8 +43,9 @@ const SharePopover: React.FC<SharePopoverProps> = ({ children, url }) => {
 				{...attributes.popper}
 			>
 				<div className="mt-5 px-10 py-5 bg-white shadow-lg rounded-md border border-solid border-grey-100">
-					<div className="font-bold">Share This Page</div>
-					<div>
+					<div className="font-bold mb-1">Share This Page</div>
+					<hr />
+					<div className="flex gap-3 mt-2">
 						<EmailShareButton {...{ url }}>
 							<EmailIcon round size={40} />
 						</EmailShareButton>
