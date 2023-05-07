@@ -5,7 +5,7 @@ import ContactForm from "../forms/ContactForm";
 
 const navigation = [
 	{ name: "Github Repo", href: "https://github.com/Bianca-Morris/modderize" },
-	{ name: "Privacy Policy", href: "/privacyPolicy" },
+	{ name: "Privacy Policy", href: "/privacy" },
 	{ name: "Terms of Use", href: "/termsOfUse" }
 ];
 
