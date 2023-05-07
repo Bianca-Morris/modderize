@@ -1,11 +1,11 @@
 import React from "react";
 
 type InputProps = {
-	type: "text" | "password" | "url";
+	type: "text" | "password" | "url" | "email";
 	id: string;
 	name: string;
 	placeholder: string;
-	onChange: React.ChangeEventHandler<HTMLInputElement>;
+	onChange?: React.ChangeEventHandler<HTMLInputElement>;
 	value?: string;
 	required?: boolean;
 	disabled?: boolean;

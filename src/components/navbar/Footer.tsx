@@ -1,10 +1,12 @@
 import React, { PropsWithChildren } from "react";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import A from "../basic/A";
+import ContactForm from "../forms/ContactForm";
 
 const navigation = [
-	{ name: "Privacy Policy", href: "#" },
-	{ name: "Legal", href: "#" }
+	{ name: "Github Repo", href: "https://github.com/Bianca-Morris/modderize" },
+	{ name: "Privacy Policy", href: "/privacyPolicy" },
+	{ name: "Terms of Use", href: "/termsOfUse" }
 ];
 
 interface FooterSectionProps extends PropsWithChildren {
@@ -43,14 +45,18 @@ const Footer: React.FC = () => {
 						</ul>
 					</FooterSection>
 					<FooterSection title="Contact">
-						<div>TBD</div>
+						<ContactForm />
 					</FooterSection>
 					<FooterSection title="About">
 						<p>
-							Lorem ipsum dolor sit amet. Sit excepturi internos
-							At rerum deserunt non ipsum repellendus tempore non
-							eligendi. Sed numquam adipisci qui voluptatem
-							quibusdam ut enim maxime.
+							Modderize is a web application for video game
+							modders to track and fulfill feature requests from
+							their communities.
+						</p>
+						<p className="mt-5">
+							This application was built to fulfill the Capstone
+							requirement of the Digital Media Design ALM Degree
+							at Harvard Extension School.
 						</p>
 					</FooterSection>
 				</div>

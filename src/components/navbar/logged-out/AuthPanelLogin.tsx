@@ -63,7 +63,7 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 				</label>
 				<Input
 					required
-					type="text"
+					type="email"
 					name="email"
 					id="email"
 					placeholder="Ex: jane.doe@mail.com"

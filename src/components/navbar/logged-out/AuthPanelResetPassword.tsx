@@ -84,7 +84,7 @@ const AuthPanelResetPassword: React.FC<AuthPanelResetPasswordProps> = ({
 								Email
 							</label>
 							<Input
-								type="text"
+								type="email"
 								name="email"
 								id="email"
 								placeholder="Ex: jane.doe@mail.com"

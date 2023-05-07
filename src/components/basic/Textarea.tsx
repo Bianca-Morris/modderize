@@ -4,7 +4,7 @@ type TextareaProps = {
 	id: string;
 	name: string;
 	placeholder: string;
-	onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
+	onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
 	value?: string;
 	required?: boolean;
 	disabled?: boolean;

@@ -149,7 +149,7 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 				</label>
 				<Input
 					required
-					type="text"
+					type="email"
 					name="email"
 					id="email"
 					placeholder="Ex: jane.doe@mail.com"
