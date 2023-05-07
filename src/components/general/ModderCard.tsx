@@ -6,6 +6,11 @@ import Image from "next/image";
 import { modRequestsCol } from "../../firebase/collections";
 import useFirebaseAPI from "../../hooks/useFirebaseAPI";
 import Button from "../basic/Button";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase/clientApp";
+import { useSetRecoilState } from "recoil";
+import { modalControllerAtom } from "../../atoms/modalControllerAtom";
+import Link from "next/link";
 
 type ModderCardProps = {
 	displayName: string;
@@ -20,9 +25,19 @@ const ModderCard: React.FC<ModderCardProps> = ({
 	photoURL,
 	isActiveModder
 }) => {
+	const [user] = useAuthState(auth);
+	const setModalState = useSetRecoilState(modalControllerAtom);
 	const router = useRouter();
 
 	const onRequestMod = useCallback(() => {
+		if (!user) {
+			setModalState((prev) => ({
+				...prev,
+				authModalOpen: true,
+				authModalView: "login"
+			}));
+			return;
+		}
 		router.push(`/users/${uid}/userModRequest`);
 	}, [uid]);
 
@@ -63,22 +78,26 @@ const ModderCard: React.FC<ModderCardProps> = ({
 		<div className="flex flex-col justify-center items-center align-center p-5 gap-3">
 			<div>
 				{photoURL ? (
-					<Image
-						width={128}
-						height={128}
-						alt={displayName}
-						src={photoURL}
-						className="shadow-xl rounded-full align-middle border-none h-52 w-52"
-					/>
+					<Link href={`/users/${uid}`}>
+						<Image
+							width={128}
+							height={128}
+							alt={displayName}
+							src={photoURL}
+							className="shadow-xl rounded-full align-middle border-none h-52 w-52"
+						/>
+					</Link>
 				) : (
-					<div className="shadow-xl bg-gray-300 rounded-full h-52 w-52 align-middle border-none flex items-center justify-center">
-						<UserIcon className="h-32 w-32 fill-gray-400" />
-					</div>
+					<Link href={`/users/${uid}`}>
+						<div className="shadow-xl bg-gray-300 rounded-full h-52 w-52 align-middle border-none flex items-center justify-center">
+							<UserIcon className="h-32 w-32 fill-gray-400" />
+						</div>
+					</Link>
 				)}
 			</div>
 			<div className="w-full p-3 m-2">
-				<div className="text-2xl font-bold text-center mb-2 truncate">
-					{displayName}
+				<div className="text-2xl font-bold text-center mb-2 truncate hover:underline">
+					<Link href={`/users/${uid}`}>{displayName}</Link>
 				</div>
 				<div className="text-green-800">
 					<strong className="font-bold pr-2">Completed:</strong>
