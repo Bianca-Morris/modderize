@@ -31,6 +31,7 @@ const ContactForm: React.FC<ContactFormProps> = () => {
 				name="subject"
 				placeholder="Your Name"
 				hidden
+				readOnly
 				aria-hidden
 				value={subject}
 			/>
