@@ -57,7 +57,9 @@ export const modRequestConverter: FirestoreDataConverter<ModRequest> = {
 			voteStatus: modRequest.voteStatus,
 			imageURL: modRequest.imageURL,
 			modderDisplayName: modRequest.modderDisplayName,
-			modderProfileImageURL: modRequest.modderProfileImageURL
+			modderProfileImageURL: modRequest.modderProfileImageURL,
+			modderNotes: modRequest.modderNotes,
+			modURL: modRequest.modURL
 		};
 	},
 	fromFirestore(
@@ -81,7 +83,9 @@ export const modRequestConverter: FirestoreDataConverter<ModRequest> = {
 			modderDisplayName,
 			modderProfileImageURL,
 			voteStatus,
-			imageURL
+			imageURL,
+			modderNotes,
+			modURL
 		} = data || {};
 		return {
 			id,
@@ -100,7 +104,9 @@ export const modRequestConverter: FirestoreDataConverter<ModRequest> = {
 			modderDisplayName,
 			modderProfileImageURL,
 			voteStatus,
-			imageURL
+			imageURL,
+			modderNotes,
+			modURL
 		};
 	}
 };

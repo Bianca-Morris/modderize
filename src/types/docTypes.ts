@@ -30,7 +30,7 @@ export interface Game extends DocumentData {
 
 export interface ModRequestSansID extends DocumentData {
 	gameID: string;
-	gameDisplayName?: string;
+	gameDisplayName: string;
 
 	title: string;
 	description: string;
@@ -50,10 +50,13 @@ export interface ModRequestSansID extends DocumentData {
 	modderID?: string;
 	modderDisplayName?: string;
 	modderProfileImageURL?: string;
+	
+	modderNotes?: string;
+	modURL?: string;
+	imageURL?: string;
 
 	voteStatus: number;
 
-	imageURL?: string;
 	docRef?: DocumentReference;
 }
 

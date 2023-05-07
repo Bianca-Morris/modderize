@@ -1,7 +1,7 @@
 import React from "react";
 
 type InputProps = {
-	type: "text" | "password";
+	type: "text" | "password" | "url";
 	id: string;
 	name: string;
 	placeholder: string;

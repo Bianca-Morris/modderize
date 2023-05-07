@@ -148,7 +148,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ userDoc }) => {
 				</label>
 				<Input
 					disabled={loading || fileLoading}
-					type="text"
+					type="url"
 					name="donationLink"
 					id="donationLink"
 					placeholder="Ex: https://www.patreon.com/janedoemods"

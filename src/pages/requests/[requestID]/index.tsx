@@ -311,6 +311,11 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 									type="button"
 									variant="indigo"
 									cls="flex-1 mt-4 bold"
+									onClick={() =>
+										router.push(
+											`/requests/${requestID}/editAsRequester`
+										)
+									}
 								>
 									<PencilIcon className="w-4 h-4 mr-3" />
 									Edit Request
@@ -368,6 +373,11 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 									type="button"
 									variant="indigo"
 									cls="flex-1 mt-4 bold"
+									onClick={() =>
+										router.push(
+											`/requests/${requestID}/editAsRequestee`
+										)
+									}
 								>
 									<PencilIcon className="w-4 h-4 mr-3" />
 									Complete Request

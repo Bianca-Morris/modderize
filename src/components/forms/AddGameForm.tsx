@@ -155,7 +155,7 @@ const AddGameForm: React.FC<AddGameFormProps> = ({ handleClose }) => {
 									id="gameImageFile"
 									required
 									disabled={fileLoading}
-									fileInputHelp="PNG or JPG (MAX. 60kb, RECOMMENDED 208x208px)."
+									fileInputHelp="JPG (MAX. 60kb, RECOMMENDED 208x208px)."
 									fileName={image?.name}
 									accept="image/jpeg"
 									{...{
