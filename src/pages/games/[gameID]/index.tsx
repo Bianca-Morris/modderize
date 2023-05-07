@@ -189,7 +189,9 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 							</div>
 						</div>
 						<div className="flex justify-center mt-5">
-							<SharePopover url="https://www.lol.com">
+							<SharePopover
+								url={`www.modderize.me/games/${gameID}`}
+							>
 								<ShareIcon className="h-8 w-8 cursor-pointer hover:fill-indigo-300" />
 							</SharePopover>
 						</div>

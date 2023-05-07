@@ -1,11 +1,10 @@
+import React, { PropsWithChildren } from "react";
 import {
 	InboxArrowDownIcon,
 	ShareIcon,
 	UserIcon
 } from "@heroicons/react/20/solid";
 import { GiftIcon, PencilIcon } from "@heroicons/react/24/outline";
-import { useRouter } from "next/router";
-import React, { PropsWithChildren } from "react";
 import Image from "next/image";
 
 import A from "../basic/A";
@@ -16,6 +15,7 @@ import SimpleHeader from "../general/SimpleHeader";
 import ContentBody from "../layout/ContentBody";
 
 interface GenericProfileProps extends PropsWithChildren {
+	id: string;
 	displayName: string;
 	email?: string;
 	description?: string;
@@ -30,6 +30,7 @@ interface GenericProfileProps extends PropsWithChildren {
 }
 
 const GenericProfile: React.FC<GenericProfileProps> = ({
+	id,
 	displayName,
 	email,
 	description,
@@ -43,8 +44,6 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 	onRequestMod,
 	children
 }) => {
-	const router = useRouter();
-
 	return (
 		<ContentBody innerCls="flex-col lg:flex-row px-10">
 			<>
@@ -128,7 +127,7 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 								/>
 							)}
 							{/** TODO: Update once deployed and project has URL */}
-							<SharePopover url="https://www.lol.com">
+							<SharePopover url={`www.modderize.me/users/${id}`}>
 								<ShareIcon className="h-8 w-8 cursor-pointer hover:fill-indigo-300" />
 							</SharePopover>
 						</div>

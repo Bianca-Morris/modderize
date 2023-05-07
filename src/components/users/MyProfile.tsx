@@ -54,6 +54,7 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 				</EditProfileModal>
 			)}
 			<GenericProfile
+				id={user.uid}
 				displayName={displayName || "...loading"}
 				profileURL={photoURL || undefined}
 				email={email || undefined}

@@ -42,6 +42,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 	return (
 		<div>
 			<GenericProfile
+				id={uid}
 				displayName={displayName || "...loading"}
 				profileURL={photoURL || undefined}
 				description={about}

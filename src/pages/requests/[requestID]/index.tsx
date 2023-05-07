@@ -151,7 +151,9 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 						</div>
 
 						<div className="flex justify-center">
-							<SharePopover url="https://www.lol.com">
+							<SharePopover
+								url={`www.modderize.me/requests/${requestID}`}
+							>
 								<ShareIcon className="h-8 w-8 cursor-pointer hover:fill-indigo-300" />
 							</SharePopover>
 						</div>
