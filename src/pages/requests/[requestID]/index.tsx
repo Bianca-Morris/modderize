@@ -132,7 +132,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 				</div>
 			</SimpleHeader>
 			<div className="w-full flex-col mt-10 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
-				<div className="flex px-5 lg:px-0 w-full flex-row justify-between items-center py-4">
+				<div className="flex px-5 lg:px-0 w-full gap-5 flex-col sm:flex-row justify-between items-center py-4">
 					<div>
 						<A variant="indigo" href={`/games/${gameID}`}>
 							{gameDisplayName}
@@ -160,9 +160,9 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 					</div>
 				</div>
 				<hr />
-				<div className="flex flex-col lg:flex-row px-5 lg:px-0 mt-10 justify-between gap-10">
-					<div className="flex flex-col">
-						<div className="max-w-2xl">
+				<div className="grid grid-cols-3 gap-5 mt-8">
+					<div className="flex flex-col col-span-3 lg:col-span-2">
+						<div className="">
 							{modderNotes && (
 								<Alert
 									showIcon
@@ -218,7 +218,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 							</div>
 						</div>
 					</div>
-					<div className="flex flex-1 flex-col gap-2">
+					<div className="flex flex-1 flex-col gap-2 col-span-3 lg:col-span-1">
 						{isModComplete && (
 							<ModInfoPanel {...{ imageURL, modURL, modderID }} />
 						)}

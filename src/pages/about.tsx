@@ -50,9 +50,7 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 								>
 									Axville
 								</A>
-								&nbsp;on Unsplash) Cupiditate id consequatur
-								dolores vel exercitationem provident est
-								possimus consequatur eum debitis dignissimos.
+								&nbsp;on Unsplash)
 							</figcaption>
 						</figure>
 					</div>

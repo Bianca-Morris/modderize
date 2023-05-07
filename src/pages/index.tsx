@@ -63,7 +63,7 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 			)}
 			<Jumbotron
 				title="POWER TO THE PLAYERS"
-				subtitle="Modderize is Making Mods Happen"
+				subtitle="Modderize Makes Mods Happen"
 			>
 				<div className="flex-1 flex flex-col bg-white rounded p-5 gap-5">
 					<div>
