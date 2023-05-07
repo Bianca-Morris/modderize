@@ -148,7 +148,6 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 									size="large"
 								/>
 							)}
-							<span className="text-2xl mt-1">{voteStatus}</span>
 						</div>
 
 						<div className="flex justify-center">

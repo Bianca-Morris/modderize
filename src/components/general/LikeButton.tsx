@@ -28,16 +28,25 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 
 	const { onVote, hasUserLikedRequest } = useModRequests();
 
-	const { id: requestID, requesterID } = modRequest;
+	const { id: requestID, requesterID, voteStatus } = modRequest;
 
 	const userIsCreator = user?.uid === requesterID;
 
 	// Can't vote on own post, or if not logged in.
 	if (!user || userIsCreator || !userDoc) {
 		return (
-			<ThumbUpIconOutline
-				className={`${sizeToClass[size]} ml-1 mt-1 mr-2 text-grey-600`}
-			/>
+			<>
+				<ThumbUpIconOutline
+					className={`${sizeToClass[size]} ml-1 mt-1 mr-2 stroke-gray-600 cursor-not-allowed`}
+				/>
+				<span
+					className={`text-gray-600 ${
+						size === "large" ? "text-2xl mt-1" : ""
+					}`}
+				>
+					{voteStatus}
+				</span>
+			</>
 		);
 	}
 
@@ -47,16 +56,27 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 		await onVote(modRequest, user, userDoc as UserDoc);
 	};
 
-	return !userLikedRequest ? (
-		<ThumbUpIconOutline
-			className={`${sizeToClass[size]} ml-1 mt-1 mr-2 cursor-pointer text-green-600 hover:text-green-500`}
-			onClick={onHandleVote}
-		/>
-	) : (
-		<ThumbUpIconSolid
-			className={`${sizeToClass[size]} ml-1 mt-1 mr-2 cursor-pointer text-green-600 hover:text-green-500`}
-			onClick={onHandleVote}
-		/>
+	return (
+		<>
+			{!userLikedRequest ? (
+				<ThumbUpIconOutline
+					className={`${sizeToClass[size]} ml-1 mt-1 mr-2 cursor-pointer text-green-600 hover:text-green-500`}
+					onClick={onHandleVote}
+				/>
+			) : (
+				<ThumbUpIconSolid
+					className={`${sizeToClass[size]} ml-1 mt-1 mr-2 cursor-pointer text-green-600 hover:text-green-500`}
+					onClick={onHandleVote}
+				/>
+			)}
+			<span
+				className={`text-green-600 ${
+					size === "large" ? "text-2xl mt-1" : ""
+				}`}
+			>
+				{voteStatus}
+			</span>
+		</>
 	);
 };
 export default LikeButton;
