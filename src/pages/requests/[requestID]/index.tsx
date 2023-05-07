@@ -35,6 +35,7 @@ import { useRouter } from "next/router";
 import GameInfoPanel from "../../../components/general/GameInfoPanel";
 import ModderInfoPanel from "../../../components/general/ModderInfoPanel";
 import ModInfoPanel from "../../../components/general/ModInfoPanel";
+import Alert from "../../../components/basic/Alert";
 
 dayjs.extend(relativeTime);
 
@@ -100,7 +101,8 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 		completionStatus,
 		lastModified,
 		creationDate,
-		modURL = ""
+		modURL = "",
+		modderNotes = ""
 	} = modRequestData || {};
 
 	const hasBeenModified = lastModified?.seconds !== creationDate?.seconds;
@@ -160,6 +162,15 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 				<div className="flex flex-col lg:flex-row px-5 lg:px-0 mt-10 justify-between gap-10">
 					<div className="flex flex-col">
 						<div className="max-w-2xl">
+							{modderNotes && (
+								<Alert
+									showIcon
+									iconType="info"
+									variant="info"
+									title="Notes from Modder: "
+									subtitle={modderNotes}
+								/>
+							)}
 							<H2 cls="text-3xl font-bold mb-4">{title}</H2>
 
 							<p className="whitespace-pre-wrap">{description}</p>
