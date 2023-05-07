@@ -65,7 +65,7 @@ const ModRequestCard: React.FC<ModRequestCardProps> = ({
 				</div>
 			)}
 			<div className="w-full flex flex-col sm:flex-row sm:justify-between">
-				<div className="flex flex-col justify-center pl-3 max-w-[100%] sm:max-w-xs">
+				<div className="flex flex-col justify-center pl-3 max-w-[100%] sm:max-w-[250px]">
 					<span className="font-bold text-gray-800 leading-5 truncate">
 						<Link href={`/requests/${requestID}`}>{title}</Link>
 					</span>
