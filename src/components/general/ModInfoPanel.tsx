@@ -1,19 +1,35 @@
-import { PaperClipIcon } from "@heroicons/react/20/solid";
-import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
+import React, { useState } from "react";
+import { ArrowDownTrayIcon, PaperClipIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
-import React from "react";
-import A from "../basic/A";
+import Button from "../basic/Button";
 import H3 from "../basic/typography/H3";
+import DownloadModModal from "../modals/DownloadModModal";
 
 type ModInfoPanelProps = {
-	imageURL: string;
+	imageURL?: string;
 	modURL: string;
+	modderID: string;
 };
 
-const ModInfoPanel: React.FC<ModInfoPanelProps> = ({ imageURL, modURL }) => {
-	const domain = new URL(modURL).hostname;
+const ModInfoPanel: React.FC<ModInfoPanelProps> = ({
+	imageURL,
+	modURL,
+	modderID
+}) => {
+	const [open, setOpenModal] = useState(false);
+
+	const onClickDownload = () => {
+		setOpenModal(true);
+	};
+
 	return (
 		<div className="flex flex-col gap-0">
+			{open && (
+				<DownloadModModal
+					{...{ modderID, open, modURL }}
+					handleClose={() => setOpenModal(false)}
+				/>
+			)}
 			<H3 cls="flex items-center bg-gray-200 p-4">
 				<PaperClipIcon className="h-6 w-8" />
 				Mod Info
@@ -26,19 +42,19 @@ const ModInfoPanel: React.FC<ModInfoPanelProps> = ({ imageURL, modURL }) => {
 							height={196}
 							src={imageURL}
 							alt="Mod screenshot"
-							className="shadow-xl rounded-lg align-middle border-none h-12 w-12"
+							className="shadow-xl rounded-lg align-middle border-none h-52 w-52"
 						></Image>
 					)}
 					<div>
-						<div className="flex">
-							<ArrowTopRightOnSquareIcon className="w-5 h-5 mr-1" />
-							<A variant="indigo" href={modURL}>
-								Go to Download
-							</A>
-						</div>
-						<span className="text-gray-600 text-sm">
-							({domain})
-						</span>
+						<Button
+							variant="indigo"
+							type="button"
+							cls="flex"
+							onClick={onClickDownload}
+						>
+							<ArrowDownTrayIcon className="w-5 h-5 mr-1" />
+							Download Available
+						</Button>
 					</div>
 				</div>
 			</div>

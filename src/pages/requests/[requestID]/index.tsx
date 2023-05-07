@@ -93,7 +93,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 		requesterID,
 		gameID,
 		gameDisplayName,
-		modderID,
+		modderID = "",
 		modderStatus,
 		modderDisplayName,
 		modderProfileImageURL,
@@ -219,7 +219,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 					</div>
 					<div className="flex flex-1 flex-col gap-2">
 						{isModComplete && (
-							<ModInfoPanel {...{ imageURL, modURL }} />
+							<ModInfoPanel {...{ imageURL, modURL, modderID }} />
 						)}
 						<ModderInfoPanel
 							{...{
