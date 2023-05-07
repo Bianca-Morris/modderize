@@ -58,7 +58,6 @@ const A: React.FC<AProps> = ({
 	scroll = true,
 	shallow = false,
 	// locale = false,
-	noreferrer = "",
 	cls = "",
 	variant,
 	target,
@@ -101,7 +100,7 @@ const A: React.FC<AProps> = ({
 
 	return (
 		<a
-			{...{ href, id, noreferrer, target, rel, onClick }}
+			{...{ href, id, target, rel, onClick }}
 			className={`${cls} ${linkClass}`}
 		>
 			{children}

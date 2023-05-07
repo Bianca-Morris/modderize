@@ -44,7 +44,8 @@ function Error({ statusCode }) {
 								variant="gray"
 								href="https://www.pexels.com/photo/close-up-photo-of-cat-with-its-eyes-closed-1183434/"
 								target="_blank"
-								rel="noreferrer"
+								tagType="a"
+								rel="noreferrer noopener"
 							>
 								Amir Ghoorchiani
 							</A>

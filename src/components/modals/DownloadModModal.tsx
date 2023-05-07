@@ -120,7 +120,10 @@ const DownloadModModal: React.FC<DownloadModModalProps> = ({
 									cls="mx-auto block"
 									variant="blue"
 									linkType="button"
+									tagType="a"
 									href={donationLink}
+									rel="noreferrer noopener"
+									target="_blank"
 								>
 									<GiftIcon className="w-4 h-4 mr-1" />
 									Donate to {displayName}
@@ -135,7 +138,13 @@ const DownloadModModal: React.FC<DownloadModModalProps> = ({
 					<div className="text-center my-2">
 						<div className="flex justify-center w-100">
 							<ArrowTopRightOnSquareIcon className="w-5 h-5 mr-1" />
-							<A variant="indigo" href={modURL}>
+							<A
+								variant="indigo"
+								rel="noreferrer noopener"
+								target="_blank"
+								tagType="a"
+								href={modURL}
+							>
 								Go to Download
 							</A>
 						</div>

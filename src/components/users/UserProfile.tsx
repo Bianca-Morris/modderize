@@ -45,8 +45,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 				displayName={displayName || "...loading"}
 				profileURL={photoURL || undefined}
 				description={about}
-				showTopDonationLink={isActiveModder && donationLink}
 				{...{ donationLink, onRequestMod }}
+				showBottomDonationLink={isActiveModder && !!donationLink}
 				showEdit={false}
 				showRequestMod={!!activeUser && isActiveModder}
 			>

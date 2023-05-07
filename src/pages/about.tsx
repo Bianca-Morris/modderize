@@ -45,7 +45,8 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 									variant="gray"
 									href="https://unsplash.com/photos/XaTRLucavKQ"
 									target="_blank"
-									rel="noreferrer"
+									rel="noreferrer noopener"
+									tagType="a"
 								>
 									Axville
 								</A>

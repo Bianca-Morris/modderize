@@ -3,7 +3,7 @@ import {
 	ShareIcon,
 	UserIcon
 } from "@heroicons/react/20/solid";
-import { PencilIcon } from "@heroicons/react/24/outline";
+import { GiftIcon, PencilIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren } from "react";
 import Image from "next/image";
@@ -23,6 +23,7 @@ interface GenericProfileProps extends PropsWithChildren {
 	donationLink?: string;
 	showEdit: boolean;
 	showTopDonationLink?: boolean;
+	showBottomDonationLink?: boolean;
 	onEditProfile?: () => void;
 	showRequestMod: boolean;
 	onRequestMod?: () => void;
@@ -35,6 +36,7 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 	profileURL,
 	showEdit,
 	showTopDonationLink,
+	showBottomDonationLink,
 	donationLink,
 	onEditProfile,
 	showRequestMod,
@@ -103,6 +105,20 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 								<InboxArrowDownIcon className="w-4 h-4 mr-2" />{" "}
 								Request Mod
 							</Button>
+						)}
+						{showBottomDonationLink && (
+							<A
+								cls="mx-auto block"
+								variant="blue"
+								linkType="button"
+								tagType="a"
+								rel="noopener noreferrer"
+								target="_blank"
+								href={donationLink}
+							>
+								<GiftIcon className="w-4 h-4 mr-1" />
+								Donate to {displayName}
+							</A>
 						)}
 						<div className="flex mt-5 w-full justify-center gap-3">
 							{showEdit && (
