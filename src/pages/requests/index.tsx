@@ -7,7 +7,6 @@ import Button from "../../components/basic/Button";
 import H1 from "../../components/basic/typography/H1";
 import SimpleHeader from "../../components/general/SimpleHeader";
 import ContentBody from "../../components/layout/ContentBody";
-import ModRequestResults from "../../components/search/ModRequestResults";
 import { constructModRequestQuery } from "../../helpers";
 import { usePrevious } from "../../hooks/usePrevious";
 
@@ -84,14 +83,7 @@ const ModRequestsPage: React.FC = () => {
 						// TODO: Search Filters
 						{<Filters />}
 					</div> */}
-					<div className="flex-1">
-						<ModRequestResults
-							results={items}
-							isInfiniteLoading={loading}
-							onInfiniteLoadCallback={generateMore}
-							{...{ hasMore }}
-						/>
-					</div>
+					<div className="flex-1"></div>
 					{hasMore && (
 						<Button
 							variant="violet"

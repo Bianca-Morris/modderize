@@ -4,7 +4,6 @@ import { GetServerSidePropsContext } from "next";
 import { useCollectionDataStatic } from "../../hooks/useCollectionDataStatic";
 import { query, where } from "firebase/firestore";
 import Button from "../../components/basic/Button";
-import { ReallySimpleInfiniteScroll } from "react-really-simple-infinite-scroll";
 import SimpleHeader from "../../components/general/SimpleHeader";
 import ContentBody from "../../components/layout/ContentBody";
 import Filters from "../../components/search/Filters";
@@ -74,53 +73,38 @@ const ModdersPage: React.FC<ModdersPageProps> = ({ username }) => {
 				<div className="flex w-full flex-col py-10">
 					<div className="flex-1 flex-grow">{<Filters />}</div>
 					<div className="flex-1">
-						<ReallySimpleInfiniteScroll
-							key="wowsa"
-							className={`infinite-scroll`}
-							style="height: 20px"
-							hasMore={hasMore}
-							// length={data.length}
-							// loadingComponent={
-							// 	<div className="loading-component">
-							// 		<span className="loading-label">Loading...</span>
-							// 	</div>
-							// }
-							// isInfiniteLoading={!loading}
-							onInfiniteLoad={loadMore}
-						>
-							<div className="w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-								{dataVals.map((datum) => {
-									const {
-										uid,
-										isActiveModder,
-										displayName,
-										photoURL
-									} = datum;
-									return (
-										<ModderCard
-											{...{
-												uid,
-												isActiveModder,
-												displayName,
-												photoURL
-											}}
-										/>
-									);
-								})}
+						<div className="w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+							{dataVals.map((datum) => {
+								const {
+									uid,
+									isActiveModder,
+									displayName,
+									photoURL
+								} = datum;
+								return (
+									<ModderCard
+										{...{
+											uid,
+											isActiveModder,
+											displayName,
+											photoURL
+										}}
+									/>
+								);
+							})}
+						</div>
+						{!loading && dataVals.length === 0 && (
+							<div className="w-full text-center">
+								No Modders found! Try&nbsp;
+								<Link
+									href="/users/modders"
+									className="text-violet-800 underline"
+								>
+									Browsing All Modders
+								</Link>
+								.
 							</div>
-							{!loading && dataVals.length === 0 && (
-								<div className="w-full text-center">
-									No Modders found! Try&nbsp;
-									<Link
-										href="/users/modders"
-										className="text-violet-800 underline"
-									>
-										Browsing All Modders
-									</Link>
-									.
-								</div>
-							)}
-						</ReallySimpleInfiniteScroll>
+						)}
 						<div className="flex align-center justify-center mt-5">
 							{hasMore && (
 								<Button
