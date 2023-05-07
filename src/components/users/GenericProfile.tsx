@@ -126,7 +126,6 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 									className="h-8 w-8 cursor-pointer hover:stroke-indigo-300"
 								/>
 							)}
-							{/** TODO: Update once deployed and project has URL */}
 							<SharePopover url={`www.modderize.me/users/${id}`}>
 								<ShareIcon className="h-8 w-8 cursor-pointer hover:fill-indigo-300" />
 							</SharePopover>
