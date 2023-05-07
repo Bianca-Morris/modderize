@@ -32,6 +32,9 @@ import SharePopover from "../../../components/general/SharePopover";
 import { useRecoilValue } from "recoil";
 import { gameAtom } from "../../../atoms/gamesAtom";
 import { useRouter } from "next/router";
+import GameInfoPanel from "../../../components/general/GameInfoPanel";
+import ModderInfoPanel from "../../../components/general/ModderInfoPanel";
+import ModInfoPanel from "../../../components/general/ModInfoPanel";
 
 dayjs.extend(relativeTime);
 
@@ -41,11 +44,7 @@ type ModRequestPageProps = {
 
 const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	const [user] = useAuthState(auth);
-	const gameState = useRecoilValue(gameAtom);
-
 	const router = useRouter();
-
-	const { allGames = [] } = gameState;
 
 	// Grab document for this mod request
 	const modRequestRef = doc(
@@ -88,7 +87,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	const {
 		title,
 		description,
-		imageURL,
+		imageURL = "",
 		requesterDisplayName,
 		requesterID,
 		gameID,
@@ -100,7 +99,8 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 		voteStatus,
 		completionStatus,
 		lastModified,
-		creationDate
+		creationDate,
+		modURL = ""
 	} = modRequestData || {};
 
 	const hasBeenModified = lastModified?.seconds !== creationDate?.seconds;
@@ -109,8 +109,10 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 	const isModder = modderID === user?.uid;
 	const noModderAssigned = !modderID && modderStatus === "open";
 	const modderAssignedButNotConfirmed =
-		modderID && modderStatus === "requested";
-	const modderAssigned = modderID && modderStatus === "accepted";
+		!!modderID && !!(modderStatus === "requested");
+	const modderAssigned = !!modderID && !!(modderStatus === "accepted");
+
+	const isModComplete = completionStatus === "complete";
 
 	const onDeleteModRequest = async () => {
 		if (!requesterID) {
@@ -128,7 +130,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 				</div>
 			</SimpleHeader>
 			<div className="w-full flex-col mt-10 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
-				<div className="flex px-5 lg:px-0 w-full flex-row md:justify-between py-4">
+				<div className="flex px-5 lg:px-0 w-full flex-row justify-between items-center py-4">
 					<div>
 						<A variant="indigo" href={`/games/${gameID}`}>
 							{gameDisplayName}
@@ -205,94 +207,22 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 						</div>
 					</div>
 					<div className="flex flex-1 flex-col gap-2">
-						<div className="flex flex-col gap-0">
-							<H3 cls="bg-gray-200 p-4">Game Info</H3>
-							<div className="border border-gray-200 p-4">
-								<div className="flex flex-col w-full items-center justify-center gap-5">
-									{gameID && allGames.length > 0 && (
-										<Image
-											width={196}
-											height={196}
-											src={
-												allGames.filter(
-													(game) => gameID === game.id
-												)[0]?.imageURL || ""
-											}
-											alt="Selected game poster"
-											className="shadow-xl rounded-lg align-middle border-none h-12 w-12"
-										></Image>
-									)}
-									<div>
-										{gameID && gameDisplayName && (
-											<div>
-												<strong>Request for:</strong>
-												<span className="ml-1">
-													<A
-														href={`/games/${gameID}`}
-														variant="indigo"
-													>
-														{gameDisplayName}
-													</A>
-												</span>
-											</div>
-										)}
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="flex flex-col gap-0">
-							<H3 cls="bg-gray-200 p-4">Modder Info</H3>
-							<div className="border border-gray-200 p-4">
-								<div className="flex w-full items-center justify-center gap-5">
-									{!modderID && (
-										<>
-											No modder currently assigned to this
-											project.
-										</>
-									)}
-									{modderProfileImageURL && (
-										<Image
-											width={128}
-											height={128}
-											alt="Modder profile"
-											src={modderProfileImageURL}
-											className="shadow-xl rounded-full align-middle border-none h-12 w-12"
-										></Image>
-									)}
-									<div>
-										{modderID && modderDisplayName && (
-											<div>
-												<strong>Assigned to:</strong>
-												<span className="ml-1">
-													<A
-														href={`/users/${modderID}`}
-														variant="indigo"
-													>
-														{modderDisplayName}
-													</A>
-												</span>
-											</div>
-										)}
-										{modderAssignedButNotConfirmed && (
-											<div>
-												<strong>Status:</strong>
-												<span className="ml-1">
-													Requested
-												</span>
-											</div>
-										)}
-										{modderAssigned && (
-											<div>
-												<strong>Status:</strong>
-												<span className="ml-1">
-													Accepted
-												</span>
-											</div>
-										)}
-									</div>
-								</div>
-							</div>
-						</div>
+						{isModComplete && (
+							<ModInfoPanel {...{ imageURL, modURL }} />
+						)}
+						<ModderInfoPanel
+							{...{
+								isModComplete,
+								modderAssigned,
+								modderAssignedButNotConfirmed,
+								modderDisplayName,
+								modderID,
+								modderProfileImageURL
+							}}
+						/>
+						{gameDisplayName && gameID && (
+							<GameInfoPanel {...{ gameDisplayName, gameID }} />
+						)}
 
 						<div className="flex flex-col justify-center md:flex-row gap-0 md:gap-1 lg:gap-3">
 							{user && isRequester && (
@@ -306,7 +236,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 									Delete Request
 								</Button>
 							)}
-							{user && isRequester && (
+							{user && isRequester && !isModComplete && (
 								<Button
 									type="button"
 									variant="indigo"
@@ -342,7 +272,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 										Work on This Request
 									</Button>
 								)}
-							{isModder && modderAssigned && (
+							{isModder && modderAssigned && !isModComplete && (
 								<Button
 									type="button"
 									variant="red"
@@ -368,7 +298,7 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 									Refuse Request
 								</Button>
 							)}
-							{isModder && modderAssigned && (
+							{isModder && modderAssigned && !isModComplete && (
 								<Button
 									type="button"
 									variant="indigo"
