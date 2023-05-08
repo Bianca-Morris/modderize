@@ -36,6 +36,7 @@ import GameInfoPanel from "../../../components/general/GameInfoPanel";
 import ModderInfoPanel from "../../../components/general/ModderInfoPanel";
 import ModInfoPanel from "../../../components/general/ModInfoPanel";
 import Alert from "../../../components/basic/Alert";
+import ErrorPage from "../../../errors/ErrorPage";
 
 dayjs.extend(relativeTime);
 
@@ -66,22 +67,21 @@ const ModRequestPage: React.FC<ModRequestPageProps> = ({ requestID }) => {
 
 	if (!loading && !modRequestData) {
 		return (
-			<div className="flex min-h-screen flex-col item-center justify-start pb-2">
-				<SimpleHeader>
-					<div className="flex text-center">
-						<H1>Error: Mod Request Not Found</H1>
-					</div>
-				</SimpleHeader>
-				<div className="w-full flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 gap-16">
-					<div className="py-6">
-						<H1 cls="text-xl font-bold font-medium text-gray-900 mb-3">
-							Sorry!
-						</H1>
-						<H2>This mod request doesn't seem to exist.</H2>
-						<p>It may have been archived or deleted.</p>
-					</div>
-				</div>
-			</div>
+			<ErrorPage
+				header1="Error: Mod Request Not Found"
+				header2="Sorry!"
+				header3="This mod request doesn't seem to exist."
+				paragraph="It may have been archived or deleted."
+			/>
+		);
+	} else if (error) {
+		return (
+			<ErrorPage
+				header1="Error: Something went wrong!"
+				header2="Sorry!"
+				header3="We're not sure what happened."
+				paragraph={"Admin code: " + error.message}
+			/>
 		);
 	}
 

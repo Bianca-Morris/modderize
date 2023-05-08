@@ -12,6 +12,9 @@ import EditModRequestForm from "../../../components/forms/EditModRequestForm";
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import ContentBody from "../../../components/layout/ContentBody";
 import ModEditPageLayout from "../../../components/layout/ModEditPageLayout";
+import ErrorPage from "../../../errors/ErrorPage";
+import NotAuthenticated from "../../../errors/NotAuthenticated";
+import NotAuthorized from "../../../errors/NotAuthorized";
 import { auth } from "../../../firebase/clientApp";
 import { modRequestsCol } from "../../../firebase/collections";
 import { modRequestConverter } from "../../../firebase/converters";
@@ -34,11 +37,19 @@ const EditAsRequester: React.FC<EditAsRequesterProps> = ({ requestID }) => {
 
 	const { gameID, gameDisplayName } = data || {};
 
-	// TODO: Add real error pages
 	if (!user) {
-		return <div>Cannot edit if not logged in!</div>;
+		return <NotAuthenticated />;
 	} else if (!loading && user.uid !== data?.requesterID) {
-		return <div>Do not have permission to use this interface!</div>;
+		return <NotAuthorized />;
+	} else if (error) {
+		return (
+			<ErrorPage
+				header1="Error: Something went wrong!"
+				header2="Sorry!"
+				header3="We're not sure what happened."
+				paragraph={"Admin code: " + error.message}
+			/>
+		);
 	}
 
 	let currGame: Game | undefined;

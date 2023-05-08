@@ -13,6 +13,7 @@ import GameNotFoundPage from "../../../components/pages/GameNotFound";
 import { auth, db } from "../../../firebase/clientApp";
 import { Game } from "../../../types/docTypes";
 import ModEditPageLayout from "../../../components/layout/ModEditPageLayout";
+import NotAuthenticated from "../../../errors/NotAuthenticated";
 
 /**
  * Will be page for creating a mod request
@@ -20,13 +21,15 @@ import ModEditPageLayout from "../../../components/layout/ModEditPageLayout";
 type RequestModPageProps = { gameData: Game };
 
 const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
-	if (!gameData) {
-		return <GameNotFoundPage />;
-	}
-
 	const { id: gameID, displayName: gameDisplayName, imageURL } = gameData;
 
 	const [user] = useAuthState(auth);
+
+	if (!gameData) {
+		return <GameNotFoundPage />;
+	} else if (!user) {
+		return <NotAuthenticated />;
+	}
 
 	return (
 		<ContentBody>

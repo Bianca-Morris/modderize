@@ -16,6 +16,7 @@ import { modRequestsCol } from "../../../firebase/collections";
 import { Game, ModRequest } from "../../../types/docTypes";
 import CompleteModRequestForm from "../../../components/forms/CompleteModRequestForm";
 import { modRequestConverter } from "../../../firebase/converters";
+import ErrorPage from "../../../errors/ErrorPage";
 
 type EditAsRequesteeProps = {
 	requestID: string;
@@ -33,11 +34,31 @@ const EditAsRequestee: React.FC<EditAsRequesteeProps> = ({ requestID }) => {
 	const gameState = useRecoilValue(gameAtom);
 	const { allGames = [] } = gameState;
 
-	// TODO: Add real error pages
 	if (!user) {
-		return <div>Cannot edit if not logged in!</div>;
+		return (
+			<ErrorPage
+				header1="Error: Not Authenticated"
+				header2="Sorry!"
+				header3="You cannot edit mod requests if you are not logged in."
+			/>
+		);
 	} else if (!loading && user.uid !== data?.modderID) {
-		return <div>Do not have permission to use this interface!</div>;
+		return (
+			<ErrorPage
+				header1="Error: Not Authorized"
+				header2={"Sorry!"}
+				header3="You do not have permission to use this interface."
+			/>
+		);
+	} else if (error) {
+		return (
+			<ErrorPage
+				header1="Error: Something went wrong!"
+				header2="Sorry!"
+				header3="We're not sure what happened."
+				paragraph={"Admin code: " + error.message}
+			/>
+		);
 	}
 
 	let currGame: Game | undefined;

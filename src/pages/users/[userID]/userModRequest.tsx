@@ -12,6 +12,9 @@ import SimpleHeader from "../../../components/general/SimpleHeader";
 import ContentBody from "../../../components/layout/ContentBody";
 import { auth, db } from "../../../firebase/clientApp";
 import ModEditPageLayout from "../../../components/layout/ModEditPageLayout";
+import ErrorPage from "../../../errors/ErrorPage";
+import NotAuthenticated from "../../../errors/NotAuthenticated";
+import A from "../../../components/basic/A";
 
 type UserModRequestPageProps = {
 	requesteeID: string;
@@ -28,13 +31,42 @@ const UserModRequestPage: React.FC<UserModRequestPageProps> = ({
 		useDocumentData(requesteeUserRef);
 
 	if (!currentUser) {
-		// Must be logged in to make a mod request
-		return <div>Must be logged in to make a mod request</div>;
+		return <NotAuthenticated />;
 	} else if (requesterID === requesteeID) {
-		// Cannot request mod from self
-		return <div>Cannot request mod from self</div>;
+		return (
+			<ErrorPage
+				header1="Error: Invalid querystring"
+				header2="Sorry!"
+				header3="You cannot request a mod from yourself."
+				paragraph={
+					<A variant="violet" href="/">
+						Return to Home Page?
+					</A>
+				}
+			/>
+		);
 	} else if (!requesteeID) {
-		return <div>Invalid requestee ID.</div>;
+		return (
+			<ErrorPage
+				header1="Error: Invalid querystring"
+				header2="Sorry!"
+				header3="Requestee ID was not provided."
+				paragraph={
+					<A variant="violet" href="/">
+						Return to Home Page?
+					</A>
+				}
+			/>
+		);
+	} else if (error) {
+		return (
+			<ErrorPage
+				header1="Error: Something went wrong!"
+				header2="Sorry!"
+				header3="We're not sure what happened."
+				paragraph={"Admin code: " + error.message}
+			/>
+		);
 	}
 
 	const { photoURL = "", displayName } = requesteeDoc || {};
