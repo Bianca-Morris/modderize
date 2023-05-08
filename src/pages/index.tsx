@@ -52,7 +52,7 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 
 	return (
 		<div className="flex min-h-screen flex-col item-center justify-start pb-2">
-			{user && (
+			{user?.displayName && (
 				<SimpleHeader>
 					<div className="flex w-100 xjustify-between">
 						<div className="flex flex-col text-3xl">
