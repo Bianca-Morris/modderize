@@ -215,6 +215,16 @@ const CompleteModRequestForm: React.FC<CompleteModRequestFormProps> = ({
 						</p>
 					</div>
 				</div>
+				{error && (
+					<Alert
+						title="Error!"
+						subtitle="Creating post may have failed. Try again later."
+						variant="danger"
+						showIcon
+						iconType="warning"
+						cls="m-5"
+					/>
+				)}
 				<div>
 					<div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
 						<Button
@@ -235,16 +245,6 @@ const CompleteModRequestForm: React.FC<CompleteModRequestFormProps> = ({
 						</Button>
 					</div>
 				</div>
-				{error && (
-					<Alert
-						title="Error!"
-						subtitle="Creating post may have failed. Try again later."
-						variant="danger"
-						showIcon
-						iconType="warning"
-						cls="mt-4"
-					/>
-				)}
 			</div>
 		</>
 	);

@@ -115,6 +115,16 @@ const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 						</p>
 					</div>
 				</div>
+				{error && (
+					<Alert
+						title="Error!"
+						subtitle={error}
+						variant="danger"
+						showIcon
+						iconType="warning"
+						cls="m-5"
+					/>
+				)}
 				<div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
 					<Button
 						type="button"
@@ -134,16 +144,6 @@ const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 					</Button>
 				</div>
 			</div>
-			{error && (
-				<Alert
-					title="Error!"
-					subtitle={error}
-					variant="danger"
-					showIcon
-					iconType="warning"
-					cls="mt-4"
-				/>
-			)}
 		</>
 	);
 };
