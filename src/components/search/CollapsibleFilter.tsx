@@ -11,9 +11,15 @@ type SectionType = {
 
 type CollapsibleFilterProps = {
 	section: SectionType;
+	onChange: (e) => void;
+	value: string;
 };
 
-const CollapsibleFilter: React.FC<CollapsibleFilterProps> = ({ section }) => {
+const CollapsibleFilter: React.FC<CollapsibleFilterProps> = ({
+	section,
+	onChange,
+	value
+}) => {
 	const [open, setOpen] = useState(false);
 	return (
 		<Disclosure
@@ -40,18 +46,19 @@ const CollapsibleFilter: React.FC<CollapsibleFilterProps> = ({ section }) => {
 			</H3>
 			<Disclosure.Panel className="pt-6">
 				<div className="space-y-6">
-					{section.options.map((option, optionIdx) => (
+					{section.options.map((option) => (
 						<div key={option.value} className="flex items-center">
 							<input
-								id={`filter-mobile-${section.id}-${optionIdx}`}
-								name={`${section.id}[]`}
-								defaultValue={option.value}
-								type="checkbox"
-								defaultChecked={option.checked}
-								className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+								id={`filter-${section.id}-${option.value}`}
+								name={section.id}
+								type="radio"
+								value={option.value}
+								checked={option.checked}
+								onChange={onChange}
+								className="h-4 w-4 rounded-full border-gray-300 text-indigo-600 focus:ring-indigo-500"
 							/>
 							<label
-								htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+								htmlFor={`filter-${section.id}-${option.value}`}
 								className="ml-3 min-w-0 flex-1 text-gray-500"
 							>
 								{option.label}

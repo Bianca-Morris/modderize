@@ -5,7 +5,6 @@ import { auth, db } from "../../../firebase/clientApp";
 import safeJsonStringify from "safe-json-stringify";
 import { User } from "@firebase/auth";
 import SimpleHeader from "../../../components/general/SimpleHeader";
-import Button from "../../../components/basic/Button";
 import { useAuthState } from "react-firebase-hooks/auth";
 import MyProfile from "../../../components/users/MyProfile";
 import UserProfile from "../../../components/users/UserProfile";
