@@ -11,6 +11,7 @@ type InputProps = {
 	disabled?: boolean;
 	cls?: string;
 	wrapperCls?: string;
+	maxLength?: number;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -23,7 +24,8 @@ const Input: React.FC<InputProps> = ({
 	required,
 	cls,
 	disabled,
-	wrapperCls
+	wrapperCls,
+	maxLength
 }) => {
 	return (
 		<div className={"relative mt-1 rounded-md shadow-sm " + wrapperCls}>
@@ -40,7 +42,8 @@ const Input: React.FC<InputProps> = ({
 					type,
 					placeholder,
 					required,
-					disabled
+					disabled,
+					maxLength
 				}}
 			/>
 		</div>

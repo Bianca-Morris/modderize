@@ -200,11 +200,12 @@ const CompleteModRequestForm: React.FC<CompleteModRequestFormProps> = ({
 								id="modder-notes"
 								name="modder-notes"
 								rows={4}
-								placeholder="What should this mod do? Be as detailed as possible. If links to other websites or images would be helpful for the modder, be sure to include those, too."
+								placeholder="Tell a little bit about the mod you created."
 								value={modderNotes}
 								onChange={(e) => setModderNotes(e.target.value)}
 								required
 								disabled={loading}
+								maxLength={250}
 							/>
 						</div>
 						<p className="mt-2 text-sm text-gray-500">

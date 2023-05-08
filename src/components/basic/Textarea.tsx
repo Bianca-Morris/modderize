@@ -11,6 +11,7 @@ type TextareaProps = {
 	cls?: string;
 	wrapperCls?: string;
 	rows?: number;
+	maxLength?: number;
 };
 
 const Textarea: React.FC<TextareaProps> = ({
@@ -23,7 +24,8 @@ const Textarea: React.FC<TextareaProps> = ({
 	disabled,
 	cls = "",
 	wrapperCls,
-	rows
+	rows,
+	maxLength
 }) => {
 	return (
 		<div className={"relative mt-1 rounded-md shadow-sm " + wrapperCls}>
@@ -40,7 +42,8 @@ const Textarea: React.FC<TextareaProps> = ({
 					id,
 					placeholder,
 					required,
-					disabled
+					disabled,
+					maxLength
 				}}
 			/>
 		</div>

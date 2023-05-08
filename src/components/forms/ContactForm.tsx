@@ -46,6 +46,7 @@ const ContactForm: React.FC<ContactFormProps> = () => {
 				name="contact-email"
 				placeholder="Your Email"
 				cls="text-gray-800"
+				maxLength={40}
 			/>
 			<label htmlFor="body" className="block mt-2">
 				Message:
@@ -56,6 +57,7 @@ const ContactForm: React.FC<ContactFormProps> = () => {
 				name="body"
 				placeholder="Your Message"
 				cls="text-gray-800"
+				maxLength={500}
 			/>
 			<Button variant="violet" type="submit" cls="mt-3">
 				<PaperAirplaneIcon className="w-4 h-4 mr-2" />

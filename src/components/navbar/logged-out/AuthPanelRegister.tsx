@@ -165,6 +165,7 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					type="text"
 					name="username"
 					id="username"
+					maxLength={15}
 					placeholder="Ex: janeDoe"
 					{...{ onChange }}
 				/>
@@ -179,6 +180,7 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					name="password"
 					id="password"
 					placeholder=""
+					maxLength={20}
 					{...{ onChange }}
 				/>
 			</div>
@@ -192,6 +194,7 @@ const AuthPanelRegister: React.FC<AuthPanelRegisterProps> = ({
 					name="password2"
 					id="password2"
 					placeholder=""
+					maxLength={20}
 					{...{ onChange }}
 				/>
 			</div>

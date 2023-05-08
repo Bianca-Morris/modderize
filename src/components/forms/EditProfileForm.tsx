@@ -139,11 +139,11 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ userDoc }) => {
 					placeholder="Ex: jane.doe@mail.com"
 					onChange={handleTextInput}
 					value={editProfileForm.about}
+					maxLength={500}
 				/>
 			</div>
 			<div className="mt-4 mx-8 flex flex-col">
 				<label htmlFor="about" className="text-left">
-					{/* @TODO: Would be nice to add some validation here to ensure this is a URL */}
 					My Donation Page:
 				</label>
 				<Input
@@ -154,6 +154,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ userDoc }) => {
 					placeholder="Ex: https://www.patreon.com/janedoemods"
 					onChange={handleTextInput}
 					value={editProfileForm.donationLink}
+					maxLength={200}
 				/>
 			</div>
 

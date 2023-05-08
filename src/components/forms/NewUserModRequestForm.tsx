@@ -134,6 +134,7 @@ const NewUserModRequestForm: React.FC<NewUserModRequestFormProps> = ({
 								onChange={(e) => setTitle(e.target.value)}
 								required
 								disabled={loading}
+								maxLength={50}
 							/>
 						</div>
 					</div>
@@ -154,14 +155,12 @@ const NewUserModRequestForm: React.FC<NewUserModRequestFormProps> = ({
 								onChange={(e) => setDescription(e.target.value)}
 								required
 								disabled={loading}
+								maxLength={500}
 							/>
 						</div>
 						<p className="mt-2 text-sm text-gray-500">
 							Brief description of the mod you are requesting.
 							<br />
-							<i>
-								Note: URLs will be hyperlinked on the view page.
-							</i>
 						</p>
 					</div>
 				</div>
