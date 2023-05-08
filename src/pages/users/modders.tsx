@@ -81,6 +81,7 @@ const ModdersPage: React.FC<ModdersPageProps> = ({ username }) => {
 								} = datum;
 								return (
 									<ModderCard
+										key={uid}
 										{...{
 											uid,
 											isActiveModder,
