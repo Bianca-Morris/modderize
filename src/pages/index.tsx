@@ -169,7 +169,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 			}
 		};
 	} catch (error) {
-		// TODO: Create error page
 		console.error("/index getServerSideProps error", error);
 		return null;
 	}
