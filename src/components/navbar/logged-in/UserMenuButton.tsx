@@ -20,8 +20,15 @@ const UserMenuButton: React.FC<UserMenuButtonProps> = () => {
 	};
 
 	const navigation = [
-		{ title: "My Profile", href: `/users/${user?.uid}` }
-		// { title: "Settings", href: "#" } // TODO
+		{ title: "My Profile", href: `/users/${user?.uid}` },
+		{
+			title: "Current Projects",
+			href: `/requests?modderID=${user?.uid}&modderStatus=accepted&completionStatus=in%20progress&hideFilters=true&title=My%20Current%20Projects`
+		},
+		{
+			title: "Project Queue",
+			href: `/requests?modderID=${user?.uid}&modderStatus=requested&hideFilters=true&title=My%20Project%20Queue`
+		}
 		// Sign Out link is defined outside of map because it has a method that needs recoil state from UserMenuButton
 	];
 
