@@ -28,6 +28,7 @@ type ModRequestPageProps = {
 	requesterID: string;
 	modderStatus: ModderStatus;
 	completionStatus: CompletionStatus;
+	hideFilters: string;
 };
 
 const ModRequestsPage: React.FC<ModRequestPageProps> = ({
@@ -36,7 +37,8 @@ const ModRequestsPage: React.FC<ModRequestPageProps> = ({
 	modderID,
 	requesterID,
 	completionStatus,
-	modderStatus
+	modderStatus,
+	hideFilters
 }) => {
 	let constraints: QueryConstraint[] = [];
 
@@ -90,6 +92,8 @@ const ModRequestsPage: React.FC<ModRequestPageProps> = ({
 		}
 	}, []);
 
+	const noFilters = hideFilters === "true";
+
 	return (
 		<div>
 			<SimpleHeader>
@@ -106,25 +110,31 @@ const ModRequestsPage: React.FC<ModRequestPageProps> = ({
 			</SimpleHeader>
 			<ContentBody>
 				<div className="grid grid-cols-3 w-full py-10 gap-5">
-					<div className="col-span-3 lg:col-span-1">
-						<H3 cls="mb-3 flex flex-row gap-1 items-center text-gray-900">
-							<FunnelIcon className="w-5 h-5 fill-gray-800" />{" "}
-							Filters:
-						</H3>
-						{
-							<Filters
-								{...{
-									gameID,
-									modderStatus,
-									completionStatus,
-									id,
-									requesterID,
-									modderID
-								}}
-							/>
-						}
-					</div>
-					<div className="col-span-3 lg:col-span-2 flex flex-col gap-3 pt-10">
+					{!noFilters && (
+						<div className="col-span-3 lg:col-span-1">
+							<H3 cls="mb-3 flex flex-row gap-1 items-center text-gray-900">
+								<FunnelIcon className="w-5 h-5 fill-gray-800" />{" "}
+								Filters:
+							</H3>
+							{
+								<Filters
+									{...{
+										gameID,
+										modderStatus,
+										completionStatus,
+										id,
+										requesterID,
+										modderID
+									}}
+								/>
+							}
+						</div>
+					)}
+					<div
+						className={`col-span-3 ${
+							noFilters ? "" : "lg:col-span-2"
+						} flex flex-col gap-3 pt-10`}
+					>
 						{dataVals.map((modRequest) => {
 							// console.log("modRequest", modRequest);
 							const { requesterDisplayName } = modRequest;
@@ -185,7 +195,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 			modderID = "",
 			requesterID = "",
 			completionStatus = "",
-			modderStatus = ""
+			modderStatus = "",
+			hideFilters = ""
 		} = {}
 	} = context || {};
 
@@ -196,7 +207,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 			modderID,
 			requesterID,
 			completionStatus,
-			modderStatus
+			modderStatus,
+			hideFilters
 		}
 	};
 }

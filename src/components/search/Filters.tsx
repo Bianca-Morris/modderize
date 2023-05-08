@@ -14,6 +14,7 @@ type FiltersProps = {
 	id?: string;
 	modderID?: string;
 	requesterID?: string;
+	hideFilters?: string;
 };
 
 const Filters: React.FC<FiltersProps> = ({
@@ -22,7 +23,8 @@ const Filters: React.FC<FiltersProps> = ({
 	modderStatus,
 	id,
 	modderID,
-	requesterID
+	requesterID,
+	hideFilters
 }) => {
 	const router = useRouter();
 	const [selectedGameID, setSelectedGameID] = useState(gameID);
@@ -53,7 +55,10 @@ const Filters: React.FC<FiltersProps> = ({
 			baseURL += `completionStatus=${selectedCompletionStatus}&`;
 		}
 		if (selectedModderStatus) {
-			baseURL += `modderStatus=${selectedModderStatus}`;
+			baseURL += `modderStatus=${selectedModderStatus}&`;
+		}
+		if (hideFilters === "true") {
+			baseURL += `hideFilters=true`;
 		}
 
 		// Refresh the page with new query
