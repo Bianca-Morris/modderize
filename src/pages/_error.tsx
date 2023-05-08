@@ -35,7 +35,7 @@ function Error({ statusCode }) {
 							width="640"
 							height="427"
 							className="min-w-full rounded-lg"
-							src="/images/pexels-amir-ghoorchiani-1183434.jpeg"
+							src="/images/pexels-amir-ghoorchiani-1183434.webp"
 							alt="Sad kitty apologizes for error"
 						></Image>
 						<figcaption className="text-xs pl-2 pt-1">

@@ -36,7 +36,7 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 								width={208}
 								height={208}
 								className="rounded-3xl w-full"
-								src="/images/axville-XaTRLucavKQ-unsplash-compressed.jpeg"
+								src="/images/axville-XaTRLucavKQ-unsplash.webp"
 								alt="Young man plays computer games with friends"
 							/>
 							<figcaption className="mt-5 text-xs text-left text-gray-400 w-full min-w-full">
