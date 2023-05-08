@@ -91,7 +91,7 @@ const useGameData = () => {
 			if (image) {
 				const metadata = extractMetadataFromFile(image);
 				imageURL = await uploadFile(
-					`/images/games/${gameID}.jpeg`,
+					`/images/games/${gameID}.webp`,
 					image,
 					metadata
 				);
