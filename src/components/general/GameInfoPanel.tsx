@@ -58,4 +58,6 @@ const GameInfoPanel: React.FC<GameInfoPanelProps> = React.memo(
 		);
 	}
 );
+
+GameInfoPanel.displayName = "GameInfoPanel";
 export default GameInfoPanel;

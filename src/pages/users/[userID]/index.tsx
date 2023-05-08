@@ -14,6 +14,9 @@ type UserPageProps = {
 };
 
 const UserPage: React.FC<UserPageProps> = ({ userData }) => {
+	// Check if the current user's profile
+	const [user] = useAuthState(auth);
+
 	// 404 Error message
 	if (!userData) {
 		return (
@@ -26,8 +29,6 @@ const UserPage: React.FC<UserPageProps> = ({ userData }) => {
 		);
 	}
 
-	// Check if the current user's profile
-	const [user] = useAuthState(auth);
 	if (user?.uid === userData.uid) {
 		return <MyProfile {...{ userData }} />;
 	} else {

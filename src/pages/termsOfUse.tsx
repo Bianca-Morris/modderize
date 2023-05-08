@@ -95,31 +95,32 @@ const TermsOfUsePage: React.FC<TermsOfUsePageProps> = () => {
 					Excluding any User Content that you may provide, you are
 					aware that all the intellectual property rights, including
 					copyrights, patents, trademarks, and trade secrets, in the
-					Site and its content are owned by Modderize or Modderize's
-					suppliers. Note that these Terms and access to the Site do
-					not give you any rights, title or interest in or to any
-					intellectual property rights, except for the limited access
-					rights expressed in Section 2.1. Modderize and its suppliers
-					reserve all rights not granted in these Terms.
+					Site and its content are owned by Modderize or
+					Modderize&apos;s suppliers. Note that these Terms and access
+					to the Site do not give you any rights, title or interest in
+					or to any intellectual property rights, except for the
+					limited access rights expressed in Section 2.1. Modderize
+					and its suppliers reserve all rights not granted in these
+					Terms.
 				</p>
 
 				<H2>User Content</H2>
 
 				<p>
-					<strong>User Content.</strong> "User Content" means any and
-					all information and content that a user submits to the Site.
-					You are exclusively responsible for your User Content. You
-					bear all risks associated with use of your User Content. 
-					You hereby certify that your User Content does not violate
-					our Acceptable Use Policy.  You may not represent or imply
-					to others that your User Content is in any way provided,
-					sponsored or endorsed by Modderize. Because you alone are
-					responsible for your User Content, you may expose yourself
-					to liability. Modderize is not obliged to backup any User
-					Content that you post; also, your User Content may be
-					deleted at any time without prior notice to you. You are
-					solely responsible for making your own backup copies of your
-					User Content if you desire.
+					<strong>User Content.</strong> &quot;User Content&quot;
+					means any and all information and content that a user
+					submits to the Site. You are exclusively responsible for
+					your User Content. You bear all risks associated with use of
+					your User Content.  You hereby certify that your User
+					Content does not violate our Acceptable Use Policy.  You may
+					not represent or imply to others that your User Content is
+					in any way provided, sponsored or endorsed by Modderize.
+					Because you alone are responsible for your User Content, you
+					may expose yourself to liability. Modderize is not obliged
+					to backup any User Content that you post; also, your User
+					Content may be deleted at any time without prior notice to
+					you. You are solely responsible for making your own backup
+					copies of your User Content if you desire.
 				</p>
 
 				<p>
@@ -136,19 +137,19 @@ const TermsOfUsePage: React.FC<TermsOfUsePageProps> = () => {
 
 				<p>
 					<strong>Acceptable Use Policy.</strong> The following terms
-					constitute our "Acceptable Use Policy": You agree not to use
-					the Site to collect, upload, transmit, display, or
-					distribute any User Content (i) that violates any
+					constitute our &quot;Acceptable Use Policy&quot;: You agree
+					not to use the Site to collect, upload, transmit, display,
+					or distribute any User Content (i) that violates any
 					third-party right or any intellectual property or
 					proprietary right; (ii) that is unlawful, harassing,
 					abusive, tortious, threatening, harmful, invasive of
-					another's privacy, vulgar, defamatory, false, intentionally
-					misleading, trade libelous, pornographic, obscene, patently
-					offensive, promotes racism, bigotry, hatred, or physical
-					harm of any kind against any group or individual; (iii) that
-					is harmful to minors in any way; or (iv) that is in
-					violation of any law, regulation, or obligations or
-					restrictions imposed by any third party.
+					another&apos;s privacy, vulgar, defamatory, false,
+					intentionally misleading, trade libelous, pornographic,
+					obscene, patently offensive, promotes racism, bigotry,
+					hatred, or physical harm of any kind against any group or
+					individual; (iii) that is harmful to minors in any way; or
+					(iv) that is in violation of any law, regulation, or
+					obligations or restrictions imposed by any third party.
 				</p>
 
 				<p>
@@ -166,7 +167,7 @@ const TermsOfUsePage: React.FC<TermsOfUsePageProps> = () => {
 					or procedures of such networks; (v) attempt to gain
 					unauthorized access to the Site, whether through password
 					mining or any other means; (vi) harass or interfere with any
-					other user's use and enjoyment of the Site; or (vi) use
+					other user&apos;s use and enjoyment of the Site; or (vi) use
 					software or automated agents or scripts to produce multiple
 					accounts on the Site, or to generate automated searches,
 					requests, or queries to the Site.
@@ -196,7 +197,7 @@ const TermsOfUsePage: React.FC<TermsOfUsePageProps> = () => {
 				<p>
 					You agree to indemnify and hold Modderize and its officers,
 					employees, and agents harmless, including costs and
-					attorneys' fees, from any claim or demand made by any
+					attorneys&apos; fees, from any claim or demand made by any
 					third-party due to or arising out of (a) your use of the
 					Site, (b) your violation of these Terms, (c) your violation
 					of applicable laws or regulations or (d) your User Content. 
@@ -224,9 +225,9 @@ const TermsOfUsePage: React.FC<TermsOfUsePageProps> = () => {
 					You use all Third-Party Links & Ads at your own risk, and
 					should apply a suitable level of caution and discretion in
 					doing so. When you click on any of the Third-Party Links &
-					Ads, the applicable third party's terms and policies apply,
-					including the third party's privacy and data gathering
-					practices.
+					Ads, the applicable third party&apos;s terms and policies
+					apply, including the third party&apos;s privacy and data
+					gathering practices.
 				</p>
 
 				<p>
@@ -251,22 +252,23 @@ const TermsOfUsePage: React.FC<TermsOfUsePageProps> = () => {
 					indirectly out of, or that relates directly or indirectly
 					to, the Site. If you are a California resident, you hereby
 					waive California civil code section 1542 in connection with
-					the foregoing, which states: "a general release does not
-					extend to claims which the creditor does not know or suspect
-					to exist in his or her favor at the time of executing the
-					release, which if known by him or her must have materially
-					affected his or her settlement with the debtor."
+					the foregoing, which states: &quot;a general release does
+					not extend to claims which the creditor does not know or
+					suspect to exist in his or her favor at the time of
+					executing the release, which if known by him or her must
+					have materially affected his or her settlement with the
+					debtor.&quot;
 				</p>
 
 				<H2>Disclaimers</H2>
 
 				<p>
-					The site is provided on an "as-is" and "as available" basis,
-					and company and our suppliers expressly disclaim any and all
-					warranties and conditions of any kind, whether express,
-					implied, or statutory, including all warranties or
-					conditions of merchantability, fitness for a particular
-					purpose, title, quiet enjoyment, accuracy, or
+					The site is provided on an &quot;as-is&quot; and &quot;as
+					available&quot; basis, and company and our suppliers
+					expressly disclaim any and all warranties and conditions of
+					any kind, whether express, implied, or statutory, including
+					all warranties or conditions of merchantability, fitness for
+					a particular purpose, title, quiet enjoyment, accuracy, or
 					non-infringement.  We and our suppliers make not guarantee
 					that the site will meet your requirements, will be available
 					on an uninterrupted, timely, secure, or error-free basis, or
@@ -388,9 +390,9 @@ const TermsOfUsePage: React.FC<TermsOfUsePageProps> = () => {
 					Please note that, pursuant to 17 U.S.C. § 512(f), any
 					misrepresentation of material fact in a written notification
 					automatically subjects the complaining party to liability
-					for any damages, costs and attorney's fees incurred by us in
-					connection with the written notification and allegation of
-					copyright infringement.
+					for any damages, costs and attorney&apos;s fees incurred by
+					us in connection with the written notification and
+					allegation of copyright infringement.
 				</p>
 
 				<H2>General</H2>
@@ -607,7 +609,7 @@ const TermsOfUsePage: React.FC<TermsOfUsePageProps> = () => {
 					<strong>Claims Not Subject to Arbitration.</strong>{" "}
 					Notwithstanding the foregoing, claims of defamation,
 					violation of the Computer Fraud and Abuse Act, and
-					infringement or misappropriation of the other party's
+					infringement or misappropriation of the other party&apos;s
 					patent, copyright, trademark or trade secrets shall not be
 					subject to this Arbitration Agreement.
 				</p>
@@ -658,22 +660,22 @@ const TermsOfUsePage: React.FC<TermsOfUsePageProps> = () => {
 					provision of these Terms shall not operate as a waiver of
 					such right or provision. The section titles in these Terms
 					are for convenience only and have no legal or contractual
-					effect. The word "including" means "including without
-					limitation". If any provision of these Terms is held to be
-					invalid or unenforceable, the other provisions of these
-					Terms will be unimpaired and the invalid or unenforceable
-					provision will be deemed modified so that it is valid and
-					enforceable to the maximum extent permitted by law.  Your
-					relationship to Modderize is that of an independent
-					contractor, and neither party is an agent or partner of the
-					other.  These Terms, and your rights and obligations herein,
-					may not be assigned, subcontracted, delegated, or otherwise
-					transferred by you without Modderize's prior written
-					consent, and any attempted assignment, subcontract,
-					delegation, or transfer in violation of the foregoing will
-					be null and void.  Modderize may freely assign these Terms. 
-					The terms and conditions set forth in these Terms shall be
-					binding upon assignees.
+					effect. The word &quot;including&quot; means &quot;including
+					without limitation&quot;. If any provision of these Terms is
+					held to be invalid or unenforceable, the other provisions of
+					these Terms will be unimpaired and the invalid or
+					unenforceable provision will be deemed modified so that it
+					is valid and enforceable to the maximum extent permitted by
+					law.  Your relationship to Modderize is that of an
+					independent contractor, and neither party is an agent or
+					partner of the other.  These Terms, and your rights and
+					obligations herein, may not be assigned, subcontracted,
+					delegated, or otherwise transferred by you without
+					Modderize&apos;s prior written consent, and any attempted
+					assignment, subcontract, delegation, or transfer in
+					violation of the foregoing will be null and void.  Modderize
+					may freely assign these Terms.  The terms and conditions set
+					forth in these Terms shall be binding upon assignees.
 				</p>
 
 				<p>

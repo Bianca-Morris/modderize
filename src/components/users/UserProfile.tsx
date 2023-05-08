@@ -57,7 +57,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
 				</div>
 
 				<div className="">
-					<H2 cls="mb-4">Mods I've Requested</H2>
+					<H2 cls="mb-4">Mods I&apos;ve Requested</H2>
 					<ProfileOpenModsByRequesterID requesterID={uid} />
 				</div>
 			</GenericProfile>

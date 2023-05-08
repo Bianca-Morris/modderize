@@ -18,7 +18,7 @@ const GameNotFoundPage: React.FC = () => {
 			<>
 				<div className="py-6">
 					<H2 cls="font-bold text-gray-900 mb-3">Sorry!</H2>
-					<H3>This game doesn't seem to be on Modderize.</H3>
+					<H3>This game doesn&apos;t seem to be on Modderize.</H3>
 					<p>
 						Check the spelling of the ID or&nbsp;
 						<A variant="gray" href="/games">

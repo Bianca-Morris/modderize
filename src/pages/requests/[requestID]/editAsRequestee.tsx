@@ -100,8 +100,8 @@ const EditAsRequestee: React.FC<EditAsRequesteeProps> = ({ requestID }) => {
 					<p className="mt-1 text-sm text-gray-600">
 						This mod request will be open to the entire&nbsp;
 						{gameDisplayName} community. To request a mod from a
-						specific creator, go to their profile and click "Request
-						Mod".
+						specific creator, go to their profile and click
+						&quot;Request Mod&quot;.
 					</p>
 				</>
 				<>
