@@ -41,10 +41,7 @@ const ProfileModsByStatus: React.FC<ProfileModsByStatusProps> = ({
 				{statusToNoneAvailableString[status]}{" "}
 				{user && user.uid === modderID && (
 					<>
-						<A
-							href="/requests" // @TODO write out complete URL
-							variant="violet"
-						>
+						<A href="/requests&modderStatus=open" variant="violet">
 							Click here
 						</A>{" "}
 						to browse open requests.

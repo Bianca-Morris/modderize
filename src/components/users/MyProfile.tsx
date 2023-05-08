@@ -14,6 +14,7 @@ import ProfileModsByStatus from "../general/ProfileModsByStatus";
 import useUserDoc from "../../hooks/useUserDoc";
 import { modalControllerAtom } from "../../atoms/modalControllerAtom";
 import H2 from "../basic/typography/H2";
+import A from "../basic/A";
 
 type MyProfileProps = {
 	userData: User;
@@ -65,31 +66,39 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 				showRequestMod={false}
 				onEditProfile={handleOpenModal}
 			>
-				<Toggle
-					loading={loadingUserDoc || updatingUserDoc}
-					label={
-						isActiveModder
-							? "I'm open to accepting mod requests"
-							: "I'm not accepting mod requests"
-					}
-					value={isActiveModder}
-					onToggle={async (newState: boolean) => {
-						// Update the user doc
-						await updateUserDocField(
-							uid,
-							"isActiveModder",
-							newState
-						);
-					}}
-				/>
+				<div className="flex justify-between">
+					<Toggle
+						loading={loadingUserDoc || updatingUserDoc}
+						label={
+							isActiveModder
+								? "I'm open to accepting mod requests"
+								: "I'm not accepting mod requests"
+						}
+						value={isActiveModder}
+						onToggle={async (newState: boolean) => {
+							// Update the user doc
+							await updateUserDocField(
+								uid,
+								"isActiveModder",
+								newState
+							);
+						}}
+					/>
+					<A
+						variant="indigo"
+						href={`/requests?modderID=${user.uid}&modderStatus=requested&hideFilters=true&title=My%20Project%20Queue`}
+					>
+						View My Project Queue
+					</A>
+				</div>
 				<hr className="my-3" />
 				<div className="mb-10">
-					<H2 cls="mb-4">My Mods In-Progress</H2>
+					<H2 cls="mb-4">My Current Projects</H2>
 					<ProfileModsByStatus status="in progress" modderID={uid} />
 				</div>
 
 				<div className="">
-					<H2 cls="mb-4">Mods I've Requested</H2>
+					<H2 cls="mb-4">My Requests</H2>
 					<ProfileOpenModsByRequesterID requesterID={uid} />
 				</div>
 			</GenericProfile>

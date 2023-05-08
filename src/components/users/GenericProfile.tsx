@@ -95,30 +95,32 @@ const GenericProfile: React.FC<GenericProfileProps> = ({
 					</div>
 
 					<div className="mt-5">
-						{showRequestMod && (
-							<Button
-								type="button"
-								variant="indigo"
-								onClick={onRequestMod}
-							>
-								<InboxArrowDownIcon className="w-4 h-4 mr-2" />{" "}
-								Request Mod
-							</Button>
-						)}
-						{showBottomDonationLink && (
-							<A
-								cls="mx-auto block"
-								variant="blue"
-								linkType="button"
-								tagType="a"
-								rel="noopener noreferrer"
-								target="_blank"
-								href={donationLink}
-							>
-								<GiftIcon className="w-4 h-4 mr-1" />
-								Donate to {displayName}
-							</A>
-						)}
+						<div className="flex flex-col w-full gap-2">
+							{showRequestMod && (
+								<Button
+									type="button"
+									variant="indigo"
+									onClick={onRequestMod}
+								>
+									<InboxArrowDownIcon className="w-4 h-4 mr-2" />{" "}
+									Request Mod
+								</Button>
+							)}
+							{showBottomDonationLink && (
+								<A
+									cls="mx-auto block"
+									variant="blue"
+									linkType="button"
+									tagType="a"
+									rel="noopener noreferrer"
+									target="_blank"
+									href={donationLink}
+								>
+									<GiftIcon className="w-4 h-4 mr-1" />
+									Donate to {displayName}
+								</A>
+							)}
+						</div>
 						<div className="flex mt-5 w-full justify-center gap-3">
 							{showEdit && (
 								<PencilIcon
