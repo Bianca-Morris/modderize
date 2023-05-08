@@ -85,7 +85,11 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 						<Button
 							variant="indigo"
 							cls="flex-1"
-							onClick={() => router.push(`/requests`)}
+							onClick={() =>
+								router.push(
+									`/requests?completionStatus=pending%20modder&modderStatus=open&title=Open%20Mod%20Requests`
+								)
+							}
 						>
 							<WrenchScrewdriverIcon className="w-4 h-4 mr-2" />
 							Fulfill a Request
