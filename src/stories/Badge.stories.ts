@@ -11,61 +11,61 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const commonProps = { children: "I am a badge"}
+const commonProps = { children: "I am a badge" };
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Gray: Story = {
 	args: {
 		...commonProps,
-		variant: "gray",
+		variant: "gray"
 	}
 };
 
 export const Red: Story = {
 	args: {
 		...commonProps,
-		variant: "red",
+		variant: "red"
 	}
 };
 
 export const Pink: Story = {
 	args: {
 		...commonProps,
-		variant: "pink",
+		variant: "pink"
 	}
 };
 
 export const Purple: Story = {
 	args: {
 		...commonProps,
-		variant: "purple",
+		variant: "purple"
 	}
 };
 
 export const Indigo: Story = {
 	args: {
 		...commonProps,
-		variant: "indigo",
+		variant: "indigo"
 	}
 };
 
 export const Blue: Story = {
 	args: {
 		...commonProps,
-		variant: "blue",
+		variant: "blue"
 	}
 };
 
 export const Green: Story = {
 	args: {
 		...commonProps,
-		variant: "green",
+		variant: "green"
 	}
 };
 
 export const Yellow: Story = {
 	args: {
 		...commonProps,
-		variant: "yellow",
+		variant: "yellow"
 	}
 };

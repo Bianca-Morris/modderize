@@ -42,11 +42,11 @@ export interface ModRequestSansID extends DocumentData {
 	lastModified: Timestamp;
 	completionStatus: CompletionStatus;
 
-	modderStatus: ModderStatus
+	modderStatus: ModderStatus;
 	modderID?: string;
 	modderDisplayName?: string;
 	modderProfileImageURL?: string;
-	
+
 	modderNotes?: string;
 	modURL?: string;
 	imageURL?: string;
@@ -66,4 +66,8 @@ export interface GameSnippet {
 }
 
 export type ModderStatus = "accepted" | "open" | "requested";
-export type CompletionStatus = "pending modder" | "in progress" | "complete" | "archived";
+export type CompletionStatus =
+	| "pending modder"
+	| "in progress"
+	| "complete"
+	| "archived";
