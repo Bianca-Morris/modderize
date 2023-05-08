@@ -6,7 +6,6 @@ import { query, where } from "firebase/firestore";
 import Button from "../../components/basic/Button";
 import SimpleHeader from "../../components/general/SimpleHeader";
 import ContentBody from "../../components/layout/ContentBody";
-import Filters from "../../components/search/Filters";
 import ModderCard from "../../components/general/ModderCard";
 import { UserDoc } from "../../types/docTypes";
 import useFirebaseAPI from "../../hooks/useFirebaseAPI";
@@ -71,7 +70,6 @@ const ModdersPage: React.FC<ModdersPageProps> = ({ username }) => {
 			</SimpleHeader>
 			<ContentBody>
 				<div className="flex w-full flex-col py-10">
-					<div className="flex-1 flex-grow">{<Filters />}</div>
 					<div className="flex-1">
 						<div className="w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 							{dataVals.map((datum) => {

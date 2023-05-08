@@ -3,12 +3,10 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { gameAtom } from "../../atoms/gamesAtom";
-import Button from "../../components/basic/Button";
 import H1 from "../../components/basic/typography/H1";
 import GameCard from "../../components/general/GameCard";
 import SimpleHeader from "../../components/general/SimpleHeader";
 import ContentBody from "../../components/layout/ContentBody";
-import Filters from "../../components/search/Filters";
 import useGameData from "../../hooks/useGameData";
 import { Game } from "../../types/docTypes";
 
@@ -73,8 +71,6 @@ const GamesPage: React.FC = () => {
 			</SimpleHeader>
 			<ContentBody>
 				<div className="flex w-full flex-row py-10">
-					{/* <div className="flex-1">{<Filters />}</div> */}
-
 					<div className="w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 						{filteredGames.map((game) => (
 							<GameCard
