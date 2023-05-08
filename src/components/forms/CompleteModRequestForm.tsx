@@ -209,8 +209,8 @@ const CompleteModRequestForm: React.FC<CompleteModRequestFormProps> = ({
 							/>
 						</div>
 						<p className="mt-2 text-sm text-gray-500">
-							If there's any information necessary for people to
-							know about your mod (like DLC requirements,
+							If there&apos;s any information necessary for people
+							to know about your mod (like DLC requirements,
 							dependencies on other mods, etc.), add it here.
 						</p>
 					</div>

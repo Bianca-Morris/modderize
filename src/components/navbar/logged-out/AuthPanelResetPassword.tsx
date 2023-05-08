@@ -55,7 +55,7 @@ const AuthPanelResetPassword: React.FC<AuthPanelResetPasswordProps> = ({
 						handleSwitch(e, "signup")
 					}
 				>
-					Don't have an account? Register
+					Don&apos;t have an account? Register
 				</A>
 			</div>
 			<div className="flex items-center justify-center my-4">
@@ -75,8 +75,8 @@ const AuthPanelResetPassword: React.FC<AuthPanelResetPasswordProps> = ({
 			) : (
 				<>
 					<p className="text-sm max-w-xs">
-						Enter the email associated with your account, and we'll
-						send a password reset link shortly.
+						Enter the email associated with your account, and
+						we&apos;ll send a password reset link shortly.
 					</p>
 					<form onSubmit={onSubmit}>
 						<div className="mt-8 mx-8 flex flex-col">

@@ -67,11 +67,11 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 			>
 				<div className="flex-1 flex flex-col bg-white rounded p-5 gap-5">
 					<div>
-						We're making it easier than ever to collaborate with
-						fellow gamers on mods for your favorite games. Share mod
-						ideas with talented modders, or contribute by fulfilling
-						a community mod request. Join the Modderize community
-						today, and embrace the modding revolution!
+						We&apos;re making it easier than ever to collaborate
+						with fellow gamers on mods for your favorite games.
+						Share mod ideas with talented modders, or contribute by
+						fulfilling a community mod request. Join the Modderize
+						community today, and embrace the modding revolution!
 					</div>
 					<div className="flex flex-col md:flex-row gap-5">
 						<Button

@@ -54,7 +54,7 @@ const AuthPanelLogin: React.FC<AuthPanelLoginProps> = ({ handleSwitch }) => {
 						handleSwitch(e, "signup")
 					}
 				>
-					Don't have an account? Register
+					Don&apos;t have an account? Register
 				</A>
 			</div>
 			<div className="mt-8 mx-8 flex flex-col">

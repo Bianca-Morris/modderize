@@ -99,9 +99,9 @@ const AddGameForm: React.FC<AddGameFormProps> = ({ handleClose }) => {
 								Game Display Name
 							</label>
 							<p className="my-2 text-sm text-gray-500">
-								A human-readable version of the game's name; can
-								contain special characters. Please check for
-								duplicates before creating.
+								A human-readable version of the game&apos;s
+								name; can contain special characters. Please
+								check for duplicates before creating.
 							</p>
 							<div className="mt-1">
 								<Input
