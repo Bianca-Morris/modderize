@@ -24,29 +24,33 @@ const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 	const [description, setDescription] = useState("");
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(false);
+	const [error, setError] = useState("");
 
 	const handleCreateGameModRequest = async () => {
-		// create the new game mod request object => type ModRequest
-		const newModRequest: ModRequestSansID = {
-			gameID,
-			gameDisplayName,
-			title,
-			description,
-			requesterID: user?.uid,
-			requesterDisplayName:
-				user?.displayName || user.email!.split("@")[0],
-			creationDate: serverTimestamp() as Timestamp,
-			lastModified: serverTimestamp() as Timestamp,
-			voteStatus: 0,
-			completionStatus: "pending modder",
-			modderStatus: "open"
-		};
+		setError("");
+		setLoading(true);
 
 		// store the mod request in db
 		try {
-			setError(false);
-			setLoading(true);
+			if (!title || !description) {
+				throw new Error("Title and description must be present.");
+			}
+
+			// create the new game mod request object => type ModRequest
+			const newModRequest: ModRequestSansID = {
+				gameID,
+				gameDisplayName,
+				title,
+				description,
+				requesterID: user?.uid,
+				requesterDisplayName:
+					user?.displayName || user.email!.split("@")[0],
+				creationDate: serverTimestamp() as Timestamp,
+				lastModified: serverTimestamp() as Timestamp,
+				voteStatus: 0,
+				completionStatus: "pending modder",
+				modderStatus: "open"
+			};
 			await addDoc(modRequestsCol, newModRequest);
 			setLoading(false);
 
@@ -54,7 +58,7 @@ const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 			router.back();
 		} catch (error: any) {
 			console.error("handleCreateModRequest error", error.message);
-			setError(true);
+			setError(error.message);
 			setLoading(false);
 		}
 	};
@@ -133,7 +137,7 @@ const NewGameModRequestForm: React.FC<NewGameModRequestFormProps> = ({
 			{error && (
 				<Alert
 					title="Error!"
-					subtitle="Creating post may have failed. Try again later."
+					subtitle={error}
 					variant="danger"
 					showIcon
 					iconType="warning"

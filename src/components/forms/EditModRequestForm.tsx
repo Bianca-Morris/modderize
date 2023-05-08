@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { User } from "firebase/auth";
 import {
 	serverTimestamp,
 	Timestamp,
@@ -27,20 +26,24 @@ const EditModRequestForm: React.FC<EditModRequestFormProps> = ({ request }) => {
 
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(false);
+	const [error, setError] = useState("");
 
 	const handleUpdateModRequest = async () => {
-		const docRef = doc(modRequestsCol, request.id);
-
-		const fieldsToUpdate = {
-			title,
-			description,
-			lastModified: serverTimestamp() as Timestamp
-		};
-
 		try {
-			setError(false);
+			setError("");
 			setLoading(true);
+
+			if (!title || !description) {
+				throw new Error("Title and description must both be present.");
+			}
+
+			const docRef = doc(modRequestsCol, request.id);
+
+			const fieldsToUpdate = {
+				title,
+				description,
+				lastModified: serverTimestamp() as Timestamp
+			};
 
 			await updateDoc(docRef, fieldsToUpdate);
 			setLoading(false);
@@ -49,7 +52,7 @@ const EditModRequestForm: React.FC<EditModRequestFormProps> = ({ request }) => {
 			router.back();
 		} catch (error: any) {
 			console.error("handleUpdateModRequest error", error.message);
-			setError(true);
+			setError(error.message);
 			setLoading(false);
 		}
 	};
@@ -129,7 +132,7 @@ const EditModRequestForm: React.FC<EditModRequestFormProps> = ({ request }) => {
 			{error && (
 				<Alert
 					title="Error!"
-					subtitle="Creating post may have failed. Try again later."
+					subtitle={error}
 					variant="danger"
 					showIcon
 					iconType="warning"

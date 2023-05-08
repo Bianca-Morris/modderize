@@ -33,47 +33,44 @@ const NewUserModRequestForm: React.FC<NewUserModRequestFormProps> = ({
 
 	const [user] = useAuthState(auth);
 
-	console.log("requestee", requestee);
-
 	const handleCreateGameModRequest = async () => {
 		setError("");
 
-		if (!gameID) {
-			setError("Game must be selected");
-			return;
-		} else if (!allGames.length) {
-			setError("Wait until games are loaded to submit...");
-			return;
-		} else if (!user) {
-			setError("You must be logged in to continue...");
-			return;
-		} else if (!requestee) {
-			setError("Requestee not valid...");
-			return;
-		}
-
-		// create the new game mod request object => type ModRequest
-		const newModRequest: ModRequestSansID = {
-			gameID,
-			gameDisplayName: allGames.filter((game) => game.id === gameID)[0]
-				.displayName,
-			title,
-			description,
-			requesterID: user?.uid,
-			requesterDisplayName:
-				user?.displayName || user.email!.split("@")[0],
-			creationDate: serverTimestamp() as Timestamp,
-			lastModified: serverTimestamp() as Timestamp,
-			voteStatus: 0,
-			completionStatus: "pending modder",
-			modderStatus: "requested",
-			modderDisplayName: requestee.displayName || undefined,
-			modderID: requestee.uid || undefined,
-			modderProfileImageURL: requestee.photoURL || undefined
-		};
-
 		// store the mod request in db
 		try {
+			if (!gameID) {
+				throw new Error("Game must be selected");
+			} else if (!allGames.length) {
+				throw new Error("Wait until games are loaded to submit...");
+			} else if (!user) {
+				throw new Error("You must be logged in to continue...");
+			} else if (!requestee) {
+				throw new Error("Requestee not valid...");
+			} else if (!title || !description) {
+				throw new Error("Title and description must both be present.");
+			}
+
+			// create the new game mod request object => type ModRequest
+			const newModRequest: ModRequestSansID = {
+				gameID,
+				gameDisplayName: allGames.filter(
+					(game) => game.id === gameID
+				)[0].displayName,
+				title,
+				description,
+				requesterID: user?.uid,
+				requesterDisplayName:
+					user?.displayName || user.email!.split("@")[0],
+				creationDate: serverTimestamp() as Timestamp,
+				lastModified: serverTimestamp() as Timestamp,
+				voteStatus: 0,
+				completionStatus: "pending modder",
+				modderStatus: "requested",
+				modderDisplayName: requestee.displayName || undefined,
+				modderID: requestee.uid || undefined,
+				modderProfileImageURL: requestee.photoURL || undefined
+			};
+
 			setError("");
 			setLoading(true);
 			await addDoc(modRequestsCol, newModRequest);
