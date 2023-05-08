@@ -29,6 +29,7 @@ type ModRequestPageProps = {
 	modderStatus: ModderStatus;
 	completionStatus: CompletionStatus;
 	hideFilters: string;
+	title: string;
 };
 
 const ModRequestsPage: React.FC<ModRequestPageProps> = ({
@@ -38,7 +39,8 @@ const ModRequestsPage: React.FC<ModRequestPageProps> = ({
 	requesterID,
 	completionStatus,
 	modderStatus,
-	hideFilters
+	hideFilters,
+	title
 }) => {
 	let constraints: QueryConstraint[] = [];
 
@@ -99,7 +101,7 @@ const ModRequestsPage: React.FC<ModRequestPageProps> = ({
 			<SimpleHeader>
 				<div className="flex w-100 justify-between items-center">
 					<div className="flex flex-col text-3xl">
-						<H1>Mod Requests</H1>
+						<H1>{title || "Mod Requests"}</H1>
 					</div>
 					<div>
 						<span>{totalCount}</span>
@@ -196,7 +198,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 			requesterID = "",
 			completionStatus = "",
 			modderStatus = "",
-			hideFilters = ""
+			hideFilters = "",
+			title = ""
 		} = {}
 	} = context || {};
 
@@ -208,7 +211,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 			requesterID,
 			completionStatus,
 			modderStatus,
-			hideFilters
+			hideFilters,
+			title
 		}
 	};
 }

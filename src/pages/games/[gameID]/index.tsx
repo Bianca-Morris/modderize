@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { doc } from "@firebase/firestore";
+import { doc, limit } from "@firebase/firestore";
 import { GetServerSidePropsContext } from "next";
 import { auth } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -32,6 +32,7 @@ import H1 from "../../../components/basic/typography/H1";
 import H2 from "../../../components/basic/typography/H2";
 import H3 from "../../../components/basic/typography/H3";
 import SharePopover from "../../../components/general/SharePopover";
+import A from "../../../components/basic/A";
 
 type GamePageProps = {
 	gameID: string;
@@ -152,10 +153,18 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 									modRequestConverter
 								),
 								where("gameID", "==", gameID),
-								orderBy("creationDate", "desc")
+								orderBy("creationDate", "desc"),
+								limit(10)
 							)}
 						/>
 					)}
+					<A
+						variant="violet"
+						cls="mt-5"
+						href={`/requests?gameID=${gameID}`}
+					>
+						View All Mod Requests for {displayName}
+					</A>
 				</div>
 
 				<div className="flex flex-1 flex-col mt-10 gap-2">
@@ -196,21 +205,6 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 							</SharePopover>
 						</div>
 					</div>
-
-					{/* {currModRequests.length > 0 && (
-						<Button
-							type="button"
-							variant="violet"
-							cls="mt-4"
-							onClick={() =>
-								router.push(
-									`/search?type=modRequests&gameID=${gameID}`
-								)
-							}
-						>
-							View All Mods for {displayName}
-						</Button>
-					)} */}
 				</div>
 			</>
 		</ContentBody>
