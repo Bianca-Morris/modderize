@@ -60,13 +60,14 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 							gamers, Modderize is the result of my own
 							frustration with the state of mod-sharing websites.
 							There are some great tools out there for sharing
-							mods and growing an audience, but most of them don't
-							have dedicated tools for requesting mods. The
-							consensus seems to be that mod requests are simply
-							an unnecessary distraction. And it is true that,
-							when unsolicited, they can be. However, there are a
-							plethora of real, enriching use-cases where this
-							particular kind of content can be really useful.
+							mods and growing an audience, but most of them
+							don&apos;t have dedicated tools for requesting mods.
+							The consensus seems to be that mod requests are
+							simply an unnecessary distraction. And it is true
+							that, when unsolicited, they can be. However, there
+							are a plethora of real, enriching use-cases where
+							this particular kind of content can be really
+							useful.
 						</p>
 						<p>
 							There was a time when the sole motivation for
@@ -91,7 +92,7 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 							entire community, and someone with the talent and
 							the time to create it will do so. Or if you happen
 							to know of a particular creator that makes the
-							specific sort of mod you're asking for, you can
+							specific sort of mod you&apos;re asking for, you can
 							request directly from them. The goal being to give
 							modders a way of figuring out what to make, and
 							gamers a place to voice the kind of content they
@@ -99,8 +100,8 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 						</p>
 						<p>
 							I believe that there is limitless potential in the
-							creativity of our gaming communities. Let's make
-							something awesome together.
+							creativity of our gaming communities. Let&apos;s
+							make something awesome together.
 						</p>
 						<p>- Bianca</p>
 					</div>
