@@ -12,6 +12,7 @@ import useFirebaseAPI from "../../hooks/useFirebaseAPI";
 import Link from "next/link";
 import { usersCol } from "../../firebase/collections";
 import H1 from "../../components/basic/typography/H1";
+import UserLoader from "../../components/general/UserLoader";
 
 type ModdersPageProps = {
 	username?: string;
@@ -91,6 +92,7 @@ const ModdersPage: React.FC<ModdersPageProps> = ({ username }) => {
 									/>
 								);
 							})}
+							{loading && <UserLoader />}
 						</div>
 						{!loading && dataVals.length === 0 && (
 							<div className="w-full text-center">

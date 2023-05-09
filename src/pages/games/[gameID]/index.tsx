@@ -33,6 +33,7 @@ import H2 from "../../../components/basic/typography/H2";
 import H3 from "../../../components/basic/typography/H3";
 import SharePopover from "../../../components/general/SharePopover";
 import A from "../../../components/basic/A";
+import ModRequestLoader from "../../../components/general/ModRequestLoader";
 
 type GamePageProps = {
 	gameID: string;
@@ -91,7 +92,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 				<SimpleHeader>
 					<div className="flex flex-col md:flex-row justify-between gap-3 md:gap-0">
 						<div className="flex flex-col text-3xl">
-							<H1>{gameLoading ? "" : displayName}</H1>
+							<H1>{gameLoading ? "Loading..." : displayName}</H1>
 							{user && !isGameFavorited && (
 								<Button
 									type="button"
@@ -158,6 +159,11 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 							)}
 						/>
 					)}
+					{gameLoading && (
+						<div className="flex flex-col gap-3 w-full">
+							<ModRequestLoader />
+						</div>
+					)}
 					<A
 						variant="violet"
 						cls="mt-5"
@@ -169,6 +175,11 @@ const GamePage: React.FC<GamePageProps> = ({ gameID }) => {
 
 				<div className="flex flex-1 flex-col mt-10 gap-2">
 					<div className="flex flex-col gap-0">
+						{!imageURL && gameLoading && (
+							<div className="flex justify-center mb-3">
+								<div className="w-52 h-52 rounded animate-pulse bg-gray-100" />
+							</div>
+						)}
 						{imageURL && (
 							<div className="flex justify-center mb-3">
 								<Image

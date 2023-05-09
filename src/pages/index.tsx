@@ -1,37 +1,39 @@
 import React, { useCallback } from "react";
-import { getDocs, limit, orderBy, query } from "firebase/firestore";
-import type { GetServerSidePropsContext } from "next";
-import Link from "next/link";
+import { limit, orderBy, query } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
-import safeJsonStringify from "safe-json-stringify";
-
-import { auth } from "../firebase/clientApp";
-
-import SimpleHeader from "../components/general/SimpleHeader";
-import { Game, ModRequest as ModRequestType } from "../types/docTypes";
-import GameCard from "../components/general/GameCard";
-import Button from "../components/basic/Button";
-import Jumbotron from "../components/basic/Jumbotron";
-import { modRequestConverter } from "../firebase/converters";
-import ModRequestList from "../components/general/ModRequestList";
-import { gamesCol, modRequestsCol } from "../firebase/collections";
-import A from "../components/basic/A";
-import H1 from "../components/basic/typography/H1";
-import H2 from "../components/basic/typography/H2";
+import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
 import {
 	InboxArrowDownIcon,
 	WrenchScrewdriverIcon
 } from "@heroicons/react/20/solid";
 
-type HomePageProps = {
-	topGames: Game[];
-};
+import { auth } from "../firebase/clientApp";
+import SimpleHeader from "../components/general/SimpleHeader";
+import { ModRequest as ModRequestType } from "../types/docTypes";
+import GameCard from "../components/general/GameCard";
+import Button from "../components/basic/Button";
+import Jumbotron from "../components/basic/Jumbotron";
+import { gameConverter, modRequestConverter } from "../firebase/converters";
+import ModRequestList from "../components/general/ModRequestList";
+import { gamesCol, modRequestsCol } from "../firebase/collections";
+import A from "../components/basic/A";
+import H1 from "../components/basic/typography/H1";
+import H2 from "../components/basic/typography/H2";
+import GameLoader from "../components/general/GameLoader";
 
-const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
+const Home: React.FC = () => {
 	const [user] = useAuthState(auth);
 
 	const router = useRouter();
+
+	const [topGames = [], loading, error, snapshot] = useCollectionDataOnce(
+		query(
+			gamesCol,
+			orderBy("numberOfPlayers", "desc"),
+			limit(5)
+		).withConverter(gameConverter)
+	);
 
 	const requestsColl = modRequestsCol.withConverter(modRequestConverter);
 
@@ -107,6 +109,7 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 					</div>
 
 					<div className="lg:w-full flex flex-wrap gap-5 my-5 items-center align-center justify-center">
+						{loading && <GameLoader />}
 						{topGames.map((game) => (
 							<GameCard
 								{...game}
@@ -141,37 +144,5 @@ const Home: React.FC<HomePageProps> = ({ topGames = [] }) => {
 		</div>
 	);
 };
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-	try {
-		// Grab top five games for the home page (sorted by number of players)
-		const gameColl = gamesCol;
-		const gameQ = query(
-			gameColl,
-			orderBy("numberOfPlayers", "desc"),
-			limit(5)
-		);
-		const gameDocs = await getDocs(gameQ);
-
-		// Parse for props obj
-		const top5Games = gameDocs.docs.map((doc) =>
-			JSON.parse(
-				safeJsonStringify({
-					id: doc.id,
-					...doc.data()
-				})
-			)
-		);
-
-		return {
-			props: {
-				topGames: !gameDocs.empty ? top5Games : []
-			}
-		};
-	} catch (error) {
-		console.error("/index getServerSideProps error", error);
-		return null;
-	}
-}
 
 export default Home;

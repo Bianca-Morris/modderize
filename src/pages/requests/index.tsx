@@ -8,6 +8,7 @@ import Button from "../../components/basic/Button";
 import H1 from "../../components/basic/typography/H1";
 import H3 from "../../components/basic/typography/H3";
 import ModRequestCard from "../../components/general/ModRequestCard";
+import ModRequestLoader from "../../components/general/ModRequestLoader";
 import SimpleHeader from "../../components/general/SimpleHeader";
 import ContentBody from "../../components/layout/ContentBody";
 import Filters from "../../components/search/Filters";
@@ -21,7 +22,7 @@ import {
 	ModRequest
 } from "../../types/docTypes";
 
-type ModRequestPageProps = {
+type ModRequestsPageProps = {
 	id: string;
 	gameID: string;
 	modderID: string;
@@ -32,7 +33,7 @@ type ModRequestPageProps = {
 	title: string;
 };
 
-const ModRequestsPage: React.FC<ModRequestPageProps> = ({
+const ModRequestsPage: React.FC<ModRequestsPageProps> = ({
 	id,
 	gameID,
 	modderID,
@@ -153,6 +154,7 @@ const ModRequestsPage: React.FC<ModRequestPageProps> = ({
 								/>
 							);
 						})}
+						{loading && <ModRequestLoader />}
 						{!loading && dataVals.length === 0 && (
 							<div className="w-full text-center">
 								No Mod Requests found! Try&nbsp;
