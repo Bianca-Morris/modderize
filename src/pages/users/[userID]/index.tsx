@@ -35,6 +35,23 @@ const UserPage: React.FC<UserPageProps> = ({ userID }) => {
 				paragraph="The account may have been deleted, suspended, or banned."
 			/>
 		);
+	} else if (!userDoc && !loading) {
+		return (
+			<ErrorPage
+				header1="Error: User Not Found"
+				header2="Sorry!"
+				header3="This user doesn't seem to be on Modderize."
+				paragraph="The account may have been deleted, suspended, or banned."
+			/>
+		);
+	} else if (error) {
+		return (
+			<ErrorPage
+				header1="Error: Something went wrong..."
+				header2="Sorry!"
+				header3={error.message}
+			/>
+		);
 	}
 
 	if (user?.uid === userID) {
