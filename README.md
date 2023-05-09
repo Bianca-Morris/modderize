@@ -166,6 +166,7 @@ Project Link: [https://github.com/bianca-morris/modderize](https://github.com/bi
 -   [achuinard](https://github.com/CSFrequency/react-firebase-hooks/issues/13) for the `useCollectionDataStatic` hook
 -   [Canva](https://www.canva.com/), which I used to create the logo
 -   [Framer](https://www.framer.com/) and [Figma](https://www.figma.com/), which I used to mock up the prototypes
+-   [Privacy Policy](https://www.freeprivacypolicy.com/free-privacy-policy-generator/) generator and [Terms of Use](https://www.termsfeed.com/terms-use-generator/) generator for content for legal pages
 -   [Karina Lin-Murphy](https://teach.extension.harvard.edu/people/karina-lin), Capstone Advisor
 -   Dr. Hongming Wang, Research Advisor
 -   [Alexander Balashov](https://github.com/alexkb0009), Industry Collaborator
