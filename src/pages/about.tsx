@@ -56,41 +56,53 @@ const AboutPage: React.FC<AboutPageProps> = () => {
 					</div>
 					<div className="flex-1 flex flex-col gap-5">
 						<p>
-							Lorem ipsum dolor sit amet. Et quia tempora sit
-							culpa obcaecati et dignissimos tempora. Vel
-							molestiae blanditiis et necessitatibus blanditiis
-							qui nisi eligendi. Sit totam nihil non mollitia
-							repellat et asperiores dolores est ipsum molestias.
-							Hic quidem praesentium aut dolor commodi in quasi
-							saepe eos quis modi et eveniet facilis id asperiores
-							architecto!
+							Created by a modder and gamer for modders and
+							gamers, Modderize is the result of my own
+							frustration with the state of mod-sharing websites.
+							There are some great tools out there for sharing
+							mods and growing an audience, but most of them don't
+							have dedicated tools for requesting mods. The
+							consensus seems to be that mod requests are simply
+							an unnecessary distraction. And it is true that,
+							when unsolicited, they can be. However, there are a
+							plethora of real, enriching use-cases where this
+							particular kind of content can be really useful.
 						</p>
 						<p>
-							Id earum consequatur quo sapiente reprehenderit id
-							natus esse. Qui maxime asperiores eum aperiam minus
-							et internos voluptatem eum eveniet laudantium et
-							aspernatur voluptatibus ea ducimus praesentium? Ut
-							perferendis dolores nam laudantium fugiat quo
-							similique ipsam eos fugit molestias et eligendi
-							consequatur ea doloremque quae sit dolorum sunt!
+							There was a time when the sole motivation for
+							modding was personal fulfillment; and that is still
+							a huge part of why most of us do it. But now that
+							the world of PC game modding is becoming more
+							monetizeable, with many modders collecting
+							subscriptions and donations via services like
+							Patreon and BuyMeACoffee, many modders (like
+							myself), are trying to figure out what kind of
+							content will make our followers happiest. This can
+							be difficult to do, especially for large creators,
+							as comments sections get larger and harder to skim.
+							And even if you create a poll, the only options your
+							users can choose between are the things you have
+							already thought of.
 						</p>
 						<p>
-							Et consectetur iusto ad odit nostrum est placeat
-							excepturi eum alias perspiciatis! Sit voluptates
-							autem et impedit illo ut dolores quia.
+							Enter Modderize, which gives gamers and modders an
+							additional means of communicating with each other.
+							You can make a mod request that is open to the
+							entire community, and someone with the talent and
+							the time to create it will do so. Or if you happen
+							to know of a particular creator that makes the
+							specific sort of mod you're asking for, you can
+							request directly from them. The goal being to give
+							modders a way of figuring out what to make, and
+							gamers a place to voice the kind of content they
+							want to see.
 						</p>
 						<p>
-							Ut nihil velit eos nostrum repudiandae qui rerum
-							blanditiis et voluptatem dolores At soluta sint? In
-							distinctio dolorem aut debitis autem qui quaerat
-							eius eum Quis eveniet quo veritatis saepe quo
-							consequatur sequi aut inventore laboriosam. Est quae
-							dolores eos excepturi dolores nam magnam obcaecati
-							cum facilis culpa qui dolorum facilis. Et veritatis
-							omnis non iusto magni sit quae alias rem fugiat
-							laudantium ut repudiandae quaerat ea magni corporis
-							ut voluptas consequatur.
+							I believe that there is limitless potential in the
+							creativity of our gaming communities. Let's make
+							something awesome together.
 						</p>
+						<p>- Bianca</p>
 					</div>
 				</div>
 			</ContentBody>
