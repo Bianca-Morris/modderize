@@ -1,9 +1,11 @@
-import { doc, getDoc } from "firebase/firestore";
-import { GetServerSidePropsContext } from "next";
 import React from "react";
+
+import { doc } from "firebase/firestore";
+import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
-import safeJsonStringify from "safe-json-stringify";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+
 import H1 from "../../../components/basic/typography/H1";
 import H3 from "../../../components/basic/typography/H3";
 import NewGameModRequestForm from "../../../components/forms/NewGameModRequestForm";
@@ -11,24 +13,38 @@ import SimpleHeader from "../../../components/general/SimpleHeader";
 import ContentBody from "../../../components/layout/ContentBody";
 import GameNotFoundPage from "../../../components/pages/GameNotFound";
 import { auth, db } from "../../../firebase/clientApp";
-import { Game } from "../../../types/docTypes";
 import ModEditPageLayout from "../../../components/layout/ModEditPageLayout";
 import NotAuthenticated from "../../../errors/NotAuthenticated";
+import { gameConverter } from "../../../firebase/converters";
+import ErrorPage from "../../../errors/ErrorPage";
 
 /**
  * Will be page for creating a mod request
  */
-type RequestModPageProps = { gameData: Game };
+type RequestModPageProps = { gameID: string };
 
-const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
-	const { id: gameID, displayName: gameDisplayName, imageURL } = gameData;
-
+const RequestModPage: React.FC<RequestModPageProps> = ({ gameID }) => {
 	const [user] = useAuthState(auth);
 
-	if (!gameData) {
+	const gameDocRef = doc(db, "games", gameID || "placeholder").withConverter(
+		gameConverter
+	);
+
+	const [gameData, loading, error, snapshot] = useDocumentData(gameDocRef);
+	const { displayName: gameDisplayName = "", imageURL = "" } = gameData || {};
+
+	if (!loading && !gameData) {
 		return <GameNotFoundPage />;
-	} else if (!user) {
+	} else if (!loading && !user) {
 		return <NotAuthenticated />;
+	} else if (error) {
+		return (
+			<ErrorPage
+				header1="Error: Something went wrong!"
+				header2="Sorry!"
+				header3={error.message}
+			/>
+		);
 	}
 
 	return (
@@ -65,7 +81,7 @@ const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
 					</p>
 				</>
 				<>
-					{user && (
+					{user && gameDisplayName && (
 						<NewGameModRequestForm
 							{...{
 								user,
@@ -83,27 +99,11 @@ const RequestModPage: React.FC<RequestModPageProps> = ({ gameData }) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 	const { query: { gameID = "" } = {} } = context || {};
 
-	try {
-		// Grab document for this game
-		const gameDocRef = doc(db, "games", gameID as string);
-		const gameDoc = await getDoc(gameDocRef);
-
-		return {
-			props: {
-				gameData: gameDoc.exists()
-					? JSON.parse(
-							safeJsonStringify({
-								id: gameDoc.id,
-								...gameDoc.data()
-							})
-					  )
-					: null
-			}
-		};
-	} catch (error) {
-		console.error("/games/<id>/requestMod getServerSideProps error", error);
-		return null;
-	}
+	return {
+		props: {
+			gameID
+		}
+	};
 }
 
 export default RequestModPage;
