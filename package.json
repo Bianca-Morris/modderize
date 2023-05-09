@@ -24,8 +24,6 @@
 		"@types/safe-json-stringify": "^1.1.2",
 		"dayjs": "^1.11.7",
 		"firebase": "9.16.0",
-		"firebase-admin": "^11.5.0",
-		"firebase-functions": "^4.2.0",
 		"next": "latest",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
