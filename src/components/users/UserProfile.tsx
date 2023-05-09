@@ -1,39 +1,31 @@
-import { User } from "firebase/auth";
-import { DocumentData } from "firebase/firestore";
+import React from "react";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+
 import { auth } from "../../firebase/clientApp";
-import useUserDocs from "../../hooks/useUserDocs";
+import { UserDoc } from "../../types/docTypes";
 import H2 from "../basic/typography/H2";
 import ProfileModsByStatus from "../general/ProfileModsByStatus";
 import ProfileOpenModsByRequesterID from "../general/ProfileOpenModsByRequesterID";
 import GenericProfile from "./GenericProfile";
 
 type UserProfileProps = {
-	userData: User; // The user that is in the process of being viewed
+	userID: string; // The userID that is in the process of being viewed
+	userDoc?: UserDoc;
 };
 
-const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
-	const { uid, displayName, photoURL } = userData;
-	const [viewingUserDoc, setViewingUserDoc] = useState<DocumentData | null>();
-	const { getUserDoc } = useUserDocs();
+const UserProfile: React.FC<UserProfileProps> = ({ userID, userDoc }) => {
 	const [activeUser] = useAuthState(auth);
 	const router = useRouter();
 
 	const {
+		uid = "",
+		displayName,
+		photoURL,
 		isActiveModder = false,
 		about,
 		donationLink
-	} = viewingUserDoc || {};
-
-	useEffect(() => {
-		onLoad();
-	}, []);
-
-	const onLoad = async () => {
-		return getUserDoc(uid).then((doc) => setViewingUserDoc(doc));
-	};
+	} = userDoc || {};
 
 	const onRequestMod = () => {
 		router.push(`/users/${uid}/userModRequest`);

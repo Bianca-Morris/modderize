@@ -1,24 +1,32 @@
 import React from "react";
 import { GetServerSidePropsContext } from "next";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../../../firebase/clientApp";
-import safeJsonStringify from "safe-json-stringify";
-import { User } from "@firebase/auth";
+import { auth } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import MyProfile from "../../../components/users/MyProfile";
 import UserProfile from "../../../components/users/UserProfile";
 import ErrorPage from "../../../errors/ErrorPage";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { doc, DocumentReference } from "firebase/firestore";
+import { usersCol } from "../../../firebase/collections";
+import { UserDoc } from "../../../types/docTypes";
 
 type UserPageProps = {
-	userData: User;
+	userID: string;
 };
 
-const UserPage: React.FC<UserPageProps> = ({ userData }) => {
-	// Check if the current user's profile
+const UserPage: React.FC<UserPageProps> = ({ userID }) => {
+	// Check the current user's profile
 	const [user] = useAuthState(auth);
 
+	const [userDoc, loading, error, snapshot] = useDocumentData(
+		doc(
+			usersCol,
+			`${userID || "placeholder"}`
+		) as DocumentReference<UserDoc>
+	);
+
 	// 404 Error message
-	if (!userData) {
+	if (!userID) {
 		return (
 			<ErrorPage
 				header1="Error: User Not Found"
@@ -29,38 +37,22 @@ const UserPage: React.FC<UserPageProps> = ({ userData }) => {
 		);
 	}
 
-	if (user?.uid === userData.uid) {
-		return <MyProfile {...{ userData }} />;
+	if (user?.uid === userID) {
+		return <MyProfile {...{ userDoc }} loadingUserDoc={loading} />;
 	} else {
 		// If not, render public view user page
-		return <UserProfile {...{ userData }} />;
+		return <UserProfile {...{ userID, userDoc }} />;
 	}
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 	const { query: { userID = "" } = {} } = context || {};
 
-	try {
-		// Grab document for this game
-		const userDocRef = doc(db, "users", userID as string);
-		const userDoc = await getDoc(userDocRef);
-
-		return {
-			props: {
-				userData: userDoc.exists()
-					? JSON.parse(
-							safeJsonStringify({
-								id: userDoc.id,
-								...userDoc.data()
-							})
-					  )
-					: null
-			}
-		};
-	} catch (error) {
-		console.error("/users/<id> getServerSideProps error", error);
-		return null;
-	}
+	return {
+		props: {
+			userID
+		}
+	};
 }
 
 export default UserPage;

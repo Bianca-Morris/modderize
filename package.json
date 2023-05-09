@@ -21,7 +21,6 @@
 	"dependencies": {
 		"@headlessui/react": "^1.7.8",
 		"@heroicons/react": "^2.0.14",
-		"@types/safe-json-stringify": "^1.1.2",
 		"dayjs": "^1.11.7",
 		"firebase": "9.16.0",
 		"next": "latest",
@@ -31,7 +30,6 @@
 		"react-popper": "^2.3.0",
 		"react-share": "^4.4.1",
 		"recoil": "^0.7.6",
-		"safe-json-stringify": "^1.2.0",
 		"sorted-array-functions": "^1.3.0"
 	},
 	"devDependencies": {

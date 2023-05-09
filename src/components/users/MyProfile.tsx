@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { User } from "firebase/auth";
 import { useSetRecoilState } from "recoil";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -11,20 +10,20 @@ import GenericProfile from "./GenericProfile";
 import { auth } from "../../firebase/clientApp";
 import ProfileOpenModsByRequesterID from "../general/ProfileOpenModsByRequesterID";
 import ProfileModsByStatus from "../general/ProfileModsByStatus";
-import useUserDoc from "../../hooks/useUserDoc";
 import { modalControllerAtom } from "../../atoms/modalControllerAtom";
 import H2 from "../basic/typography/H2";
 import A from "../basic/A";
+import { UserDoc } from "../../types/docTypes";
 
 type MyProfileProps = {
-	userData: User;
+	userDoc?: UserDoc;
+	loadingUserDoc: boolean;
 };
 
-const MyProfile: React.FC<MyProfileProps> = () => {
+const MyProfile: React.FC<MyProfileProps> = ({ userDoc, loadingUserDoc }) => {
 	const [user] = useAuthState(auth);
 
-	const { updateUserDocField, loading: updatingUserDoc } = useUserDocs();
-	const { userDoc, loading: loadingUserDoc } = useUserDoc();
+	const { updateUserDocField } = useUserDocs();
 
 	const {
 		isActiveModder = false,
@@ -68,7 +67,7 @@ const MyProfile: React.FC<MyProfileProps> = () => {
 			>
 				<div className="flex justify-between">
 					<Toggle
-						loading={loadingUserDoc || updatingUserDoc}
+						loading={loadingUserDoc}
 						label={
 							isActiveModder
 								? "I'm open to accepting mod requests"
