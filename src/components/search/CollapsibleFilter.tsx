@@ -45,7 +45,7 @@ const CollapsibleFilter: React.FC<CollapsibleFilterProps> = ({
 				</Disclosure.Button>
 			</H3>
 			<Disclosure.Panel className="pt-6">
-				<div className="space-y-6">
+				<div className="space-y-2">
 					{section.options.map((option) => (
 						<div key={option.value} className="flex items-center">
 							<input

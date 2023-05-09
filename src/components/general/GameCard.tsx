@@ -31,7 +31,9 @@ const GameCard: React.FC<GameCardProps> = ({
 					className="flex items-center align-center justify-center w-52 h-52 rounded"
 				/>
 			)}
-			<div className="font-bold mt-3 h-10 w-52">{displayName}</div>
+			<div className="font-bold mt-3 h-10 w-52 truncate">
+				{displayName}
+			</div>
 		</Link>
 	);
 };
