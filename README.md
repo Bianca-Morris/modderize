@@ -51,7 +51,7 @@
 
 ## About The Project
 
-[![Modderize website](https://i.gyazo.com/c935bc17cb0dbee1291b32ef4a17d026.jpg)](https:www.modderize.me)
+[![Modderize website](https://i.gyazo.com/c935bc17cb0dbee1291b32ef4a17d026.jpg)](https://www.modderize.me)
 
 Modderize is a web application for video game modders to track and fulfill feature requests from their communities; gamers can use it to make requests and discover new mod content. This application was built by [Bianca Morris](https://www.biancamorris.com/) to fulfill the Capstone requirement of the Digital Media Design ALM Degree at Harvard Extension School.
 
@@ -64,6 +64,8 @@ Modderize is a web application for video game modders to track and fulfill featu
 -   [![Tailwind][Tailwind CSS]][Tailwind-url] @ 3.2.4
 -   [![Firebase][Firebase]][Firebase-url] @ 9.16.0
 -   [![Typescript][Typescript]][Typescript-url] @ 4.9.4
+
+And deployed with Vercel.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -154,10 +156,14 @@ Project Link: [https://github.com/bianca-morris/modderize](https://github.com/bi
 
 ## Acknowledgments
 
--   Firebase, Tailwind, NextJS, and Typescript Documentation (as well as docs for other npm dependencies like `react-share`, `recoil`, `sorted-array-functions`, etc.)
+-   Firebase, Tailwind, NextJS, and Typescript Documentation (as well as docs for other npm dependencies like `react-share`, `react-firebase-hooks`, `recoil`, `sorted-array-functions`, etc.)
 -   [Othneildrew](https://github.com/othneildrew/Best-README-Template), for the template used for this README
 -   This project was created from the official [Next.js TailwindCSS template](https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss)
 -   [FreeCodeCamp.com](https://www.freecodecamp.com/) for their [Reddit Clone](https://www.youtube.com/watch?v=rCm5RVYKWVg) and [LinkedIn Clone](https://www.youtube.com/watch?v=HimR8Xtz17U) tutorials
+-   [Tailwind UI](https://tailwindui.com/) and [HeadlessUI](https://headlessui.com/) for a variety of components and design patterns
+-   [Dan Abramov](https://overreacted.io/making-setinterval-declarative-with-react-hooks/) for the `useInterval` hook (and for making React, I guess...)
+-   [David Walsh](https://davidwalsh.name/react-useprevious-hook) for the `usePrevious` hook
+-   [achuinard](https://github.com/CSFrequency/react-firebase-hooks/issues/13) for the `useCollectionDataStatic` hook
 -   [Canva](https://www.canva.com/), which I used to create the logo
 -   [Framer](https://www.framer.com/) and [Figma](https://www.figma.com/), which I used to mock up the prototypes
 -   [Karina Lin-Murphy](https://teach.extension.harvard.edu/people/karina-lin), Capstone Advisor
@@ -180,7 +186,3 @@ Project Link: [https://github.com/bianca-morris/modderize](https://github.com/bi
 [Firebase-url]: https://firebase.google.com/
 [Typescript]: https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=ffffff
 [Typescript-url]: https://www.typescriptlang.org/
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/bianca-morris/modderize/tree/master&project-name=modderize&repository-name=modderize)
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).

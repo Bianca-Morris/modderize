@@ -8,6 +8,10 @@
 		"game mods",
 		"modderize"
 	],
+	"homepage": "https://www.modderize.me",
+	"bugs": {
+		"url": "https://github.com/Bianca-Morris/modderize/issues"
+	},
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
