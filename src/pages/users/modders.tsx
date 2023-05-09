@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
+import Link from "next/link";
 
 import { useCollectionDataStatic } from "../../hooks/useCollectionDataStatic";
 import { query, where } from "firebase/firestore";
@@ -9,7 +10,6 @@ import ContentBody from "../../components/layout/ContentBody";
 import ModderCard from "../../components/general/ModderCard";
 import { UserDoc } from "../../types/docTypes";
 import useFirebaseAPI from "../../hooks/useFirebaseAPI";
-import Link from "next/link";
 import { usersCol } from "../../firebase/collections";
 import H1 from "../../components/basic/typography/H1";
 import UserLoader from "../../components/general/UserLoader";

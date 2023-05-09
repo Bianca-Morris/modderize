@@ -1,6 +1,8 @@
-import { cp } from "fs";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { XMarkIcon } from "@heroicons/react/20/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+
 import { CompletionStatus, ModderStatus } from "../../types/docTypes";
 import Button from "../basic/Button";
 import CompletionStatusFilter from "./CompletionStatusFilter";
@@ -65,6 +67,12 @@ const Filters: React.FC<FiltersProps> = ({
 		router.push(baseURL);
 	};
 
+	const onClearFilters = () => {
+		setSelectedGameID(undefined);
+		setSelectedCompletionStatus(undefined);
+		setSelectedModderStatus(undefined);
+	};
+
 	return (
 		<form onSubmit={onSubmit}>
 			<GameFilter {...{ selectedGameID, setSelectedGameID }} />
@@ -80,9 +88,25 @@ const Filters: React.FC<FiltersProps> = ({
 					setSelectedCompletionStatus
 				}}
 			/>
-			<Button type="submit" variant="blue" cls="w-full">
-				Search
-			</Button>
+			<div className="flex lg:flex-col flex-row w-full gap-3">
+				<Button type="submit" variant="violet" cls="lg:w-full flex-1">
+					<MagnifyingGlassIcon className="w-4 h-4 mr-1" />
+					Search
+				</Button>
+				<Button
+					type="button"
+					variant="red"
+					cls="lg:w-full flex-1"
+					onClick={onClearFilters}
+					disabled={
+						!selectedCompletionStatus &&
+						!selectedGameID &&
+						!selectedModderStatus
+					}
+				>
+					<XMarkIcon className="w-4 h-4 mr-1" /> Clear Filters
+				</Button>
+			</div>
 		</form>
 	);
 };
