@@ -20,7 +20,7 @@ import SimpleHeader from "../../../components/general/SimpleHeader";
 import useGameData from "../../../hooks/useGameData";
 
 import ContentBody from "../../../components/layout/ContentBody";
-import GameNotFoundPage from "../../../components/pages/GameNotFound";
+import GameNotFoundPage from "../../../errors/GameNotFound";
 import {
 	gameConverter,
 	modRequestConverter

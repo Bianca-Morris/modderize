@@ -11,7 +11,7 @@ import H3 from "../../../components/basic/typography/H3";
 import NewGameModRequestForm from "../../../components/forms/NewGameModRequestForm";
 import SimpleHeader from "../../../components/general/SimpleHeader";
 import ContentBody from "../../../components/layout/ContentBody";
-import GameNotFoundPage from "../../../components/pages/GameNotFound";
+import GameNotFoundPage from "../../../errors/GameNotFound";
 import { auth, db } from "../../../firebase/clientApp";
 import ModEditPageLayout from "../../../components/layout/ModEditPageLayout";
 import NotAuthenticated from "../../../errors/NotAuthenticated";

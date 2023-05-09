@@ -1,6 +1,6 @@
 import React from "react";
-import ErrorPage from "../../errors/ErrorPage";
-import A from "../basic/A";
+import ErrorPage from "./ErrorPage";
+import A from "../components/basic/A";
 
 const GameNotFoundPage: React.FC = () => {
 	return (
