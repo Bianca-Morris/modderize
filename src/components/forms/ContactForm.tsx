@@ -1,8 +1,5 @@
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import React from "react";
-import Button from "../basic/Button";
-import Input from "../basic/Input";
-import Textarea from "../basic/Textarea";
+import A from "../basic/A";
 
 type ContactFormProps = {};
 
@@ -12,23 +9,33 @@ const ContactForm: React.FC<ContactFormProps> = () => {
 		<div>
 			Please direct any questions or feedback regarding the site to Bianca
 			Morris on{" "}
-			<a
+			<A
+				variant="lightViolet"
+				tagType="a"
 				href="https://www.linkedin.com/in/biancamorris"
 				target={"_blank"}
 				rel="noreferrer noopener"
 			>
 				LinkedIn
-			</a>{" "}
+			</A>{" "}
 			or{" "}
-			<a
+			<A
+				variant="lightViolet"
+				tagType="a"
 				href="https://www.github.com/bianca-morris"
 				target={"_blank"}
 				rel="noreferrer noopener"
 			>
 				Github
-			</a>
-			. Thank you!
+			</A>
+			. I look forward to hearing from you!
+			<br />
+			<br />
+			Thanks,
+			<br />
+			Bianca
 		</div>
+		/** HTML form was a last minute removal due to interfering with SSL certificate/HTTPS configuration */
 		// <form
 		// 	action="mailto:biancaallynm@protonmail.com"
 		// 	method="get"
